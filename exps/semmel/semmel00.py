@@ -17,7 +17,7 @@ class Exp(MyExp):
         # Define yourself dataset path
         self.data_dir = "datasets/semmel00"
         self.train_ann = "annotation_train.json"
-        self.val_ann = "annotation_val.json"
+        self.val_ann = "annotation_test.json"
 
         # --------------  training config --------------------- #
 
