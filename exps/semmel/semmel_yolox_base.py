@@ -38,8 +38,10 @@ class Exp(BaseExp):
             self.depth = 1.33
             self.width = 1.25
 
+        # self.ckpt = f"models/{scale}.pth"
+
         # detect classes number of model
-        self.num_classes = 80
+        self.num_classes = 18
         # activation name. For example, if using "relu", then "silu" will be replaced to "relu".
         self.act = "silu"
 
