@@ -158,7 +158,7 @@ class Exp(BaseExp):
         from yolox.data import COCODataset, TrainTransform
 
         return COCODataset(
-            name=self.train_ann.split("annotation_")[-1].removesuffix(".json"),
+            name="Images", # self.train_ann.split("annotation_")[-1].removesuffix(".json"),
             data_dir=self.data_dir,
             json_file=self.train_ann,
             img_size=self.input_size,
@@ -320,10 +320,11 @@ class Exp(BaseExp):
         testdev = kwargs.get("testdev", False)
         legacy = kwargs.get("legacy", False)
 
-        if not testdev:
-            name = self.val_ann.split("annotation_")[-1].removesuffix(".json")
-        else:
-            name = self.test_ann.split("annotation_")[-1].removesuffix(".json")
+        # if not testdev:
+        #     name = self.val_ann.split("annotation_")[-1].removesuffix(".json")
+        # else:
+        #     name = self.test_ann.split("annotation_")[-1].removesuffix(".json")
+        name = "Images"
 
         def read_useful_info(coco):
             # if isinstance(coco, COCO):
