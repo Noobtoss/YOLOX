@@ -8,7 +8,7 @@ import torch
 import torch.distributed as dist
 import torch.nn as nn
 
-from yolox.exp.base_exp import BaseExp
+from yolox.exp import Exp as BaseExp
 
 # THS, based on: yolox.exp.yolox_base.py
 
@@ -22,12 +22,24 @@ class Exp(BaseExp):
         self.output_dir = "./runs"
 
         # ---------------- model config ---------------- #
+
+        scale = "yolox_x"  # "yolox_m" # "yolox_l" # "yolox_x"
+
+        if scale == "yolox_s":
+            self.depth = 0.33
+            self.width = 0.50
+        if scale == "yolox_m":
+            self.depth = 0.67
+            self.width = 0.75
+        if scale == "yolox_l":
+            self.depth = 1.0
+            self.width = 1.0
+        if scale == "yolox_x":
+            self.depth = 1.33
+            self.width = 1.25
+
         # detect classes number of model
         self.num_classes = 80
-        # factor of model depth
-        self.depth = 1.00
-        # factor of model width
-        self.width = 1.00
         # activation name. For example, if using "relu", then "silu" will be replaced to "relu".
         self.act = "silu"
 
