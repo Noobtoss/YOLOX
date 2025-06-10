@@ -10,6 +10,8 @@ import torch.nn as nn
 
 from yolox.exp.base_exp import BaseExp
 
+# THS, based on: yolox.exp.yolox_base.py
+
 __all__ = ["Exp", "check_exp_value"]
 
 
@@ -307,13 +309,22 @@ class Exp(BaseExp):
         else:
             name = self.test_ann.split("annotation_")[-1].removesuffix(".json")
 
-        return COCODataset(
+        def read_useful_info(coco):
+            # if isinstance(coco, COCO):
+            coco.dataset["info"] = None
+            # coco.dataset["license"] = None
+            # coco.dataset["type"] = None
+            return coco
+
+        coco_dataset = COCODataset(
             name=name,
             data_dir=self.data_dir,
             json_file=self.val_ann if not testdev else self.test_ann,
             img_size=self.test_size,
             preproc=ValTransform(legacy=legacy),
         )
+        read_useful_info(coco_dataset.coco)
+        return coco_dataset
 
     def get_eval_loader(self, batch_size, is_distributed, **kwargs):
         valdataset = self.get_eval_dataset(**kwargs)
