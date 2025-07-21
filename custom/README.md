@@ -9,4 +9,4 @@ This folder contains custom shell scripts and Python scripts used for SLURM job 
 
 Some parts of the implementation were adapted from public contributions:
 
-- https://github.com/Megvii-BaseDetection/YOLOX/pull/1782/commits
+- https://github.com/Megvii-BaseDetection/YOLOX/pull/1782
