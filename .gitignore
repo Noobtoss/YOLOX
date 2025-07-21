@@ -4,6 +4,10 @@
 # user experiments directory
 YOLOX_outputs/
 datasets/
+datasets_archived/
+runs/
+results/
+models/
 # do not ignore datasets under yolox/data
 !*yolox/data/datasets/
 

@@ -1,0 +1,47 @@
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+# Copyright (c) Megvii, Inc. and its affiliates.
+import os
+
+from semmel_yolox_base import Exp as MyExp
+
+
+class Exp(MyExp):
+    def __init__(self):
+        super(Exp, self).__init__()
+
+        self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
+
+        # ---------------- dataloader config ---------------- #
+
+        # Define yourself dataset path
+        self.data_dir = "datasets/semmel00"
+        self.train_ann = "annotation_train.json"
+        self.val_ann = "annotation_test.json"
+
+        # --------------  training config --------------------- #
+
+        self.max_epoch = 30
+        self.data_num_workers = 4
+        self.eval_interval = 1
+
+        # ---------------- model config ---------------- #
+
+        scale = "yolox_x" # "yolox_m" # "yolox_l" # "yolox_x"
+
+        if scale == "yolox_s":
+            self.depth = 0.33
+            self.width = 0.50
+        if scale == "yolox_m":
+            self.depth = 0.67
+            self.width = 0.75
+        if scale == "yolox_l":
+            self.depth = 1.0
+            self.width = 1.0
+        if scale == "yolox_x":
+            self.depth = 1.33
+            self.width = 1.25
+
+        # self.ckpt = f"models/{scale}.pth"
+
+        self.num_classes = 18
