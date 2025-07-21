@@ -1,18 +1,33 @@
-#!/usr/bin/env python3
-# -*- coding:utf-8 -*-
-# Copyright (c) Megvii, Inc. and its affiliates.
-
 import argparse
 import os
 from loguru import logger
-import sys
 import torch
-from torch import nn
+import torch.nn as nn
 from yolox.exp import get_exp
-from yolox.models.network_blocks import SiLU
 import coremltools as ct
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+SEMMEL_NAMES = {
+    0: "Hintergrund",
+    1: "Unbekannt",
+    2: "Bauernbrot",
+    3: "Floesserbrot",
+    4: "Salzstange",
+    5: "Sonnenblumensemmel",
+    6: "Kuerbiskernsemmel",
+    7: "Roggensemmel",
+    8: "Dinkelbroetchen",
+    9: "LaugenstangeSchinkenKaese",
+    10: "Pfefferlaugenbrezel",
+    11: "KernigeSchinkenKaeseStange",
+    12: "Schokocroissant",
+    13: "Apfeltasche",
+    14: "Quarktasche",
+    15: "Mohnschnecke",
+    16: "Nussschnecke",
+    17: "Vanillehoernchen"
+}
 
 
 def make_parser():
@@ -39,7 +54,7 @@ def make_parser():
 class YOLOXDetectModel(nn.Module):
     """Wrap an Ultralytics YOLO model for Apple iOS CoreML export."""
 
-    def __init__(self, model, im, num_of_class, device=DEVICE):
+    def __init__(self, model, im, num_of_class, device='cuda'):
         """Initialize the YOLOXDetectModel class with a YOLO model and example image."""
         super().__init__()
         _, _, h, w = im.shape
@@ -79,7 +94,7 @@ def main():
     model.load_state_dict(ckpt)
     logger.info("Checkpoint loaded.")
 
-    names = args.class_name  # {0: "person", 1: "bicycle", 2: "car", 3: "motorcycle", 5: "bus", 7: "truck"}
+    names = SEMMEL_NAMES  # {0: "person", 1: "bicycle", 2: "car", 3: "motorcycle", 5: "bus", 7: "truck"}
     nc = len(names.keys())  # number of classes
 
     im = torch.zeros(args.batch_size, 3, exp.test_size[0], exp.test_size[1]).to(DEVICE)
@@ -111,7 +126,7 @@ def main():
     nms_spec = ct.proto.Model_pb2.Model()
     nms_spec.specificationVersion = 5
     for i in range(2):
-        decoder_output = model._spec.description.output[i].SerializeToString()
+        decoder_output = spec.description.output[i].SerializeToString()
         nms_spec.description.input.add()
         nms_spec.description.input[i].ParseFromString(decoder_output)
         nms_spec.description.output.add()
