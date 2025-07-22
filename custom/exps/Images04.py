@@ -15,7 +15,7 @@ class Exp(MyExp):
         # ---------------- dataloader config ---------------- #
 
         # Define yourself dataset path
-        self.data_dir = "datasets/semmel04"
+        self.data_dir = "datasets/Images04"
         self.train_ann = "annotation_train.json"
         self.val_ann = "annotation_test.json"
 

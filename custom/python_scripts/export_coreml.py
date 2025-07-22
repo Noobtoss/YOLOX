@@ -5,29 +5,9 @@ import torch
 import torch.nn as nn
 from yolox.exp import get_exp
 import coremltools as ct
+from semmel_names import names_04 as SEMMEL_NAMES
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-SEMMEL_NAMES = {
-    0: "Hintergrund",
-    1: "Unbekannt",
-    2: "Bauernbrot",
-    3: "Floesserbrot",
-    4: "Salzstange",
-    5: "Sonnenblumensemmel",
-    6: "Kuerbiskernsemmel",
-    7: "Roggensemmel",
-    8: "Dinkelbroetchen",
-    9: "LaugenstangeSchinkenKaese",
-    10: "Pfefferlaugenbrezel",
-    11: "KernigeSchinkenKaeseStange",
-    12: "Schokocroissant",
-    13: "Apfeltasche",
-    14: "Quarktasche",
-    15: "Mohnschnecke",
-    16: "Nussschnecke",
-    17: "Vanillehoernchen"
-}
 
 
 def make_parser():

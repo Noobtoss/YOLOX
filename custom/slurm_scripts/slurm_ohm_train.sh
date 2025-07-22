@@ -10,7 +10,7 @@
 #SBATCH --mem=32G                # RAM pro CPU Kern #20G #32G #64G
 
 BASE_DIR=/nfs/scratch/staff/schmittth/codeNexus/YOLOX
-CFG=${1:-custom/exps/semmel04.py}
+CFG=${1:-custom/exps/Images04.py}
 CKPT=${2:-models/yolox_x.pth}
 
 module purge
@@ -29,7 +29,7 @@ export WANDB_CONFIG_DIR=/tmp/ths_wandb
 srun python tools/train.py \
     --exp_file $BASE_DIR/$CFG \
     --devices 1 \
-    --batch-size 64 \
+    --batch-size 32 \
     --fp16 \
     --occup \
     --ckpt $BASE_DIR/$CKPT \
