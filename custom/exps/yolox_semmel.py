@@ -23,9 +23,8 @@ class Exp(BaseExp):
 
         # ---------------- semmel config ---------------- #
 
-        self.num_classes = 18
+        self.num_classes = 17
         self.names = {
-            0: "Hintergrund",
             1: "Unbekannt",
             2: "Bauernbrot",
             3: "Floesserbrot",

@@ -1,5 +1,4 @@
 names_04 = {
-    0: "Hintergrund",
     1: "Unbekannt",
     2: "Bauernbrot",
     3: "Floesserbrot",

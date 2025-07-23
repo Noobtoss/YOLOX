@@ -27,7 +27,7 @@ class Exp(MyExp):
 
         # ---------------- semmel config ---------------- #
 
-        self.num_classes = 18
+        self.num_classes = 17
 
         # ---------------- model config ---------------- #
 
