@@ -3,7 +3,7 @@
 # Copyright (c) Megvii, Inc. and its affiliates.
 import os
 
-from semmel_yolox_base import Exp as MyExp
+from yolox_semmel import Exp as MyExp
 
 
 class Exp(MyExp):
@@ -25,6 +25,10 @@ class Exp(MyExp):
         self.data_num_workers = 4
         self.eval_interval = 1
 
+        # ---------------- semmel config ---------------- #
+
+        self.num_classes = 18
+
         # ---------------- model config ---------------- #
 
         scale = "yolox_x" # "yolox_m" # "yolox_l" # "yolox_x"
@@ -43,5 +47,3 @@ class Exp(MyExp):
             self.width = 1.25
 
         # self.ckpt = f"models/{scale}.pth"
-
-        self.num_classes = 18

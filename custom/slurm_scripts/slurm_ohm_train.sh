@@ -37,4 +37,4 @@ srun python tools/train.py \
     --logger wandb \
         wandb-project runs \
         wandb-entity team-noobtoss \
-        wandb-name "$(basename "$CKPT" .pth)-$(basename "$CFG" .py)-$(date +"%Y-%m-%d_%H-%M")"
+        wandb-name "$(basename "$CKPT" .pth)_$(basename "$CFG" .py)_$(date +"%Y-%m-%d_%H-%M")"

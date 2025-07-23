@@ -21,6 +21,30 @@ class Exp(BaseExp):
 
         self.output_dir = "./runs"
 
+        # ---------------- semmel config ---------------- #
+
+        self.num_classes = 18
+        self.names = {
+            0: "Hintergrund",
+            1: "Unbekannt",
+            2: "Bauernbrot",
+            3: "Floesserbrot",
+            4: "Salzstange",
+            5: "Sonnenblumensemmel",
+            6: "Kuerbiskernsemmel",
+            7: "Roggensemmel",
+            8: "Dinkelsemmel",
+            9: "LaugenstangeSchinkenKaese",
+            10: "Pfefferlaugenbrezel",
+            11: "KernigeStange",
+            12: "Schokocroissant",
+            13: "Apfeltasche",
+            14: "Quarktasche",
+            15: "Mohnschnecke",
+            16: "Nussschnecke",
+            17: "Vanillehoernchen"
+        }
+
         # ---------------- model config ---------------- #
 
         scale = "yolox_x"  # "yolox_m" # "yolox_l" # "yolox_x"
@@ -40,8 +64,6 @@ class Exp(BaseExp):
 
         # self.ckpt = f"models/{scale}.pth"
 
-        # detect classes number of model
-        self.num_classes = 18
         # activation name. For example, if using "relu", then "silu" will be replaced to "relu".
         self.act = "silu"
 
@@ -158,7 +180,7 @@ class Exp(BaseExp):
         from yolox.data import COCODataset, TrainTransform
 
         return COCODataset(
-            name="Images", # self.train_ann.split("annotation_")[-1].removesuffix(".json"),
+            name="Images",  # self.train_ann.split("annotation_")[-1].removesuffix(".json"),
             data_dir=self.data_dir,
             json_file=self.train_ann,
             img_size=self.input_size,
