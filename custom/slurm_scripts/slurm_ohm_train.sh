@@ -29,7 +29,7 @@ export WANDB_CONFIG_DIR=/tmp/ths_wandb
 srun python tools/train.py \
     --exp_file $BASE_DIR/$CFG \
     --devices 1 \
-    --batch-size 32 \
+    --batch-size 8 \
     --fp16 \
     --occup \
     --ckpt $BASE_DIR/$CKPT \

@@ -140,7 +140,8 @@ class Exp(BaseExp):
 
         # -----------------  testing config ------------------ #
         # output image size during evaluation/test
-        self.test_size = (640, 640)
+        self.input_size = (640, 640)  # (height, width)
+        self.input_size = (1280, 1280)  # (height, width)
         # confidence threshold during evaluation/test,
         # boxes whose scores are less than test_conf will be filtered
         self.test_conf = 0.01
