@@ -5,6 +5,7 @@
 YOLOX_outputs/
 datasets/
 datasets_archived/
+logs/
 runs/
 results/
 models/
