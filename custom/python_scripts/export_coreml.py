@@ -13,7 +13,7 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 def make_parser():
     """Create and return the argument parser."""
     parser = argparse.ArgumentParser(description="YOLOX ONNX Deployment")
-    parser.add_argument("--output-name", type=str, default="yolox.onnx", help="Output name of models")
+    parser.add_argument("--output-name", type=str, default="yolox.mlpackage", help="Output name of models")
     parser.add_argument("--input", type=str, default="images", help="Input node name of ONNX model")
     parser.add_argument("--output", type=str, default="output", help="Output node name of ONNX model")
     parser.add_argument("--opset", type=int, default=11, help="ONNX opset version")
