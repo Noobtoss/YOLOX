@@ -44,6 +44,7 @@ class YOLOXDetectModel(nn.Module):
 
     def forward(self, x):
         """Normalize predictions of object detection model with input size-dependent factors."""
+        x = x[:, [2, 1, 0], :, :]  # RGB to BGR
         out_pred = self.model(x)
         xywh = out_pred[:, :, :4][0]
         objectness = out_pred[0][:, 4:5]
