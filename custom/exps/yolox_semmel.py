@@ -43,7 +43,7 @@ class Exp(BaseExp):
             16: "Nussschnecke",
             17: "Vanillehoernchen"
         }
-        self.img_size = (640, 640)  # (1280, 1280)  # (height, width)
+        self.img_size = (1280, 1280)  # (640, 640)  # (height, width)
 
         # ---------------- model config ---------------- #
 
