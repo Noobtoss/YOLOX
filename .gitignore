@@ -8,7 +8,7 @@ datasets_archived/
 logs/
 runs/
 results/
-models/
+checkpoints/
 # do not ignore datasets under yolox/data
 !*yolox/data/datasets/
 
