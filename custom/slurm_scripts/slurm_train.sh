@@ -17,7 +17,7 @@ module purge
 module load python/anaconda3
 eval "$(conda shell.bash hook)"
 
-conda activate conda_YOLOX
+conda activate conda-YOLOX
 
 export WANDB_API_KEY=95177947f5f36556806da90ea7a0bf93ed857d58
 export WANDB_DIR=/tmp/ths_wandb
