@@ -39,12 +39,21 @@ names_05 = {
     18: "Osterei",
     19: "Osterbrezel",
     20: "Kirschtasche",
-    21: "Fruechteschiffchen"
-
-
-
-
-
-
-
+    21: "Fruechteschiffchen",
+    22: "Anisbrezel",
+    23: "Doppelsemmel",
+    24: "Fruestuecksemmel",
+    25: "Kaisersemmel",
+    26: "Kornknacker",
+    27: "Landbrot",
+    28: "Laugenbrezel",
+    29: "Laugenstange",
+    30: "Laugenzopf",
+    31: "Mohnsemmel",
+    32: "Mohnstange",
+    33: "Partybrot",
+    34: "Sandwichbroetchen",
+    35: "Sesamsemmel",
+    36: "Sesamstange",
+    37: "Vollgutsemmel"
 }
