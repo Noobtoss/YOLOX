@@ -27,7 +27,7 @@ class Exp(MyExp):
 
         # ---------------- semmel config ---------------- #
 
-        self.num_classes = 21
+        self.num_classes = 17
         self.names = {
             1: "Backware",
             2: "Bauernbrot",

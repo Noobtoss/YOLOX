@@ -15,7 +15,7 @@ class Exp(MyExp):
         # ---------------- dataloader config ---------------- #
 
         # Define yourself dataset path
-        self.data_dir = "datasets/Images07Muelller"
+        self.data_dir = "datasets/Images07Brezel"
         self.train_ann = "annotation_train.json"
         self.val_ann = "annotation_test.json"
 
@@ -27,8 +27,17 @@ class Exp(MyExp):
 
         # ---------------- semmel config ---------------- #
 
-        self.num_classes = 21
+        self.num_classes = 10
         self.names = {
+            1: "Backware",
+            2: "Backware",
+            3: "Backware",
+            4: "Backware",
+            5: "Backware",
+            6: "Backware",
+            7: "Backware",
+            8: "Backware",
+            9: "Backware",
             10: "Brezel",
         }
         self.img_size =  (1280, 1280) # (640, 640)  # (height, width)
