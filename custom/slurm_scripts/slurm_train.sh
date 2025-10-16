@@ -11,7 +11,7 @@
 
 BASE_DIR=/nfs/scratch/staff/schmittth/code-nexus/YOLOX
 CFG=${1:-custom/exps/Images04.py}
-CKPT=${2:-models/yolox_x.pth}
+CKPT=${2:-checkpoints/yolox_x.pth}
 
 module purge
 module load python/anaconda3

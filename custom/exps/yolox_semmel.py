@@ -62,7 +62,7 @@ class Exp(BaseExp):
             self.depth = 1.33
             self.width = 1.25
 
-        # self.ckpt = f"models/{scale}.pth"
+        # self.ckpt = f"checkpoints/{scale}.pth"
 
         # activation name. For example, if using "relu", then "silu" will be replaced to "relu".
         self.act = "silu"

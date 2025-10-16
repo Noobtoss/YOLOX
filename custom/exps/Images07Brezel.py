@@ -50,4 +50,4 @@ class Exp(MyExp):
             self.depth = 1.33
             self.width = 1.25
 
-        # self.ckpt = f"models/{scale}.pth"
+        # self.ckpt = f"checkpoints/{scale}.pth"
