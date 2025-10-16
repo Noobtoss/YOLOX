@@ -25,7 +25,7 @@ class Exp(BaseExp):
 
         self.num_classes = 17
         self.names = {
-            1: "Unbekannt",
+            1: "Backware",
             2: "Bauernbrot",
             3: "Floesserbrot",
             4: "Salzstange",

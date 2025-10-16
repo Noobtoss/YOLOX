@@ -29,7 +29,7 @@ class Exp(MyExp):
 
         self.num_classes = 21
         self.names = {
-            1: "Unbekannt",
+            1: "Backware",
             2: "Bauernbrot",
             3: "Floesserbrot",
             4: "Salzstange",

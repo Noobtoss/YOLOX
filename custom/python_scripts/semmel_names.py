@@ -1,5 +1,5 @@
 names_04 = {
-    1: "Unbekannt",
+    1: "Backware",
     2: "Bauernbrot",
     3: "Floesserbrot",
     4: "Salzstange",
@@ -19,7 +19,7 @@ names_04 = {
 }
 
 names_05 = {
-    1: "Unbekannt",
+    1: "Backware",
     2: "Bauernbrot",
     3: "Floesserbrot",
     4: "Salzstange",
@@ -40,4 +40,11 @@ names_05 = {
     19: "Osterbrezel",
     20: "Kirschtasche",
     21: "Fruechteschiffchen"
+
+
+
+
+
+
+
 }
