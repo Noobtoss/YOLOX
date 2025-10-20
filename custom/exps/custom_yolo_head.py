@@ -10,6 +10,8 @@ from yolox.utils import bboxes_iou, cxcywh2xyxy, meshgrid, visualize_assign
 from yolox.models.losses import IOUloss
 from yolox.models.network_blocks import BaseConv, DWConv
 
+# THS, based on: yolox.models.yolo_head
+
 
 class YOLOXHead(nn.Module):
     def __init__(
