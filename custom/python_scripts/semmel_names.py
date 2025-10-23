@@ -1,3 +1,7 @@
+names_brezel = {
+    10: "Brezel",
+}
+
 names_04 = {
     1: "Backware",
     2: "Bauernbrot",

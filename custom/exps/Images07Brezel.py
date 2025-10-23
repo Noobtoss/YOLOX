@@ -29,16 +29,7 @@ class Exp(MyExp):
 
         self.num_classes = 10
         self.names = {
-            1: "Backware",
-            2: "Backware",
-            3: "Backware",
-            4: "Backware",
-            5: "Backware",
-            6: "Backware",
-            7: "Backware",
-            8: "Backware",
-            9: "Backware",
-            10: "Brezel",
+            1: "Brezel",
         }
         self.img_size =  (1280, 1280) # (640, 640)  # (height, width)
 

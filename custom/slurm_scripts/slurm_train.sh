@@ -19,13 +19,6 @@ eval "$(conda shell.bash hook)"
 
 conda activate conda-YOLOX
 
-echo "Job started on $(hostname) at $(date)"
-
-# Wait for 1 minutes
-sleep 60
-
-echo "Job finished at $(date)"
-
 export WANDB_API_KEY=95177947f5f36556806da90ea7a0bf93ed857d58
 export WANDB_DIR=/tmp/ths_wandb
 export WANDB_CACHE_DIR=/tmp/ths_wandb
@@ -33,7 +26,8 @@ export WANDB_CONFIG_DIR=/tmp/ths_wandb
 
 # python3 setup.py develop
 
-srun python tools/train.py \
+# srun python tools/train.py \
+python tools/train.py \
     --exp_file $BASE_DIR/$CFG \
     --devices 1 \
     --batch-size 8 \

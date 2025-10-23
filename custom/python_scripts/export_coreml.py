@@ -5,10 +5,11 @@ import torch
 import torch.nn as nn
 from yolox.exp import get_exp
 import coremltools as ct
-from semmel_names import names_04 as SEMMEL_NAMES
+from semmel_names import names_05 as SEMMEL_NAMES
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+# THS example usage: python custom/python_scripts/export_coreml.py --output-name Images07Mueller.mlpackage --ckpt results/Images07Mueller/best_ckpt.pth --exp_file custom/exps/Images07Mueller.py
 
 def make_parser():
     """Create and return the argument parser."""
@@ -175,7 +176,7 @@ def main():
 
     metadata = {
         "description": "YOLOX",
-        "author": "usesrname"
+        "author": "Noobtoss"
     }
     ct_model.short_description = metadata.pop("description")
     ct_model.author = metadata.pop("author")
