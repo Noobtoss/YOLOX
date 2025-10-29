@@ -24,7 +24,6 @@ class Exp(BaseExp):
         # ---------------- semmel config ---------------- #
 
         self.num_classes = 17
-        self.num_classes = 37
         self.names = {
             1: "Backware",
             2: "Bauernbrot",
@@ -42,27 +41,7 @@ class Exp(BaseExp):
             14: "Quarktasche",
             15: "Mohnschnecke",
             16: "Nussschnecke",
-            17: "Vanillehoernchen",
-            18: "Osterei",
-            19: "Osterbrezel",
-            20: "Kirschtasche",
-            21: "Fruechteschiffchen",
-            22: "Anisbrezel",
-            23: "Doppelsemmel",
-            24: "Fruestuecksemmel",
-            25: "Kaisersemmel",
-            26: "Kornknacker",
-            27: "Landbrot",
-            28: "Laugenbrezel",
-            29: "Laugenstange",
-            30: "Laugenzopf",
-            31: "Mohnsemmel",
-            32: "Mohnstange",
-            33: "Partybrot",
-            34: "Sandwichbroetchen",
-            35: "Sesamsemmel",
-            36: "Sesamstange",
-            37: "Vollgutsemmel"
+            17: "Vanillehoernchen"
         }
         self.img_size = (1280, 1280)  # (640, 640)  # (height, width)
 
@@ -156,7 +135,7 @@ class Exp(BaseExp):
         self.eval_interval = 10
         # save history checkpoint or not.
         # If set to False, yolox will only save latest and best ckpt.
-        self.save_history_ckpt = True
+        self.save_history_ckpt = False # True
         # name of experiment
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
 
@@ -171,7 +150,7 @@ class Exp(BaseExp):
 
     def get_model(self):
         from yolox.models import YOLOX, YOLOPAFPN #, YOLOXHead # THS
-        from custom_yolo_head import YOLOXHead
+        from yolox_head import YOLOXHead
 
         def init_yolo(M):
             for m in M.modules():
