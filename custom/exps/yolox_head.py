@@ -393,12 +393,12 @@ class YOLOXHead(nn.Module):
                 cls_preds.view(-1, self.num_classes)[fg_masks], cls_targets
             )
         ).sum() / num_fg
-        loss_adm, _ = (
+        loss_ams, _ = (
             self.ams_loss(
                 cls_preds.view(-1, self.num_classes)[fg_masks], cls_targets
             )
         )
-        loss_adm = loss_adm.sum() / num_fg
+        loss_ams = loss_ams.sum() / num_fg
         if self.use_l1:
             loss_l1 = (
                 self.l1_loss(origin_preds.view(-1, 4)[fg_masks], l1_targets)
@@ -407,14 +407,14 @@ class YOLOXHead(nn.Module):
             loss_l1 = 0.0
 
         reg_weight = 5.0
-        loss = reg_weight * loss_iou + loss_obj + loss_cls + loss_adm + loss_l1
+        loss = reg_weight * loss_iou + loss_obj + loss_cls + loss_ams + loss_l1
 
         return (
             loss,
             reg_weight * loss_iou,
             loss_obj,
             loss_cls,
-            loss_adm,  # DANGER this allows loss_adm to hijack loss_l1
+            loss_ams,  # DANGER this allows loss_ams to hijack loss_l1
             # loss_l1,
             num_fg / max(num_gts, 1),
         )
