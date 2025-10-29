@@ -137,7 +137,7 @@ def main():
     nms.confidenceThresholdInputFeatureName = "confidenceThreshold"
     nms.iouThreshold = 0.5
     nms.confidenceThreshold = 0.4
-    nms.pickTop.perClass = True
+    nms.pickTop.perClass = False  # True  # THS: makes nms class agnostic
     nms.stringClassLabels.vector.extend(names.values())
     nms_model = ct.models.MLModel(nms_spec)
 
