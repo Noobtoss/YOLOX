@@ -1,5 +1,5 @@
 names_brezel = {
-    10: "Brezel",
+    1: "Brezel",
 }
 
 names_04 = {
