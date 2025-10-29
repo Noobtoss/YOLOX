@@ -3,7 +3,7 @@
 # Copyright (c) Megvii, Inc. and its affiliates.
 import os
 
-from custom_yolox import Exp as MyExp
+from yolox_base import Exp as MyExp
 
 
 class Exp(MyExp):
