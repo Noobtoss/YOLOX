@@ -9,7 +9,7 @@ from yolox.utils import bboxes_iou, cxcywh2xyxy, meshgrid, visualize_assign
 
 from yolox.models.losses import IOUloss
 from yolox.models.network_blocks import BaseConv, DWConv
-from adm_loss import ADMSoftmaxLoss
+from ams_loss import AMSoftmaxLoss
 
 # THS, based on: yolox.models.yolo_head
 
@@ -123,7 +123,7 @@ class YOLOXHead(nn.Module):
         self.use_l1 = False
         self.l1_loss = nn.L1Loss(reduction="none")
         self.bcewithlog_loss = nn.BCEWithLogitsLoss(reduction="none")
-        self.adm_loss = ADMSoftmaxLoss(embedding_dim=num_classes, no_classes=num_classes, reduction="none")
+        self.ams_loss = AMSoftmaxLoss(embedding_dim=num_classes, no_classes=num_classes, reduction="none")
         self.iou_loss = IOUloss(reduction="none")
         self.strides = strides
         self.grids = [torch.zeros(1)] * len(in_channels)
@@ -394,7 +394,7 @@ class YOLOXHead(nn.Module):
             )
         ).sum() / num_fg
         loss_adm, _ = (
-            self.adm_loss(
+            self.ams_loss(
                 cls_preds.view(-1, self.num_classes)[fg_masks], cls_targets
             )
         )

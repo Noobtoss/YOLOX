@@ -5,7 +5,7 @@ import torch.nn.functional as F
 # https://github.com/tomastokar/Additive-Margin-Softmax/blob/main/AMSloss.py
 # https://arxiv.org/abs/1801.05599
 
-class ADMSoftmaxLoss(nn.Module):
+class AMSoftmaxLoss(nn.Module):
 
     def __init__(self, embedding_dim, no_classes, scale=30.0, margin=0.4, reduction="none"):
         '''
@@ -23,7 +23,7 @@ class ADMSoftmaxLoss(nn.Module):
         margin : float
             Size of additive margin
         '''
-        super(ADMSoftmaxLoss, self).__init__()
+        super(AMSoftmaxLoss, self).__init__()
         self.scale = scale
         self.margin = margin
         self.embedding_dim = embedding_dim
