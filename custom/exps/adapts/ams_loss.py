@@ -2,27 +2,12 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-# https://github.com/tomastokar/Additive-Margin-Softmax/blob/main/AMSloss.py
+# https://github.com/tomastokar/Additive-Margin-Softmax/tree/main
 # https://arxiv.org/abs/1801.05599
 
 class AMSoftmaxLoss(nn.Module):
 
     def __init__(self, embedding_dim, no_classes, scale=30.0, margin=0.4, reduction="none"):
-        '''
-        Additive Margin Softmax Loss
-
-
-        Attributes
-        ----------
-        embedding_dim : int
-            Dimension of the embedding vector
-        no_classes : int
-            Number of classes to be embedded
-        scale : float
-            Global scale factor
-        margin : float
-            Size of additive margin
-        '''
         super(AMSoftmaxLoss, self).__init__()
         self.scale = scale
         self.margin = margin
@@ -32,9 +17,6 @@ class AMSoftmaxLoss(nn.Module):
         self.loss = nn.CrossEntropyLoss(reduction=reduction)
 
     def forward(self, x, onehot):
-        '''
-        Input shape (N, embedding_dim)
-        '''
         n, m = x.shape
         assert n == len(onehot)
         assert m == self.embedding_dim
