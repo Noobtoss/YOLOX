@@ -135,7 +135,7 @@ class Exp(BaseExp):
         self.eval_interval = 10
         # save history checkpoint or not.
         # If set to False, yolox will only save latest and best ckpt.
-        self.save_history_ckpt = False # True
+        self.save_history_ckpt = False  # True
         # name of experiment
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
 
@@ -149,8 +149,7 @@ class Exp(BaseExp):
         self.nmsthre = 0.65
 
     def get_model(self):
-        from yolox.models import YOLOX, YOLOPAFPN #, YOLOXHead # THS
-        from yolox_head import YOLOXHead
+        from yolox.models import YOLOX, YOLOPAFPN, YOLOXHead
 
         def init_yolo(M):
             for m in M.modules():
@@ -343,21 +342,12 @@ class Exp(BaseExp):
         testdev = kwargs.get("testdev", False)
         legacy = kwargs.get("legacy", False)
 
-        # if not testdev:
-        #     name = self.val_ann.split("annotation_")[-1].removesuffix(".json")
-        # else:
-        #     name = self.test_ann.split("annotation_")[-1].removesuffix(".json")
-        name = "Images"
-
         def read_useful_info(coco):
-            # if isinstance(coco, COCO):
             coco.dataset["info"] = None
-            # coco.dataset["license"] = None
-            # coco.dataset["type"] = None
             return coco
 
         coco_dataset = COCODataset(
-            name=name,
+            name="Images",
             data_dir=self.data_dir,
             json_file=self.val_ann if not testdev else self.test_ann,
             img_size=self.test_size,

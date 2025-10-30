@@ -52,6 +52,6 @@ class AMSoftmaxLoss(nn.Module):
         err = self.loss(logits, labels)
 
         # Normalize by scale so that loss magnitude ~1 (roughly BCE)
-        err = err / self.scale
+        # err = err / self.scale
 
         return err, logits

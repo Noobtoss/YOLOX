@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 from yolox.exp import get_exp
 import coremltools as ct
-from semmel_names import names_05 as SEMMEL_NAMES
+from .semmel_names import names_05 as SEMMEL_NAMES
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 

@@ -9,7 +9,7 @@ from yolox.utils import bboxes_iou, cxcywh2xyxy, meshgrid, visualize_assign
 
 from yolox.models.losses import IOUloss
 from yolox.models.network_blocks import BaseConv, DWConv
-from ams_loss import AMSoftmaxLoss
+from .ams_loss import AMSoftmaxLoss
 
 # THS, based on: yolox.models.yolo_head
 
@@ -123,7 +123,7 @@ class YOLOXHead(nn.Module):
         self.use_l1 = False
         self.l1_loss = nn.L1Loss(reduction="none")
         self.bcewithlog_loss = nn.BCEWithLogitsLoss(reduction="none")
-        self.ams_loss = AMSoftmaxLoss(embedding_dim=num_classes, no_classes=num_classes, reduction="none")
+        self.ams_loss = AMSoftmaxLoss(embedding_dim=320, no_classes=num_classes, reduction="none")
         self.iou_loss = IOUloss(reduction="none")
         self.strides = strides
         self.grids = [torch.zeros(1)] * len(in_channels)
@@ -161,7 +161,7 @@ class YOLOXHead(nn.Module):
             obj_output = self.obj_preds[k](reg_feat)
 
             if self.training:
-                output = torch.cat([reg_output, obj_output, cls_output], 1)
+                output = torch.cat([reg_output, obj_output, cls_output, cls_feat], 1)
                 output, grid = self.get_output_and_grid(
                     output, k, stride_this_level, xin[0].type()
                 )
@@ -216,7 +216,7 @@ class YOLOXHead(nn.Module):
         grid = self.grids[k]
 
         batch_size = output.shape[0]
-        n_ch = 5 + self.num_classes
+        n_ch = 5 + self.num_classes + 320
         hsize, wsize = output.shape[-2:]
         if grid.shape[2:4] != output.shape[2:4]:
             yv, xv = meshgrid([torch.arange(hsize), torch.arange(wsize)])
@@ -265,7 +265,8 @@ class YOLOXHead(nn.Module):
     ):
         bbox_preds = outputs[:, :, :4]  # [batch, n_anchors_all, 4]
         obj_preds = outputs[:, :, 4:5]  # [batch, n_anchors_all, 1]
-        cls_preds = outputs[:, :, 5:]  # [batch, n_anchors_all, n_cls]
+        cls_preds = outputs[:, :, 5:5+self.num_classes]  # [batch, n_anchors_all, n_cls]
+        cls_feat = outputs[:, :, 5+self.num_classes:]   # [batch, n_anchors_all, n_cls_feat] n_cls_feat = 320
 
         # calculate targets
         nlabel = (labels.sum(dim=2) > 0).sum(dim=1)  # number of objects
@@ -395,7 +396,7 @@ class YOLOXHead(nn.Module):
         ).sum() / num_fg
         loss_ams, _ = (
             self.ams_loss(
-                cls_preds.view(-1, self.num_classes)[fg_masks], cls_targets
+                cls_feat.view(-1, 320)[fg_masks], cls_targets
             )
         )
         loss_ams = loss_ams.sum() / num_fg
