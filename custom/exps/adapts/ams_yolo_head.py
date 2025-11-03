@@ -17,13 +17,13 @@ from .ams_loss import AMSoftmaxLoss
 
 class YOLOXHead(nn.Module):
     def __init__(
-            self,
-            num_classes,
-            width=1.0,
-            strides=[8, 16, 32],
-            in_channels=[256, 512, 1024],
-            act="silu",
-            depthwise=False,
+        self,
+        num_classes,
+        width=1.0,
+        strides=[8, 16, 32],
+        in_channels=[256, 512, 1024],
+        act="silu",
+        depthwise=False,
     ):
         """
         Args:
@@ -148,7 +148,7 @@ class YOLOXHead(nn.Module):
         expanded_strides = []
 
         for k, (cls_conv, reg_conv, stride_this_level, x) in enumerate(
-                zip(self.cls_convs, self.reg_convs, self.strides, xin)
+            zip(self.cls_convs, self.reg_convs, self.strides, xin)
         ):
             x = self.stems[k](x)
             cls_x = x
@@ -254,15 +254,15 @@ class YOLOXHead(nn.Module):
         return outputs
 
     def get_losses(
-            self,
-            imgs,
-            x_shifts,
-            y_shifts,
-            expanded_strides,
-            labels,
-            outputs,
-            origin_preds,
-            dtype,
+        self,
+        imgs,
+        x_shifts,
+        y_shifts,
+        expanded_strides,
+        labels,
+        outputs,
+        origin_preds,
+        dtype,
     ):
         bbox_preds = outputs[:, :, :4]  # [batch, n_anchors_all, 4]
         obj_preds = outputs[:, :, 4:5]  # [batch, n_anchors_all, 1]
@@ -385,16 +385,16 @@ class YOLOXHead(nn.Module):
 
         num_fg = max(num_fg, 1)
         loss_iou = (
-                       self.iou_loss(bbox_preds.view(-1, 4)[fg_masks], reg_targets)
-                   ).sum() / num_fg
+            self.iou_loss(bbox_preds.view(-1, 4)[fg_masks], reg_targets)
+        ).sum() / num_fg
         loss_obj = (
-                       self.bcewithlog_loss(obj_preds.view(-1, 1), obj_targets)
-                   ).sum() / num_fg
+            self.bcewithlog_loss(obj_preds.view(-1, 1), obj_targets)
+        ).sum() / num_fg
         loss_cls = (
-                       self.bcewithlog_loss(
-                           cls_preds.view(-1, self.num_classes)[fg_masks], cls_targets
-                       )
-                   ).sum() / num_fg
+            self.bcewithlog_loss(
+                cls_preds.view(-1, self.num_classes)[fg_masks], cls_targets
+            )
+        ).sum() / num_fg
         loss_ams, _ = (
             self.ams_loss(
                 cls_feat.view(-1, 320)[fg_masks], cls_targets
@@ -403,8 +403,8 @@ class YOLOXHead(nn.Module):
         loss_ams = loss_ams.sum() / num_fg
         if self.use_l1:
             loss_l1 = (
-                          self.l1_loss(origin_preds.view(-1, 4)[fg_masks], l1_targets)
-                      ).sum() / num_fg
+                self.l1_loss(origin_preds.view(-1, 4)[fg_masks], l1_targets)
+            ).sum() / num_fg
         else:
             loss_l1 = 0.0
 
@@ -431,18 +431,18 @@ class YOLOXHead(nn.Module):
 
     @torch.no_grad()
     def get_assignments(
-            self,
-            batch_idx,
-            num_gt,
-            gt_bboxes_per_image,
-            gt_classes,
-            bboxes_preds_per_image,
-            expanded_strides,
-            x_shifts,
-            y_shifts,
-            cls_preds,
-            obj_preds,
-            mode="gpu",
+        self,
+        batch_idx,
+        num_gt,
+        gt_bboxes_per_image,
+        gt_classes,
+        bboxes_preds_per_image,
+        expanded_strides,
+        x_shifts,
+        y_shifts,
+        cls_preds,
+        obj_preds,
+        mode="gpu",
     ):
 
         if mode == "cpu":
@@ -483,7 +483,7 @@ class YOLOXHead(nn.Module):
 
         with torch.cuda.amp.autocast(enabled=False):
             cls_preds_ = (
-                    cls_preds_.float().sigmoid_() * obj_preds_.float().sigmoid_()
+                cls_preds_.float().sigmoid_() * obj_preds_.float().sigmoid_()
             ).sqrt()
             pair_wise_cls_loss = F.binary_cross_entropy(
                 cls_preds_.unsqueeze(0).repeat(num_gt, 1, 1),
@@ -493,9 +493,9 @@ class YOLOXHead(nn.Module):
         del cls_preds_
 
         cost = (
-                pair_wise_cls_loss
-                + 3.0 * pair_wise_ious_loss
-                + float(1e6) * (~geometry_relation)
+            pair_wise_cls_loss
+            + 3.0 * pair_wise_ious_loss
+            + float(1e6) * (~geometry_relation)
         )
 
         (
@@ -521,7 +521,7 @@ class YOLOXHead(nn.Module):
         )
 
     def get_geometry_constraint(
-            self, gt_bboxes_per_image, expanded_strides, x_shifts, y_shifts,
+        self, gt_bboxes_per_image, expanded_strides, x_shifts, y_shifts,
     ):
         """
         Calculate whether the center of an object is located in a fixed range of
@@ -591,7 +591,7 @@ class YOLOXHead(nn.Module):
         # TODO: use forward logic here.
 
         for k, (cls_conv, reg_conv, stride_this_level, x) in enumerate(
-                zip(self.cls_convs, self.reg_convs, self.strides, xin)
+            zip(self.cls_convs, self.reg_convs, self.strides, xin)
         ):
             x = self.stems[k](x)
             cls_x = x
