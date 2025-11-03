@@ -3,7 +3,7 @@
 # Copyright (c) Megvii, Inc. and its affiliates.
 import os
 
-from adapts.base_yolox import Exp as MyExp
+from adapts.ams_yolox import Exp as MyExp
 
 
 class Exp(MyExp):
@@ -11,7 +11,7 @@ class Exp(MyExp):
         super(Exp, self).__init__()
 
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
-        self.exp_name = f"{self.exp_name}"
+        self.exp_name = f"{self.exp_name}_ams"
 
         # ---------------- dataloader config ---------------- #
 
