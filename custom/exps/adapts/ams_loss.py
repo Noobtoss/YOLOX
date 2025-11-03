@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+
 # https://github.com/tomastokar/Additive-Margin-Softmax
 # https://arxiv.org/abs/1801.05599
 
