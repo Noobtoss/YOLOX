@@ -35,7 +35,7 @@ def divide_no_nan(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
 
 
 class SupervisedContrastiveLoss(nn.Module):
-    def __init__(self, temperature=0.07, extra_temperature=2):
+    def __init__(self, temperature=0.07, extra_temperature=1):
         """
         Implementation of the loss described in the paper Supervised Contrastive Learning :
         https://arxiv.org/abs/2004.11362
