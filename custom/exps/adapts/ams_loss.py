@@ -5,6 +5,7 @@ import torch.nn.functional as F
 
 # https://github.com/tomastokar/Additive-Margin-Softmax
 # https://arxiv.org/abs/1801.05599
+# https://github.com/huggingface/sentence-transformers/tree/master/sentence_transformers/losses
 
 class AMSoftmaxLoss(nn.Module):
 

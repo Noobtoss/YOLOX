@@ -6,6 +6,7 @@ from math import log
 # https://github.com/HobbitLong/SupContrast/blob/master/losses.py
 # https://github.com/GuillaumeErhard/Supervised_contrastive_loss_pytorch/blob/main/loss/spc.py
 # https://github.com/google-research/google-research/blob/master/supcon/losses.py#L99
+# https://github.com/huggingface/sentence-transformers/tree/master/sentence_transformers/losses
 
 
 def fix_01(projections, onehot_targets):
@@ -34,7 +35,7 @@ def divide_no_nan(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
 
 
 class SupervisedContrastiveLoss(nn.Module):
-    def __init__(self, temperature=0.07):
+    def __init__(self, temperature=0.07, extra_temperature=2):
         """
         Implementation of the loss described in the paper Supervised Contrastive Learning :
         https://arxiv.org/abs/2004.11362
@@ -43,6 +44,7 @@ class SupervisedContrastiveLoss(nn.Module):
         """
         super(SupervisedContrastiveLoss, self).__init__()
         self.temperature = temperature
+        self.extra_temperature = extra_temperature
 
     def forward(self, projections, targets):
         """
@@ -55,7 +57,7 @@ class SupervisedContrastiveLoss(nn.Module):
 
         device = torch.device("cuda") if projections.is_cuda else torch.device("cpu")
 
-        dot_product_tempered = torch.mm(projections, projections.T) / self.temperature
+        dot_product_tempered = (torch.mm(projections, projections.T) / self.temperature) * self.extra_temperature
         # Minus max for numerical stability with exponential. Same done in cross entropy. Epsilon added to avoid log(0)
         exp_dot_tempered = (
                 torch.exp(dot_product_tempered - torch.max(dot_product_tempered, dim=1, keepdim=True)[0]) + 1e-5
@@ -66,12 +68,11 @@ class SupervisedContrastiveLoss(nn.Module):
         mask_combined = mask_similar_class * mask_anchor_out
         cardinality_per_samples = torch.sum(mask_combined, dim=1)
 
-        log_probs = exp_dot_tempered / (torch.sum(exp_dot_tempered * mask_anchor_out, dim=1, keepdim=True))
+        log_probs = exp_dot_tempered / (1/self.extra_temperature * torch.sum(exp_dot_tempered * mask_anchor_out, dim=1, keepdim=True))
         log_probs = torch.log(log_probs)
 
-        loss = - log_probs
         supervised_contrastive_loss_per_sample = divide_no_nan(
-            torch.sum(loss * mask_combined, dim=1), cardinality_per_samples
+            1/self.extra_temperature * -torch.sum(log_probs * mask_combined, dim=1), cardinality_per_samples
         )
 
         return supervised_contrastive_loss_per_sample
