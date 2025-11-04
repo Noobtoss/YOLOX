@@ -12,7 +12,7 @@ from math import log
 def fix_01(projections, onehot_targets):
     targets = onehot_targets.argmax(dim=1)
 
-    max_samples = 256  # Danger at batch_size = 8, this selects max = 32 bboxes per img
+    max_samples = 512  # Danger at batch_size = 8, this selects max = 32 bboxes per img
     if projections.shape[0] > max_samples:
         idx = torch.randperm(projections.shape[0])[:max_samples]
         projections = projections[idx]
