@@ -10,17 +10,21 @@ class Exp(MyExp):
 
     def __init__(self):
         super(Exp, self).__init__()
-        num_classes = 37
 
-        ams_loss = AMSoftmaxLoss(embedding_dim=320, no_classes=num_classes, scale=10.0, reduction="none")
-        sup_contrastive_loss = SupervisedContrastiveLoss()
+        ams_loss = AMSoftmaxLoss(embedding_dim=320, no_classes=37, scale=10.0, reduction="none") # DANGER
+        sup_contrastive_loss = SupervisedContrastiveLoss(temperature=0.07)
         custom_sup_contrastive_loss = CustomSupervisedContrastiveLoss()
 
-        self.embedding_loss = ams_loss
+        self.embedding_loss = custom_sup_contrastive_loss # ams_loss # custom_sup_contrastive_loss
         self.embedding_loss_weight = 1
 
+        # prob of applying mosaic aug
+        self.mosaic_prob = 1
+        # prob of applying mixup aug
+        self.mixup_prob = 1
+
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
-        self.exp_name = f"{self.exp_name}_contrastive"
+        self.exp_name = f"{self.exp_name}_tmp"
 
         # ---------------- dataloader config ---------------- #
 
@@ -31,13 +35,13 @@ class Exp(MyExp):
 
         # --------------  training config --------------------- #
 
-        self.max_epoch = 100
+        self.max_epoch = 1
         self.data_num_workers = 4
         self.eval_interval = 1
 
         # ---------------- semmel config ---------------- #
 
-        self.num_classes = num_classes
+        self.num_classes = 37
         self.names = {
             1: "Backware",
             2: "Bauernbrot",
