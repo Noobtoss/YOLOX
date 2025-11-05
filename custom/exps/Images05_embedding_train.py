@@ -2,7 +2,7 @@ import os
 
 from adapts.embedding_train_yolox import Exp as MyExp
 from adapts.ams_loss import AMSoftmaxLoss
-from adapts.contrastive_loss import SupervisedContrastiveLoss, SupervisedContrastiveLossExtra
+from adapts.contrastive_loss import SupervisedContrastiveLoss, ExtraSupervisedContrastiveLoss
 
 
 class Exp(MyExp):
@@ -13,7 +13,7 @@ class Exp(MyExp):
 
         ams_loss = AMSoftmaxLoss(embedding_dim=320, no_classes=num_classes, scale=10.0, reduction="none")
         contrastive_loss = SupervisedContrastiveLoss()
-        contrastive_loss_extra = SupervisedContrastiveLossExtra()
+        extra_contrastive_loss = ExtraSupervisedContrastiveLoss()
 
         self.embedding_loss = ams_loss
         self.embedding_loss_weight = 1
@@ -30,7 +30,7 @@ class Exp(MyExp):
 
         # --------------  training config --------------------- #
 
-        self.max_epoch = 1
+        self.max_epoch = 100
         self.data_num_workers = 4
         self.eval_interval = 1
 

@@ -76,7 +76,7 @@ class SupervisedContrastiveLoss(nn.Module):
         return supervised_contrastive_loss_per_sample
 
 
-class SupervisedContrastiveLossExtra(nn.Module):
+class ExtraSupervisedContrastiveLoss(nn.Module):
     def __init__(self, temperature=0.07):
         """
         Implementation of the loss described in the paper Supervised Contrastive Learning :
@@ -84,7 +84,7 @@ class SupervisedContrastiveLossExtra(nn.Module):
 
         :param temperature: int
         """
-        super(SupervisedContrastiveLossExtra, self).__init__()
+        super(ExtraSupervisedContrastiveLoss, self).__init__()
         self.temperature = temperature
 
     def forward(self, projections, targets):
