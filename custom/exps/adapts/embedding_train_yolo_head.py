@@ -9,7 +9,7 @@ from yolox.utils import bboxes_iou, cxcywh2xyxy, meshgrid, visualize_assign
 
 from yolox.models.losses import IOUloss
 from yolox.models.network_blocks import BaseConv, DWConv
-from .ams_loss import AMSoftmaxLoss
+from .contrastive_loss import SupervisedContrastiveLoss
 
 
 # THS, based on: yolox.models.yolo_head
@@ -24,6 +24,8 @@ class YOLOXHead(nn.Module):
         in_channels=[256, 512, 1024],
         act="silu",
         depthwise=False,
+        embedding_loss=None,
+        embedding_loss_weight=1
     ):
         """
         Args:
@@ -124,10 +126,11 @@ class YOLOXHead(nn.Module):
         self.use_l1 = False
         self.l1_loss = nn.L1Loss(reduction="none")
         self.bcewithlog_loss = nn.BCEWithLogitsLoss(reduction="none")
-        self.ams_loss = AMSoftmaxLoss(embedding_dim=320, no_classes=num_classes, scale=10.0, reduction="none")
         self.iou_loss = IOUloss(reduction="none")
         self.strides = strides
         self.grids = [torch.zeros(1)] * len(in_channels)
+        self.embedding_loss = embedding_loss
+        self.embedding_loss_weight = embedding_loss_weight
 
     def initialize_biases(self, prior_prob):
         for conv in self.cls_preds:
@@ -395,12 +398,11 @@ class YOLOXHead(nn.Module):
                 cls_preds.view(-1, self.num_classes)[fg_masks], cls_targets
             )
         ).sum() / num_fg
-        loss_ams, _ = (
-            self.ams_loss(
+        loss_embedding = (
+            self.embedding_loss(
                 cls_feat.view(-1, 320)[fg_masks], cls_targets
             )
-        )
-        loss_ams = loss_ams.sum() / num_fg
+        ).sum() / num_fg
         if self.use_l1:
             loss_l1 = (
                 self.l1_loss(origin_preds.view(-1, 4)[fg_masks], l1_targets)
@@ -409,15 +411,15 @@ class YOLOXHead(nn.Module):
             loss_l1 = 0.0
 
         reg_weight = 5.0
-        ams_weight = 0.5
-        loss = reg_weight * loss_iou + loss_obj + loss_cls + ams_weight * loss_ams + loss_l1
+        embedding_loss_weight = self.embedding_loss_weight
+        loss = reg_weight * loss_iou + loss_obj + loss_cls + embedding_loss_weight * loss_embedding + loss_l1
 
         return (
             loss,
             reg_weight * loss_iou,
             loss_obj,
             loss_cls,
-            loss_ams,  # DANGER this allows loss_ams to hijack loss_l1
+            loss_embedding,  # DANGER this allows loss_embedding to hijack loss_l1
             # loss_l1,
             num_fg / max(num_gts, 1),
         )

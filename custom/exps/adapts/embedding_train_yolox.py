@@ -12,11 +12,18 @@ class Exp(MyExp):
     def __init__(self):
         super(Exp, self).__init__()
 
+        # ams_loss = AMSoftmaxLoss(embedding_dim=320, no_classes=num_classes, scale=10.0, reduction="none")
+        # contrastive_loss = SupervisedContrastiveLoss()
+
+        self.embedding_loss = None
+        self.embedding_loss_weight = 1
+        self.save_history_ckpt = False
+
         # --------------- transform config ----------------- #
         # prob of applying mosaic aug
-        self.mosaic_prob = 0.2 # 1
+        self.mosaic_prob = 1 # 0.2
         # prob of applying mixup aug
-        self.mixup_prob = 0.2 # 1
+        self.mixup_prob = 1 # 0.2
         # prob of applying hsv aug
         self.hsv_prob = 1.0
         # prob of applying flip aug
@@ -34,7 +41,10 @@ class Exp(MyExp):
 
     def get_model(self):
         from yolox.models import YOLOX, YOLOPAFPN  # , YOLOXHead # THS
-        from .contrastive_yolo_head import YOLOXHead
+        from .embedding_train_yolo_head import YOLOXHead
+
+        if self.embedding_loss is None:
+            raise NotImplementedError("embedding_loss must be set before calling get_model().")
 
         def init_yolo(M):
             for m in M.modules():
@@ -45,7 +55,8 @@ class Exp(MyExp):
         if getattr(self, "model", None) is None:
             in_channels = [256, 512, 1024]
             backbone = YOLOPAFPN(self.depth, self.width, in_channels=in_channels, act=self.act)
-            head = YOLOXHead(self.num_classes, self.width, in_channels=in_channels, act=self.act)
+            head = YOLOXHead(self.num_classes, self.width, in_channels=in_channels, act=self.act,
+                             embedding_loss=self.embedding_loss, embedding_loss_weight=self.embedding_loss_weight)
             self.model = YOLOX(backbone, head)
 
         self.model.apply(init_yolo)

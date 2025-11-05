@@ -1,18 +1,22 @@
-#!/usr/bin/env python3
-# -*- coding:utf-8 -*-
-# Copyright (c) Megvii, Inc. and its affiliates.
 import os
 
 from adapts.embedding_train_yolox import Exp as MyExp
-from adapts.contrastive_loss import SupervisedContrastiveLossExtra
+from adapts.ams_loss import AMSoftmaxLoss
+from adapts.contrastive_loss import SupervisedContrastiveLoss, SupervisedContrastiveLossExtra
 
 
 class Exp(MyExp):
 
     def __init__(self):
         super(Exp, self).__init__()
+        num_classes = 37
 
-        self.embedding_loss = SupervisedContrastiveLossExtra()
+        ams_loss = AMSoftmaxLoss(embedding_dim=320, no_classes=num_classes, scale=10.0, reduction="none")
+        contrastive_loss = SupervisedContrastiveLoss()
+        contrastive_loss_extra = SupervisedContrastiveLossExtra()
+
+        self.embedding_loss = ams_loss
+        self.embedding_loss_weight = 1
 
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
         self.exp_name = f"{self.exp_name}_contrastive"
@@ -26,13 +30,13 @@ class Exp(MyExp):
 
         # --------------  training config --------------------- #
 
-        self.max_epoch = 100
+        self.max_epoch = 1
         self.data_num_workers = 4
         self.eval_interval = 1
 
         # ---------------- semmel config ---------------- #
 
-        self.num_classes = 37
+        self.num_classes = num_classes
         self.names = {
             1: "Backware",
             2: "Bauernbrot",
@@ -72,7 +76,7 @@ class Exp(MyExp):
             36: "Sesamstange",
             37: "Vollgutsemmel"
         }
-        self.img_size =  (1280, 1280) # (640, 640)  # (height, width)
+        self.img_size = (1280, 1280)  # (640, 640)  # (height, width)
 
         # ---------------- model config ---------------- #
 
