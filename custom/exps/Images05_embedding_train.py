@@ -12,10 +12,13 @@ class Exp(MyExp):
 
         ams_loss = AMSoftmaxLoss(embedding_dim=320, no_classes=37, scale=10.0, reduction="none") # DANGER
         sup_contrastive_loss = SupervisedContrastiveLoss(temperature=0.07)
-        sup_contrastive_loss = SupervisedContrastiveLoss(temperature=0.03)
+        # sup_contrastive_loss = SupervisedContrastiveLoss(temperature=0.03)
 
-        self.embedding_loss = sup_contrastive_loss # ams_loss
-        self.embedding_weight = 1  # None
+        # self.embedding_loss = ams_loss
+        self.embedding_loss = sup_contrastive_loss
+        # self.embedding_weight = 1
+        # self.embedding_weight = 0
+        self.embedding_weight = None
 
         # prob of applying mosaic aug
         self.mosaic_prob = 1
@@ -23,7 +26,7 @@ class Exp(MyExp):
         self.mixup_prob = 1
 
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
-        self.exp_name = f"{self.exp_name}_tmp"
+        self.exp_name = f"{self.exp_name}_sup_contrastive_dynamic"
 
         # ---------------- dataloader config ---------------- #
 
