@@ -22,7 +22,7 @@ class YOLOXHead(BaseYOLOXHead):
         act="silu",
         depthwise=False,
         embedding_loss=None,
-        embedding_loss_weight=1
+        embedding_weight=None
     ):
         super().__init__(
             num_classes,
@@ -34,8 +34,8 @@ class YOLOXHead(BaseYOLOXHead):
         )
 
         self.embedding_loss = embedding_loss
-        self.embedding_loss_weight = embedding_loss_weight
-        self.current_epoch = 0
+        self.embedding_weight = embedding_weight
+        self.dynamic_embedding_weight = None
 
     def forward(self, xin, labels=None, imgs=None):
         outputs = []
@@ -285,8 +285,8 @@ class YOLOXHead(BaseYOLOXHead):
             loss_l1 = 0.0
 
         reg_weight = 5.0
-        embedding_loss_weight = self.embedding_loss_weight
-        loss = reg_weight * loss_iou + loss_obj + loss_cls + embedding_loss_weight * loss_embedding + loss_l1
+        embedding_weight = self.embedding_weight if self.embedding_weight is not None else self.dynamic_embedding_weight
+        loss = reg_weight * loss_iou + loss_obj + loss_cls + embedding_weight * loss_embedding + loss_l1
 
         return (
             loss,

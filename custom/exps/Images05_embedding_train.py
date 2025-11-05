@@ -12,9 +12,10 @@ class Exp(MyExp):
 
         ams_loss = AMSoftmaxLoss(embedding_dim=320, no_classes=37, scale=10.0, reduction="none") # DANGER
         sup_contrastive_loss = SupervisedContrastiveLoss(temperature=0.07)
+        sup_contrastive_loss = SupervisedContrastiveLoss(temperature=0.03)
 
         self.embedding_loss = sup_contrastive_loss # ams_loss
-        self.embedding_loss_weight = 1
+        self.embedding_weight = 1  # None
 
         # prob of applying mosaic aug
         self.mosaic_prob = 1
@@ -33,7 +34,7 @@ class Exp(MyExp):
 
         # --------------  training config --------------------- #
 
-        self.max_epoch = 1
+        self.max_epoch = 100
         self.data_num_workers = 4
         self.eval_interval = 1
 
