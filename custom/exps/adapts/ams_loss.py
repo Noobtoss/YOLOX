@@ -10,7 +10,7 @@ import torch.nn.functional as F
 class AMSoftmaxLoss(nn.Module):
 
     def __init__(self, embedding_dim, no_classes, scale=30.0, margin=0.4, reduction="none"):
-        super(AMSoftmaxLoss, self).__init__()
+        super().__init__()
         self.scale = scale
         self.margin = margin
         self.embedding_dim = embedding_dim

@@ -1,21 +1,19 @@
 import os
 
-from adapts.embedding_train_yolox import Exp as MyExp
+from adapts.yolox_embedding_train import Exp as MyExp
 from adapts.ams_loss import AMSoftmaxLoss
 from adapts.sup_contrastive_loss import SupervisedContrastiveLoss
-from adapts.custom_sup_contrastive_loss import CustomSupervisedContrastiveLoss
 
 
 class Exp(MyExp):
 
     def __init__(self):
-        super(Exp, self).__init__()
+        super().__init__()
 
         ams_loss = AMSoftmaxLoss(embedding_dim=320, no_classes=37, scale=10.0, reduction="none") # DANGER
         sup_contrastive_loss = SupervisedContrastiveLoss(temperature=0.07)
-        custom_sup_contrastive_loss = CustomSupervisedContrastiveLoss()
 
-        self.embedding_loss = custom_sup_contrastive_loss # ams_loss # custom_sup_contrastive_loss
+        self.embedding_loss = sup_contrastive_loss # ams_loss
         self.embedding_loss_weight = 1
 
         # prob of applying mosaic aug

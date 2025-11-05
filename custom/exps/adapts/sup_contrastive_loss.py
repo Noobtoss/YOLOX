@@ -43,7 +43,7 @@ class SupervisedContrastiveLoss(nn.Module):
 
         :param temperature: int
         """
-        super(SupervisedContrastiveLoss, self).__init__()
+        super().__init__()
         self.temperature = temperature
 
     def forward(self, projections, targets):
