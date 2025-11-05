@@ -3,12 +3,16 @@
 # Copyright (c) Megvii, Inc. and its affiliates.
 import os
 
-from adapts.contrastive_yolox import Exp as MyExp
+from adapts.embedding_train_yolox import Exp as MyExp
+from adapts.contrastive_loss import SupervisedContrastiveLossExtra
 
 
 class Exp(MyExp):
+
     def __init__(self):
         super(Exp, self).__init__()
+
+        self.embedding_loss = SupervisedContrastiveLossExtra()
 
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
         self.exp_name = f"{self.exp_name}_contrastive"
