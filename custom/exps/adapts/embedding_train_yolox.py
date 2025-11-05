@@ -17,7 +17,7 @@ class Exp(MyExp):
 
         self.embedding_loss = None
         self.embedding_loss_weight = 1
-        self.save_history_ckpt = False
+        self.save_history_ckpt = True
 
         # --------------- transform config ----------------- #
         # prob of applying mosaic aug
