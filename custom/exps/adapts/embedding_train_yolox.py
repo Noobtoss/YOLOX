@@ -45,6 +45,8 @@ class Exp(MyExp):
 
         if self.embedding_loss is None:
             raise NotImplementedError("embedding_loss must be set before calling get_model().")
+        else:
+            print(f"embedding_loss: {self.embedding_loss}")
 
         def init_yolo(M):
             for m in M.modules():
