@@ -9,7 +9,7 @@ from yolox.utils import bboxes_iou, cxcywh2xyxy, meshgrid, visualize_assign
 
 from yolox.models.losses import IOUloss
 from yolox.models.network_blocks import BaseConv, DWConv
-from .contrastive_loss import SupervisedContrastiveLoss
+from .sup_contrastive_loss import SupervisedContrastiveLoss
 
 
 # THS, based on: yolox.models.yolo_head
