@@ -16,21 +16,21 @@ class Exp(MyExp):
     def __init__(self):
         super().__init__()
 
-        # ams_loss = AMSoftmaxLoss(embedding_dim=320, no_classes=num_classes, scale=10.0, reduction="none")
+        # ams_loss = AMSoftmaxLoss(cls_emb_dim=320, no_classes=num_classes, scale=10.0, reduction="none")
         # contrastive_loss = SupervisedContrastiveLoss()
 
-        self.embedding_loss = None
-        self.embedding_weight = None
+        self.cls_emb_loss = None
+        self.cls_emb_weight = None
         self.save_history_ckpt = True
 
     def get_model(self):
         from yolox.models import YOLOX, YOLOPAFPN  # , YOLOXHead # THS
-        from .yolo_head_embedding_train import YOLOXHead
+        from .yolo_head_cls_emb import YOLOXHead
 
-        if self.embedding_loss is None:
-            raise NotImplementedError("embedding_loss must be set before calling get_model().")
+        if self.cls_emb_loss is None:
+            raise NotImplementedError("cls_emb_loss must be set before calling get_model().")
         else:
-            print(f"embedding_loss: {self.embedding_loss}")
+            print(f"cls_emb_loss: {self.cls_emb_loss}")
 
         def init_yolo(M):
             for m in M.modules():
@@ -42,7 +42,7 @@ class Exp(MyExp):
             in_channels = [256, 512, 1024]
             backbone = YOLOPAFPN(self.depth, self.width, in_channels=in_channels, act=self.act)
             head = YOLOXHead(self.num_classes, self.width, in_channels=in_channels, act=self.act,
-                             embedding_loss=self.embedding_loss, embedding_weight=self.embedding_weight)
+                             cls_emb_loss=self.cls_emb_loss, cls_emb_weight=self.cls_emb_weight)
             self.model = YOLOX(backbone, head)
 
         self.model.apply(init_yolo)

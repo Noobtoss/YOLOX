@@ -21,8 +21,8 @@ class YOLOXHead(BaseYOLOXHead):
         in_channels=[256, 512, 1024],
         act="silu",
         depthwise=False,
-        embedding_loss=None,
-        embedding_weight=None
+        cls_emb_loss=None,
+        cls_emb_weight=None
     ):
         super().__init__(
             num_classes,
@@ -33,9 +33,9 @@ class YOLOXHead(BaseYOLOXHead):
             depthwise
         )
 
-        self.embedding_loss = embedding_loss
-        self.embedding_weight = embedding_weight
-        self.dynamic_embedding_weight = None
+        self.cls_emb_loss = cls_emb_loss
+        self.cls_emb_weight = cls_emb_weight
+        self.dynamic_cls_emb_weight = None
 
     def forward(self, xin, labels=None, imgs=None):
         outputs = []
@@ -83,7 +83,7 @@ class YOLOXHead(BaseYOLOXHead):
 
             else:
                 output = torch.cat(
-                    [reg_output, obj_output.sigmoid(), cls_output.sigmoid()], 1
+                    [reg_output, obj_output.sigmoid(), cls_output.sigmoid(), cls_feat], 1
                 )
 
             outputs.append(output)
@@ -272,8 +272,8 @@ class YOLOXHead(BaseYOLOXHead):
                 cls_preds.view(-1, self.num_classes)[fg_masks], cls_targets
             )
         ).sum() / num_fg
-        loss_embedding = (
-            self.embedding_loss(
+        loss_cls_emb = (
+            self.cls_emb_loss(
                 cls_feat.view(-1, 320)[fg_masks], cls_targets
             )
         ).sum() / num_fg
@@ -285,15 +285,15 @@ class YOLOXHead(BaseYOLOXHead):
             loss_l1 = 0.0
 
         reg_weight = 5.0
-        embedding_weight = self.embedding_weight if self.embedding_weight is not None else self.dynamic_embedding_weight
-        loss = reg_weight * loss_iou + loss_obj + loss_cls + embedding_weight * loss_embedding + loss_l1
+        cls_emb_weight = self.cls_emb_weight if self.cls_emb_weight is not None else self.dynamic_cls_emb_weight
+        loss = reg_weight * loss_iou + loss_obj + loss_cls + cls_emb_weight * loss_cls_emb + loss_l1
 
         return (
             loss,
             reg_weight * loss_iou,
             loss_obj,
             loss_cls,
-            loss_embedding,  # DANGER this allows loss_embedding to hijack loss_l1
+            loss_cls_emb,  # DANGER this allows loss_cls_emb to hijack loss_l1
             # loss_l1,
             num_fg / max(num_gts, 1),
         )

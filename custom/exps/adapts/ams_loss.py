@@ -9,19 +9,19 @@ import torch.nn.functional as F
 
 class AMSoftmaxLoss(nn.Module):
 
-    def __init__(self, embedding_dim, no_classes, scale=30.0, margin=0.4, reduction="none"):
+    def __init__(self, cls_emb_dim, no_classes, scale=30.0, margin=0.4, reduction="none"):
         super().__init__()
         self.scale = scale
         self.margin = margin
-        self.embedding_dim = embedding_dim
+        self.cls_emb_dim = cls_emb_dim
         self.no_classes = no_classes
-        self.embedding = nn.Embedding(no_classes, embedding_dim, max_norm=1)
+        self.embedding = nn.Embedding(no_classes, cls_emb_dim, max_norm=1)
         self.loss = nn.CrossEntropyLoss(reduction=reduction)
 
     def forward(self, x, onehot):
         n, m = x.shape
         assert n == len(onehot)
-        assert m == self.embedding_dim
+        assert m == self.cls_emb_dim
         # assert torch.min(labels) >= 0
         # assert torch.max(labels) < self.no_classes
 

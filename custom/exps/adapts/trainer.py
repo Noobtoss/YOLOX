@@ -13,10 +13,10 @@ class Trainer(BaseTrainer):
     def before_epoch(self):
         logger.info("---> start train epoch{}".format(self.epoch + 1))
 
-        if self.model.head.embedding_weight is None:
+        if self.model.head.cls_emb_weight is None:
             start, end = 2.0, 0.2
-            embedding_weight = end + (start - end) * (1 - self.epoch / self.max_epoch)
-            self.model.head.dynamic_embedding_weight = embedding_weight
+            cls_emb_weight = end + (start - end) * (1 - self.epoch / self.max_epoch)
+            self.model.head.dynamic_cls_emb_weight = cls_emb_weight
 
         if self.epoch + 1 == self.max_epoch - self.exp.no_aug_epochs or self.no_aug:
             logger.info("--->No mosaic aug now!")
