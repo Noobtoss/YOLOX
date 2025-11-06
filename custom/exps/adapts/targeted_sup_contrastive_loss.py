@@ -10,19 +10,6 @@ from math import log
 # https://github.com/huggingface/sentence-transformers/tree/master/sentence_transformers/losses
 
 
-def undersampling(projections, onehot_targets):
-    targets = onehot_targets.argmax(dim=1)
-
-    max_samples = 512  # Danger at batch_size = 8, this selects max = 64 bboxes per img
-    if projections.shape[0] > max_samples:
-        idx = torch.randperm(projections.shape[0])[:max_samples]
-        projections = projections[idx]
-        targets = targets[idx]
-    projections = F.normalize(projections, dim=1)
-
-    return projections, targets
-
-
 def divide_no_nan(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
     """
     PyTorch equivalent of tf.math.divide_no_nan.
@@ -35,8 +22,8 @@ def divide_no_nan(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
     return result
 
 
-class SupervisedContrastiveLoss(nn.Module):
-    def __init__(self, temperature=0.07):
+class TargetedSupervisedContrastiveLoss(nn.Module):
+    def __init__(self, temperature=0.07, target_ids=None):
         """
         Implementation of the loss described in the paper Supervised Contrastive Learning :
         https://arxiv.org/abs/2004.11362
@@ -45,6 +32,22 @@ class SupervisedContrastiveLoss(nn.Module):
         """
         super().__init__()
         self.temperature = temperature
+        if target_ids is None:
+            raise ValueError("target_ids must be set for targeted sampling.")
+        self.target_ids = torch.tensor(target_ids)
+
+    def targeted_sampling(self, projections, onehot_targets):
+        targets = onehot_targets.argmax(dim=1)
+
+        if self.target_ids.device != targets.device:
+            self.target_ids = self.target_ids.to(targets.device)
+        mask = torch.isin(targets, self.target_ids)
+        projections = projections[mask]
+        targets = targets[mask]
+
+        projections = F.normalize(projections, dim=1)
+
+        return projections, targets
 
     def forward(self, projections, targets):
         """
@@ -53,7 +56,10 @@ class SupervisedContrastiveLoss(nn.Module):
         :param targets: torch.Tensor, shape [batch_size]
         :return: torch.Tensor, scalar
         """
-        projections, targets = undersampling(projections, targets)
+        projections, targets = self.targeted_sampling(projections, targets)
+
+        if targets.shape[0] == 0:
+            return torch.tensor(0.0, device=targets.device, dtype=targets.dtype)
 
         device = torch.device("cuda") if projections.is_cuda else torch.device("cpu")
 

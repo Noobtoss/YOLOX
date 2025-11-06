@@ -3,6 +3,7 @@ import os
 from adapts.yolox_embedding_train import Exp as MyExp
 from adapts.ams_loss import AMSoftmaxLoss
 from adapts.sup_contrastive_loss import SupervisedContrastiveLoss
+from adapts.targeted_sup_contrastive_loss import TargetedSupervisedContrastiveLoss
 
 
 class Exp(MyExp):
@@ -13,12 +14,17 @@ class Exp(MyExp):
         ams_loss = AMSoftmaxLoss(embedding_dim=320, no_classes=37, scale=10.0, reduction="none") # DANGER
         sup_contrastive_loss = SupervisedContrastiveLoss(temperature=0.07)
         # sup_contrastive_loss = SupervisedContrastiveLoss(temperature=0.03)
+        self.target_ids = [24, 34]
+        self.target_ids = [25, 31, 35]
+        self.target_ids = [24, 34, 25, 31, 35]
+        targeted_sup_contrastive_loss = TargetedSupervisedContrastiveLoss(temperature=0.07, target_ids=self.target_ids)
 
         # self.embedding_loss = ams_loss
-        self.embedding_loss = sup_contrastive_loss
+        self.embedding_loss = targeted_sup_contrastive_loss
         # self.embedding_weight = 1
         # self.embedding_weight = 0
-        self.embedding_weight = None
+        # self.embedding_weight = None
+        self.embedding_weight = 4
 
         # prob of applying mosaic aug
         self.mosaic_prob = 1
@@ -26,7 +32,7 @@ class Exp(MyExp):
         self.mixup_prob = 1
 
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
-        self.exp_name = f"{self.exp_name}_sup_contrastive_dynamic"
+        self.exp_name = f"{self.exp_name}_targeted_sup_contrastive_2"
 
         # ---------------- dataloader config ---------------- #
 
