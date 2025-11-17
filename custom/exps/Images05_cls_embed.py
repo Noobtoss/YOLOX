@@ -11,12 +11,9 @@ class Exp(MyExp):
     def __init__(self):
         super().__init__()
 
-        ams_loss = AMSoftmaxLoss(cls_emb_dim=320, no_classes=37, scale=10.0, reduction="none")  # DANGER
-        sup_contrastive_loss = SupervisedContrastiveLoss(temperature=0.07)
-        # sup_contrastive_loss = SupervisedContrastiveLoss(temperature=0.03)
-        self.target_ids = [24, 34]
-        self.target_ids = [25, 31, 35]
-        self.target_ids = [24, 34, 25, 31, 35]
+        # ams_loss = AMSoftmaxLoss(cls_emb_dim=320, no_classes=37, scale=10.0, reduction="none")
+        sup_contrastive_loss = SupervisedContrastiveLoss(temperature=0.07)  # temperature=0.03
+        # self.target_ids = [24, 34]  # [25, 31, 35]  # [24, 34, 25, 31, 35]
         # targeted_sup_contrastive_loss = TargetedSupervisedContrastiveLoss(temperature=0.07, target_ids=self.target_ids)
 
         # self.cls_emb_loss = ams_loss
