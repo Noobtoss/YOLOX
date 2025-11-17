@@ -21,7 +21,7 @@ class Exp(MyExp):
 
         self.cls_emb_loss = None
         self.cls_emb_weight = None
-        self.save_history_ckpt = True
+        self.save_history_ckpt = False # True
 
     def get_model(self):
         from yolox.models import YOLOX, YOLOPAFPN  # , YOLOXHead # THS

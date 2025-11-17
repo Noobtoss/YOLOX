@@ -19,7 +19,7 @@ class Exp(MyExp):
 
         # --------------  training config --------------------- #
 
-        self.max_epoch = 100
+        self.max_epoch = 10
         self.data_num_workers = 4
         self.eval_interval = 8
 
