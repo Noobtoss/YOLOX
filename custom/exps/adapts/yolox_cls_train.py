@@ -16,16 +16,25 @@ class Exp(MyExp):
     def __init__(self):
         super().__init__()
 
-        # ams_loss = AMSoftmaxLoss(cls_emb_dim=320, no_classes=num_classes, scale=10.0, reduction="none")
-        # contrastive_loss = SupervisedContrastiveLoss()
+        self.cls_emb_loss        = None   # SupervisedContrastiveLoss()
+        self.cls_emb_weight      = None   # 1
+        self.cls_dropout_p       = None   # 0.5
+        self.cls_train_scheduler = None   # YoloHeadClsScheduler()
+        self.save_history_ckpt   = False  # True
 
-        self.cls_emb_loss = None
-        self.cls_emb_weight = None
-        self.save_history_ckpt = False # True
+    def get_cls_train_scheduler(self):
+        from .yolo_head_cls_scheduler import YoloHeadClsScheduler
+        scheduler = YoloHeadClsScheduler(
+            model=self.model,
+            cls_emb_weight=self.cls_emb_weight,
+            cls_dropout_p=self.cls_dropout_p,
+            max_epoch=self.max_epoch,
+        )
+        return scheduler
 
     def get_model(self):
         from yolox.models import YOLOX, YOLOPAFPN  # , YOLOXHead # THS
-        from .yolo_head_cls_emb import YOLOXHead
+        from .yolo_head_cls_train import YOLOXHead
 
         if self.cls_emb_loss is None:
             raise NotImplementedError("cls_emb_loss must be set before calling get_model().")
@@ -42,7 +51,9 @@ class Exp(MyExp):
             in_channels = [256, 512, 1024]
             backbone = YOLOPAFPN(self.depth, self.width, in_channels=in_channels, act=self.act)
             head = YOLOXHead(self.num_classes, self.width, in_channels=in_channels, act=self.act,
-                             cls_emb_loss=self.cls_emb_loss, cls_emb_weight=self.cls_emb_weight)
+                             cls_emb_loss=self.cls_emb_loss,
+                             cls_emb_weight=self.cls_emb_weight,
+                             cls_dropout_p=self.cls_dropout_p)
             self.model = YOLOX(backbone, head)
 
         self.model.apply(init_yolo)

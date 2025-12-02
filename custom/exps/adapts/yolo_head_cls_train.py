@@ -22,7 +22,8 @@ class YOLOXHead(BaseYOLOXHead):
         act="silu",
         depthwise=False,
         cls_emb_loss=None,
-        cls_emb_weight=None
+        cls_emb_weight=None,
+        cls_dropout_p=None
     ):
         super().__init__(
             num_classes,
@@ -34,10 +35,19 @@ class YOLOXHead(BaseYOLOXHead):
         )
 
         self.cls_emb_loss = cls_emb_loss
-        self.cls_emb_weight = cls_emb_weight
-        self.dynamic_cls_emb_weight = None
+        self.cls_emb_weight = cls_emb_weight or 0  # if None passed assume no wanna use so weight == 0
+        self.cls_dropout_p = cls_dropout_p
 
-    def forward(self, xin, labels=None, imgs=None):
+        if self.cls_dropout_p is not None:
+            self.cls_convs.append(  # added dropout after cls_convs processing
+                nn.Sequential(
+                    *[
+                        nn.Dropout(p=self.cls_dropout_p)
+                    ]
+                )
+            )
+
+    def forward(self, xin, labels=None, imgs=None):  # added supervised contrastive loss
         outputs = []
         origin_preds = []
         x_shifts = []
@@ -285,8 +295,7 @@ class YOLOXHead(BaseYOLOXHead):
             loss_l1 = 0.0
 
         reg_weight = 5.0
-        cls_emb_weight = self.cls_emb_weight if self.cls_emb_weight is not None else self.dynamic_cls_emb_weight
-        loss = reg_weight * loss_iou + loss_obj + loss_cls + cls_emb_weight * loss_cls_emb + loss_l1
+        loss = reg_weight * loss_iou + loss_obj + loss_cls + self.cls_emb_weight * loss_cls_emb + loss_l1
 
         return (
             loss,
