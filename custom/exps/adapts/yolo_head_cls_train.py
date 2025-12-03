@@ -39,13 +39,11 @@ class YOLOXHead(BaseYOLOXHead):
         self.cls_dropout_p = cls_dropout_p
 
         if self.cls_dropout_p is not None:
-            self.cls_convs.append(  # added dropout after cls_convs processing
-                nn.Sequential(
-                    *[
-                        nn.Dropout(p=self.cls_dropout_p)
-                    ]
-                )
-            )
+            self.cls_dropout_layer = nn.Dropout(p=self.cls_dropout_p, inplace=False)
+        else:
+            self.cls_dropout_layer = nn.Identity()
+
+
 
     def forward(self, xin, labels=None, imgs=None):  # added supervised contrastive loss
         outputs = []
@@ -59,6 +57,8 @@ class YOLOXHead(BaseYOLOXHead):
         ):
             x = self.stems[k](x)
             cls_x = x
+            cls_x = self.cls_dropout_layer(cls_x)
+
             reg_x = x
 
             cls_feat = cls_conv(cls_x)

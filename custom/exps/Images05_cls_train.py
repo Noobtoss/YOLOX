@@ -20,7 +20,7 @@ class Exp(MyExp):
         # self.cls_emb_loss = ams_loss
         self.cls_emb_loss = sup_contrastive_loss
         self.cls_emb_weight = 0  # 1
-        self.cls_dropout_p = None  # 0.5
+        self.cls_dropout_p = 0.9  # None
         self.cls_train_scheduler = YoloHeadClsScheduler
 
         # prob of applying mosaic aug
@@ -29,7 +29,7 @@ class Exp(MyExp):
         self.mixup_prob = 1
 
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
-        self.exp_name = f"{self.exp_name}_baseline"
+        self.exp_name = f"{self.exp_name}_dropout_09"
 
         # ---------------- dataloader config ---------------- #
 
