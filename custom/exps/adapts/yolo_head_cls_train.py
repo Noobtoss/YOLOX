@@ -35,10 +35,10 @@ class YOLOXHead(BaseYOLOXHead):
         )
 
         self.cls_emb_loss = cls_emb_loss
-        self.cls_emb_weight = cls_emb_weight or 0  # if None passed assume no wanna use so weight == 0
-        self.cls_dropout_p = cls_dropout_p
+        self.cls_emb_weight = cls_emb_weight or 0
+        self.cls_dropout_p = cls_dropout_p or 0
 
-        if self.cls_dropout_p is not None:
+        if self.cls_dropout_p != 0:
             self.cls_dropout_layer = nn.Dropout(p=self.cls_dropout_p, inplace=False)
         else:
             self.cls_dropout_layer = nn.Identity()
