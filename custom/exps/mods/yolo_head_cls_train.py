@@ -22,7 +22,9 @@ class YOLOXHead(BaseYOLOXHead):
         act="silu",
         depthwise=False,
         cls_emb_loss=None,
+        duplicate_loss=None,
         cls_emb_weight=None,
+        duplicate_weight=None,
         cls_dropout_p=None
     ):
         super().__init__(
@@ -35,7 +37,9 @@ class YOLOXHead(BaseYOLOXHead):
         )
 
         self.cls_emb_loss = cls_emb_loss
+        self.duplicate_loss = duplicate_loss
         self.cls_emb_weight = cls_emb_weight or 0
+        self.duplicate_weight = duplicate_weight or 0
         self.cls_dropout_p = cls_dropout_p or 0
 
         if self.cls_dropout_p != 0:
@@ -287,6 +291,11 @@ class YOLOXHead(BaseYOLOXHead):
                 cls_feat.view(-1, 320)[fg_masks], cls_targets
             )
         ).sum() / num_fg
+        loss_duplicates = (
+            self.duplicate_loss(
+                bbox_preds.view(-1, 4)[fg_masks]
+            )
+        ).sum() / num_fg
         if self.use_l1:
             loss_l1 = (
                 self.l1_loss(origin_preds.view(-1, 4)[fg_masks], l1_targets)
@@ -295,14 +304,17 @@ class YOLOXHead(BaseYOLOXHead):
             loss_l1 = 0.0
 
         reg_weight = 5.0
-        loss = reg_weight * loss_iou + loss_obj + loss_cls + self.cls_emb_weight * loss_cls_emb + loss_l1
+        loss = (reg_weight * loss_iou +
+                loss_obj + loss_cls +
+                self.duplicate_weight * loss_duplicates +
+                self.cls_emb_weight * loss_cls_emb + loss_l1)
 
         return (
             loss,
             reg_weight * loss_iou,
             loss_obj,
             loss_cls,
-            loss_cls_emb,  # DANGER this allows loss_cls_emb to hijack loss_l1
+            loss_duplicates,  # loss_cls_emb,  # DANGER this allows loss_cls_emb to hijack loss_l1
             # loss_l1,
             num_fg / max(num_gts, 1),
         )

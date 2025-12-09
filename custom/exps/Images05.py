@@ -1,6 +1,6 @@
 import os
 
-from adapts.yolox_base import Exp as MyExp
+from mods.yolox_base import Exp as MyExp
 
 
 class Exp(MyExp):

@@ -1,10 +1,11 @@
 import os
 
-from adapts.yolox_cls_train import Exp as MyExp
-from adapts.ams_loss import AMSoftmaxLoss
-from adapts.sup_contrastive_loss import SupervisedContrastiveLoss
-from adapts.targeted_sup_contrastive_loss import TargetedSupervisedContrastiveLoss
-from adapts.yolo_head_cls_scheduler import YoloHeadClsScheduler
+from mods.yolox_cls_train import Exp as MyExp
+from mods.ams_loss import AMSoftmaxLoss
+from mods.sup_contrastive_loss import SupervisedContrastiveLoss
+from mods.duplicate_loss import DuplicateLoss
+from mods.targeted_sup_contrastive_loss import TargetedSupervisedContrastiveLoss
+from mods.yolo_head_cls_scheduler import YoloHeadClsScheduler
 
 
 class Exp(MyExp):
@@ -14,12 +15,16 @@ class Exp(MyExp):
 
         # ams_loss = AMSoftmaxLoss(cls_emb_dim=320, no_classes=37, scale=10.0, reduction="none")
         sup_contrastive_loss = SupervisedContrastiveLoss()  # temperature=0.07
+        duplicate_loss = DuplicateLoss()
         # self.target_ids = [24, 34]  # [25, 31, 35]  # [24, 34, 25, 31, 35]
         # targeted_sup_contrastive_loss = TargetedSupervisedContrastiveLoss(temperature=0.07, target_ids=self.target_ids)
 
+
         # self.cls_emb_loss = ams_loss
         self.cls_emb_loss = sup_contrastive_loss
+        self.duplicate_loss = duplicate_loss
         self.cls_emb_weight = 0
+        self.duplicate_weight = 1
         self.cls_dropout_p = 0
         self.cls_train_scheduler = YoloHeadClsScheduler
 
