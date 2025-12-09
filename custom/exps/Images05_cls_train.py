@@ -24,7 +24,7 @@ class Exp(MyExp):
         self.cls_emb_loss = sup_contrastive_loss
         self.duplicate_loss = duplicate_loss
         self.cls_emb_weight = 0
-        self.duplicate_weight = 1
+        self.duplicate_weight = 0
         self.cls_dropout_p = 0
         self.cls_train_scheduler = YoloHeadClsScheduler
 
