@@ -6,5 +6,8 @@ exp_name Images05_sup_con_loss CFG custom/exps/Images05_cls_train.py CKPT checkp
 exp_name Images05_sup_con_loss_double CFG custom/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 2 cls_dropout_p 0
 exp_name Images05_sup_con_loss_dropout_07 CFG custom/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 1 cls_dropout_p 0.7
 exp_name Images05_duplicate_loss CFG custom/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 duplicate_weight 4 cls_dropout_p 0
+exp_name Images05_longer_aug CFG custom/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 0 duplicate_weight 0 cls_dropout_p 0
+exp_name Images05_longer_aug_dropout_05 CFG custom/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 0 cls_dropout_p 0.5
+exp_name Images05_longer_aug_sup_con_loss CFG custom/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 1 cls_dropout_p 0
 exp_name Images05_baseline CFG custom/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 duplicate_weight 0 cls_dropout_p 0
 # end of current exp
