@@ -35,6 +35,7 @@ for ((i=0; i<${#ARR[@]}; i+=2)); do
     value="${ARR[$i+1]}"
     KV["$key"]="$value"
 done
+OUTPUT_DIR="${BASE_DIR}/runs"
 RUN_NAME="${KV[exp_name]:-unnamed_experiment}"
 CFG="${KV[CFG]:-custom/exps/Images04.py}"
 CKPT="${KV[CKPT]:-checkpoints/yolox_x.pth}"
@@ -51,4 +52,7 @@ python tools/train.py \
         wandb-project runs \
         wandb-entity team-noobtoss \
         wandb-name "${RUN_NAME}_$(date +"%Y-%m-%d_%H-%M")" \
+    output_dir $OUTPUT_DIR \
     $PARAMS
+
+find "$OUTPUT_DIR/$RUN_NAME" -type f ! -name "train_log.txt" ! -name "last_epoch_ckpt.pth" -delete
