@@ -15,10 +15,14 @@ from .yolox_base import Exp as MyExp
 class Exp(MyExp):
     def __init__(self):
         super().__init__()
+        self.save_history_ckpt   = False  # True
 
+        self.class_weights       = None
         self.cls_emb_loss        = None   # SupervisedContrastiveLoss()
+        self.duplicate_loss      = None   # DuplicateLoss()
         self.cls_emb_weight      = None   # 1
         self.cls_dropout_p       = None   # 0.5
+        self.duplicate_weight    = None   # 0
         self.cls_train_scheduler = None   # YoloHeadClsScheduler()
         self.save_history_ckpt   = False  # True
 
@@ -51,6 +55,7 @@ class Exp(MyExp):
             in_channels = [256, 512, 1024]
             backbone = YOLOPAFPN(self.depth, self.width, in_channels=in_channels, act=self.act)
             head = YOLOXHead(self.num_classes, self.width, in_channels=in_channels, act=self.act,
+                             class_weights=self.class_weights,
                              cls_emb_loss=self.cls_emb_loss,
                              duplicate_loss=self.duplicate_loss,
                              cls_emb_weight=self.cls_emb_weight,

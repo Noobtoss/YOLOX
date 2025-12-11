@@ -21,6 +21,7 @@ class YOLOXHead(BaseYOLOXHead):
         in_channels=[256, 512, 1024],
         act="silu",
         depthwise=False,
+        class_weights=None,
         cls_emb_loss=None,
         duplicate_loss=None,
         cls_emb_weight=None,
@@ -35,7 +36,7 @@ class YOLOXHead(BaseYOLOXHead):
             act,
             depthwise
         )
-
+        self.class_weights = class_weights
         self.cls_emb_loss = cls_emb_loss
         self.duplicate_loss = duplicate_loss
         self.cls_emb_weight = cls_emb_weight or 0
@@ -285,7 +286,11 @@ class YOLOXHead(BaseYOLOXHead):
             self.bcewithlog_loss(
                 cls_preds.view(-1, self.num_classes)[fg_masks], cls_targets
             )
-        ).sum() / num_fg
+        )
+        if self.class_weights is not None:
+            cw = self.class_weights.to(loss_cls.device)
+            loss_cls = loss_cls * cw
+        loss_cls = loss_cls.sum() / num_fg
         loss_cls_emb = (
             self.cls_emb_loss(
                 cls_feat.view(-1, 320)[fg_masks], cls_targets
@@ -305,7 +310,8 @@ class YOLOXHead(BaseYOLOXHead):
 
         reg_weight = 5.0
         loss = (reg_weight * loss_iou +
-                loss_obj + loss_cls +
+                loss_obj +
+                loss_cls +
                 self.duplicate_weight * loss_duplicates +
                 self.cls_emb_weight * loss_cls_emb + loss_l1)
 
