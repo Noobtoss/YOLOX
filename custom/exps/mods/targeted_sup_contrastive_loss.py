@@ -51,7 +51,6 @@ class TargetedSupervisedContrastiveLoss(nn.Module):
 
     def forward(self, projections, targets):
         """
-
         :param projections: torch.Tensor, shape [batch_size, projection_dim]
         :param targets: torch.Tensor, shape [batch_size]
         :return: torch.Tensor, scalar

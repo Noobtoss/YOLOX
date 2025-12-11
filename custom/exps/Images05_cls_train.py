@@ -1,4 +1,5 @@
 import os
+import torch
 
 from mods.yolox_cls_train import Exp as MyExp
 from mods.ams_loss import AMSoftmaxLoss
@@ -12,6 +13,7 @@ class Exp(MyExp):
 
     def __init__(self):
         super().__init__()
+        self.num_classes = 37
 
         # ams_loss = AMSoftmaxLoss(cls_emb_dim=320, no_classes=37, scale=10.0, reduction="none")
         sup_contrastive_loss = SupervisedContrastiveLoss()  # temperature=0.07
@@ -21,6 +23,8 @@ class Exp(MyExp):
 
 
         # self.cls_emb_loss = ams_loss
+        # self.class_weights = torch.ones(self.num_classes)
+        # self.class_weights[0] = 0.5
         self.cls_emb_loss = sup_contrastive_loss
         self.duplicate_loss = duplicate_loss
         self.cls_emb_weight = 0
