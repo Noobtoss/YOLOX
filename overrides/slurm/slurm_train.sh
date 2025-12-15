@@ -1,7 +1,6 @@
 #!/bin/bash
-#SBATCH --job-name=YOLOX_train_arr # Kurzname des Jobs
-#SBATCH --array=11-13%4              # 7 Jobs total running 4 at a time
-#SBATCH --output=logs/R-%A-%a.out
+#SBATCH --job-name=YOLOX_train        # Kurzname des Jobs
+#SBATCH --output=logs/R-%j.out
 #SBATCH --partition=p2
 #SBATCH --qos=gpuultimate
 #SBATCH --gres=gpu:1
@@ -11,8 +10,8 @@
 #SBATCH --mem-per-cpu=64G        # RAM pro CPU Kern #20G #32G #64G
 
 BASE_DIR=/nfs/scratch/staff/schmittth/code-nexus/YOLOX
-# CFG=${1:-custom/exps/Images04.py}
-# CKPT=${2:-checkpoints/yolox_x.pth}
+CFG=${1:-overrides/exps/Images04.py}
+CKPT=${2:-checkpoints/yolox_x.pth}
 
 module purge
 module load python/anaconda3
@@ -25,20 +24,7 @@ export WANDB_DIR=/tmp/ths_wandb
 export WANDB_CACHE_DIR=/tmp/ths_wandb
 export WANDB_CONFIG_DIR=/tmp/ths_wandb
 
-PARAMS_FILE="$BASE_DIR/custom/slurm_scripts/slurm_params.txt"
-PARAMS=$(grep -v '^[[:space:]]*#' "$PARAMS_FILE" | sed -n "$((SLURM_ARRAY_TASK_ID + 1))p")
-
-declare -A KV
-read -r -a ARR <<< "$PARAMS"
-for ((i=0; i<${#ARR[@]}; i+=2)); do
-    key="${ARR[$i]}"
-    value="${ARR[$i+1]}"
-    KV["$key"]="$value"
-done
-OUTPUT_DIR="${BASE_DIR}/runs"
-RUN_NAME="${KV[exp_name]:-unnamed_experiment}"
-CFG="${KV[CFG]:-custom/exps/Images04.py}"
-CKPT="${KV[CKPT]:-checkpoints/yolox_x.pth}"
+# python3 setup.py develop
 
 python tools/train.py \
     --exp_file $BASE_DIR/$CFG \
@@ -51,8 +37,4 @@ python tools/train.py \
     --logger wandb \
         wandb-project runs \
         wandb-entity team-noobtoss \
-        wandb-name "${RUN_NAME}_$(date +"%Y-%m-%d_%H-%M")" \
-    output_dir $OUTPUT_DIR \
-    $PARAMS
-
-find "$OUTPUT_DIR/$RUN_NAME" -type f ! -name "train_log.txt" ! -name "last_epoch_ckpt.pth" -delete
+        wandb-name "$(basename "$CKPT" .pth)_$(basename "$CFG" .py)_$(date +"%Y-%m-%d_%H-%M")"
