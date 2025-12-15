@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=YOLOX_train_arr # Kurzname des Jobs
-#SBATCH --array=15-18%3              # 7 Jobs total running 4 at a time
+#SBATCH --array=11-14%4              # 7 Jobs total running 4 at a time
 #SBATCH --output=logs/R-%A-%a.out
 #SBATCH --partition=p2
 #SBATCH --qos=gpuultimate
@@ -26,7 +26,7 @@ export WANDB_CACHE_DIR=/tmp/ths_wandb
 export WANDB_CONFIG_DIR=/tmp/ths_wandb
 
 PARAMS_FILE="$BASE_DIR/overrides/slurm/slurm_params.txt"
-PARAMS=$(grep -v '^[[:space:]]*#' "$PARAMS_FILE" | sed -n "$((SLURM_ARRAY_TASK_ID + 1))p")
+PARAMS=$(grep -v '^[[:space:]]*#' "$PARAMS_FILE" | sed -n "$((SLURM_ARRAY_TASK_ID))p")
 
 declare -A KV
 read -r -a ARR <<< "$PARAMS"
