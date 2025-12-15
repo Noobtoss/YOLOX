@@ -1,17 +1,22 @@
 # Images05_cls_train Experiments
-exp_name Images05_dropout_09 CFG custom/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 cls_dropout_p 0.9
-exp_name Images05_dropout_07 CFG custom/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 cls_dropout_p 0.7
-exp_name Images05_dropout_05 CFG custom/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 cls_dropout_p 0.5
-exp_name Images05_sup_con_loss CFG custom/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 1 cls_dropout_p 0
-exp_name Images05_sup_con_loss_double CFG custom/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 2 cls_dropout_p 0
-exp_name Images05_sup_con_loss_dropout_07 CFG custom/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 1 cls_dropout_p 0.7
-exp_name Images05_duplicate_loss CFG custom/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 duplicate_weight 4 cls_dropout_p 0
-exp_name Images05_longer_aug CFG custom/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 0 duplicate_weight 0 cls_dropout_p 0
-exp_name Images05_longer_aug_dropout_05 CFG custom/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 0 cls_dropout_p 0.5
-exp_name Images05_longer_aug_sup_con_loss CFG custom/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 1 cls_dropout_p 0
-exp_name Images05_baseline CFG custom/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth
+exp_name Images05_dropout_09 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 cls_dropout_p 0.9
+exp_name Images05_dropout_07 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 cls_dropout_p 0.7
+exp_name Images05_dropout_05 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 cls_dropout_p 0.5
+exp_name Images05_sup_con_loss CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 1 cls_dropout_p 0
+exp_name Images05_sup_con_loss_double CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 2 cls_dropout_p 0
+exp_name Images05_sup_con_loss_dropout_07 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 1 cls_dropout_p 0.7
+exp_name Images05_duplicate_loss CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 duplicate_weight 4 cls_dropout_p 0
+exp_name Images05_longer_aug CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 0 duplicate_weight 0 cls_dropout_p 0
+exp_name Images05_longer_aug_dropout_05 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 0 cls_dropout_p 0.5
+exp_name Images05_longer_aug_sup_con_loss CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 1 cls_dropout_p 0
+exp_name Images05_baseline CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth
 # Images07Unified Experiments
-exp_name Images07Unified_baseline CFG custom/exps/Images07Unified.py CKPT checkpoints/yolox_x.pth
-exp_name Images07Unified_dropout_05 CFG custom/exps/Images07Unified.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 cls_dropout_p 0.5
-exp_name Images07Unified_sup_con_loss CFG custom/exps/Images07Unified.py CKPT checkpoints/yolox_x.pth cls_emb_weight 1 cls_dropout_p 0
+exp_name Images07Unified_baseline CFG overrides/exps/Images07Unified.py CKPT checkpoints/yolox_x.pth
+exp_name Images07Unified_dropout_05 CFG overrides/exps/Images07Unified.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 cls_dropout_p 0.5
+exp_name Images07Unified_sup_con_loss CFG overrides/exps/Images07Unified.py CKPT checkpoints/yolox_x.pth cls_emb_weight 1 cls_dropout_p 0
+# Images07Unified Pretrained Experiments
+exp_name Images05_pretrained CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x_Images07Unified.pth
+exp_name Images05_pretrained_dropout_05 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x_Images07Unified.pth cls_emb_weight 0 cls_dropout_p 0.5
+exp_name Images05_pretrained_sup_con_loss CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x_Images07Unified.pth cls_emb_weight 1 cls_dropout_p 0
+exp_name Images05_baseline CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth
 # end of current Experiments
