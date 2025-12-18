@@ -320,7 +320,7 @@ class YOLOXHead(BaseYOLOXHead):
             reg_weight * loss_iou,
             loss_obj,
             loss_cls,
-            loss_duplicates,  # loss_cls_emb,  # DANGER this allows loss_cls_emb to hijack loss_l1
+            loss_cls_emb,  # DANGER this allows loss_cls_emb to hijack loss_l1
             # loss_l1,
             num_fg / max(num_gts, 1),
         )
