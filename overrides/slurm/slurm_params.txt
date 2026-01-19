@@ -1,4 +1,4 @@
-# Images05_cls_train Experiments
+# Images05_cls_train init cls_train experiments
 exp_name Images05_dropout_09 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 cls_dropout_p 0.9
 exp_name Images05_dropout_07 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 cls_dropout_p 0.7
 exp_name Images05_dropout_05 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 cls_dropout_p 0.5
@@ -12,21 +12,45 @@ exp_name Images05_less_aug CFG overrides/exps/Images05_cls_train.py CKPT checkpo
 exp_name Images05_less_aug_dropout_05 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 cls_dropout_p 0.5 hsv_prob 0.4
 exp_name Images05_less_aug_sup_con_loss CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 1 cls_dropout_p 0 hsv_prob 0.4
 exp_name Images05_baseline CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth
-# Images07Unified Pretrain Experiments
+# Images07Unified pretrain experiments
 exp_name Images05_pretrained CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x_Images05Pretrain.pth
 exp_name Images05_pretrained_dropout_05 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x_Images05Pretrain.pth cls_emb_weight 0 cls_dropout_p 0.5
 exp_name Images05_pretrained_sup_con_loss CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x_Images05Pretrain.pth cls_emb_weight 1 cls_dropout_p 0
 exp_name Images07Unified_dropout_05 CFG overrides/exps/Images07Unified.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 cls_dropout_p 0.5
 exp_name Images07Unified_sup_con_loss CFG overrides/exps/Images07Unified.py CKPT checkpoints/yolox_x.pth cls_emb_weight 1 cls_dropout_p 0
 exp_name Images07Unified_baseline CFG overrides/exps/Images07Unified.py CKPT checkpoints/yolox_x.pth
-# Images05_cls_train Experiments Merging
-exp_name Images05_sup_con_loss_2 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 2 cls_dropout_p 0
-exp_name Images05_sup_con_loss_3 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 3 cls_dropout_p 0
-exp_name Images05_sup_con_loss_4 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 3 cls_dropout_p 0
+# Images05_cls_train cls_emb_weight experiments
+exp_name Images05_sup_con_loss CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 1
+exp_name Images05_sup_con_loss_2 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 2
+exp_name Images05_sup_con_loss_3 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 3
+exp_name Images05_sup_con_loss_4 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 4
+exp_name Images05_sup_con_loss_5 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 5
+exp_name Images05_sup_con_loss_6 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 6
+exp_name Images05_sup_con_loss_7 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 7
+exp_name Images05_sup_con_loss_8 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 8
+exp_name Images05_sup_con_loss_9 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 9
+exp_name Images05_sup_con_loss_10 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth cls_emb_weight 10
+exp_name Images05_baseline CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth
+exp_name Images05_baseline_2 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth
+exp_name Images05_baseline_3 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth
+exp_name Images05_baseline_4 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth
+# Images05_cls_train longer/less aug experiments
+exp_name Images05_longer_aug CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0
+exp_name Images05_less_aug CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth hsv_prob 0.4
+exp_name Images05_less_02_aug CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth hsv_prob 0.2
+exp_name Images05_less_00_aug CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth hsv_prob 0
 exp_name Images05_longer_less_aug CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0.4
-exp_name Images05_longer_aug_sup_con_loss_2 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 2
-exp_name Images05_less_aug_sup_con_loss_2 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth hsv_prob 0.4 cls_emb_weight 2
-exp_name Images05_longer_less_aug_sup_con_loss_2 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0.4 cls_emb_weight 2
-exp_name Images05_longer_less_aug_sup_con_loss_3 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0.4 cls_emb_weight 3
-exp_name Images05_longer_less_aug_sup_con_loss_4 CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0.4 cls_emb_weight 4
-# end of current Experiments
+exp_name Images05_longer_less_02_aug CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0.2
+exp_name Images05_longer_less_00_aug CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0
+# Images05_cls_train best01 training experiments
+exp_name Images05_sup_con_loss_longer_aug CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 1
+exp_name Images05_sup_con_loss_4_longer_aug CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 4
+exp_name Images05_sup_con_loss_less_aug CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth hsv_prob 0.4 cls_emb_weight 1
+exp_name Images05_sup_con_loss_less_02_aug CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth hsv_prob 0.2 cls_emb_weight 1
+exp_name Images05_sup_con_loss_4_less_aug CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth hsv_prob 0.4 cls_emb_weight 4
+exp_name Images05_sup_con_loss_4_less_02_aug CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth hsv_prob 0.2 cls_emb_weight 4
+exp_name Images05_sup_con_loss_longer_less_aug CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0.4 cls_emb_weight 1
+exp_name Images05_sup_con_loss_longer_less_02_aug CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0.2 cls_emb_weight 1
+exp_name Images05_sup_con_loss_4_longer_less_aug CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0.4 cls_emb_weight 4
+exp_name Images05_sup_con_loss_4_longer_less_02_aug CFG overrides/exps/Images05_cls_train.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0.2 cls_emb_weight 4
+# end of current experiments
