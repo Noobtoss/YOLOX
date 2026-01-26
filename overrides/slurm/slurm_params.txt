@@ -56,9 +56,9 @@ exp_name Images05_sup_con_loss_4_longer_less_02_aug CFG overrides/exps/Images05C
 # MetaFood2026 experiments
 exp_name Images05MetaFood2026_baseline CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth
 exp_name Images05MetaFood2026_cls_1 CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth cls_emb_weight 1
-exp_name Images05MetaFood2026_cls_1 CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth cls_emb_weight 2
-exp_name Images05MetaFood2026_cls_1 CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth cls_emb_weight 4
-exp_name Images05MetaFood2026_cls_1 CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth cls_emb_weight 6
-exp_name Images05MetaFood2026_cls_1 CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth cls_emb_weight 8
-exp_name Images05MetaFood2026_cls_1 CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth cls_emb_weight 10
+exp_name Images05MetaFood2026_cls_2 CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth cls_emb_weight 2
+exp_name Images05MetaFood2026_cls_4 CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth cls_emb_weight 4
+exp_name Images05MetaFood2026_cls_6 CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth cls_emb_weight 6
+exp_name Images05MetaFood2026_cls_8 CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth cls_emb_weight 8
+exp_name Images05MetaFood2026_cls_10 CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth cls_emb_weight 10
 # end of current experiments
