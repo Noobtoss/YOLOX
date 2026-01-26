@@ -1,12 +1,10 @@
 import os
 import torch
 
-from mods.yolox_cls_train import Exp as MyExp
+from mods.yolox_meta_food_2026 import Exp as MyExp
 from mods.ams_loss import AMSoftmaxLoss
 from mods.sup_contrastive_loss import SupervisedContrastiveLoss
 from mods.duplicate_loss import DuplicateLoss
-from mods.targeted_sup_contrastive_loss import TargetedSupervisedContrastiveLoss
-from mods.yolo_head_cls_scheduler import YoloHeadClsScheduler
 
 
 class Exp(MyExp):
@@ -15,27 +13,10 @@ class Exp(MyExp):
         super().__init__()
         self.num_classes = 37
 
-        # ams_loss = AMSoftmaxLoss(cls_emb_dim=320, no_classes=37, scale=10.0, reduction="none")
         sup_contrastive_loss = SupervisedContrastiveLoss()  # temperature=0.07
-        duplicate_loss = DuplicateLoss()
-        # self.target_ids = [24, 34]  # [25, 31, 35]  # [24, 34, 25, 31, 35]
-        # targeted_sup_contrastive_loss = TargetedSupervisedContrastiveLoss(temperature=0.07, target_ids=self.target_ids)
 
-
-        # self.cls_emb_loss = ams_loss
-        # self.class_weights = torch.ones(self.num_classes)
-        # self.class_weights[0] = 0.5
         self.cls_emb_loss = sup_contrastive_loss
-        self.duplicate_loss = duplicate_loss
         self.cls_emb_weight = 0
-        self.duplicate_weight = 0
-        self.cls_dropout_p = 0
-        self.cls_train_scheduler = YoloHeadClsScheduler
-
-        # prob of applying mosaic aug
-        self.mosaic_prob = 1
-        # prob of applying mixup aug
-        self.mixup_prob = 1
 
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
         self.exp_name = f"{self.exp_name}_baseline"
@@ -43,13 +24,13 @@ class Exp(MyExp):
         # ---------------- dataloader config ---------------- #
 
         # Define yourself dataset path
-        self.data_dir = "datasets/Images05"
+        self.data_dir = "datasets/Images05MetaFood2026"
         self.train_ann = "annotation_train.json"
         self.val_ann = "annotation_test.json"
 
         # --------------  training config --------------------- #
 
-        self.max_epoch = 100
+        self.max_epoch = 1
         self.data_num_workers = 4
         self.eval_interval = 1
 

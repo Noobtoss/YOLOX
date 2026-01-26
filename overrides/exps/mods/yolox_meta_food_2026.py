@@ -19,26 +19,12 @@ class Exp(MyExp):
 
         self.class_weights       = None
         self.cls_emb_loss        = None   # SupervisedContrastiveLoss()
-        self.duplicate_loss      = None   # DuplicateLoss()
         self.cls_emb_weight      = None   # 1
-        self.cls_dropout_p       = None   # 0.5
-        self.duplicate_weight    = None   # 0
-        self.extra_scheduler     = None   # Scheduler()
         self.save_history_ckpt   = False  # True
-
-    def get_extra_scheduler(self):
-        from .scheduler import Scheduler
-        scheduler = Scheduler(
-            model=self.model,
-            cls_emb_weight=self.cls_emb_weight,
-            cls_dropout_p=self.cls_dropout_p,
-            max_epoch=self.max_epoch,
-        )
-        return scheduler
 
     def get_model(self):
         from yolox.models import YOLOX, YOLOPAFPN  # , YOLOXHead # THS
-        from .yolo_head_cls_train import YOLOXHead
+        from .yolo_head_meta_food_2026 import YOLOXHead
 
         if self.cls_emb_loss is None:
             raise NotImplementedError("cls_emb_loss must be set before calling get_model().")
@@ -57,19 +43,10 @@ class Exp(MyExp):
             head = YOLOXHead(self.num_classes, self.width, in_channels=in_channels, act=self.act,
                              class_weights=self.class_weights,
                              cls_emb_loss=self.cls_emb_loss,
-                             duplicate_loss=self.duplicate_loss,
-                             cls_emb_weight=self.cls_emb_weight,
-                             duplicate_weight=self.duplicate_weight,
-                             cls_dropout_p=self.cls_dropout_p)
+                             cls_emb_weight=self.cls_emb_weight)
             self.model = YOLOX(backbone, head)
 
         self.model.apply(init_yolo)
         self.model.head.initialize_biases(1e-2)
         self.model.train()
         return self.model
-
-    def get_trainer(self, args):
-        from .trainer import Trainer
-        trainer = Trainer(self, args)
-        # NOTE: trainer shouldn't be an attribute of exp object
-        return trainer

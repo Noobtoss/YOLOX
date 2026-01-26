@@ -9,14 +9,14 @@ from yolox.core import Trainer as BaseTrainer
 class Trainer(BaseTrainer):
     def __init__(self, exp, args):
         super().__init__(exp, args)
-        self.cls_train_scheduler = None
+        self.extra_scheduler = None
 
     def before_train(self):
         super().before_train()
-        if hasattr(self.exp, 'get_cls_train_scheduler'):
-            self.cls_train_scheduler = self.exp.get_cls_train_scheduler()
+        if hasattr(self.exp, 'get_extra_scheduler'):
+            self.extra_scheduler = self.exp.get_extra_scheduler()
 
     def before_epoch(self):
-        if self.cls_train_scheduler is not None:
-            self.cls_train_scheduler(self.epoch + 1)
+        if self.extra_scheduler is not None:
+            self.extra_scheduler(self.epoch + 1)
         super().before_epoch()
