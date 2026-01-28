@@ -1,10 +1,7 @@
 import os
-import torch
 
 from mods.yolox_meta_food_2026 import Exp as MyExp
-from mods.ams_loss import AMSoftmaxLoss
 from mods.sup_contrastive_loss import SupervisedContrastiveLoss
-from mods.duplicate_loss import DuplicateLoss
 
 
 class Exp(MyExp):
