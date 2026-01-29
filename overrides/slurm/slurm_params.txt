@@ -62,4 +62,12 @@ exp_name Images05MetaFood2026_new25pct_cls_4    CFG overrides/exps/Images05MetaF
 exp_name Images05MetaFood2026_new25pct_cls_6    CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026_new25pct cls_emb_weight 6
 exp_name Images05MetaFood2026_new25pct_cls_8    CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026_new25pct cls_emb_weight 8
 exp_name Images05MetaFood2026_new25pct_cls_10   CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026_new25pct cls_emb_weight 10
+# Experiments MetaFood2026 new50pct
+exp_name Images05MetaFood2026_new50pct_baseline CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026_new50pct
+exp_name Images05MetaFood2026_new50pct_cls_1    CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026_new50pct cls_emb_weight 1
+exp_name Images05MetaFood2026_new50pct_cls_2    CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026_new50pct cls_emb_weight 2
+exp_name Images05MetaFood2026_new50pct_cls_4    CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026_new50pct cls_emb_weight 4
+exp_name Images05MetaFood2026_new50pct_cls_6    CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026_new50pct cls_emb_weight 6
+exp_name Images05MetaFood2026_new50pct_cls_8    CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026_new50pct cls_emb_weight 8
+exp_name Images05MetaFood2026_new50pct_cls_10   CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026_new50pct cls_emb_weight 10
 # Experiments End Current
