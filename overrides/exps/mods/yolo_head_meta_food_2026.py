@@ -23,10 +23,7 @@ class YOLOXHead(BaseYOLOXHead):
         depthwise=False,
         class_weights=None,
         cls_emb_loss=None,
-        #duplicate_loss=None,  # ToDo Remove
-        cls_emb_weight=None,
-        #duplicate_weight=None,  # ToDo Remove
-        #cls_dropout_p=None  # ToDo Remove
+        cls_emb_weight=None
     ):
         super().__init__(
             num_classes,
@@ -38,15 +35,7 @@ class YOLOXHead(BaseYOLOXHead):
         )
         self.class_weights = class_weights
         self.cls_emb_loss = cls_emb_loss
-        #self.duplicate_loss = duplicate_loss   # ToDo Remove
         self.cls_emb_weight = cls_emb_weight or 0
-        #self.duplicate_weight = duplicate_weight or 0   # ToDo Remove
-        #self.cls_dropout_p = cls_dropout_p or 0   # ToDo Remove
-
-        #if self.cls_dropout_p != 0:   # ToDo Remove
-        #    self.cls_dropout_layer = nn.Dropout(p=self.cls_dropout_p, inplace=False)  # ToDo Remove
-        #else:  # ToDo Remove
-        #    self.cls_dropout_layer = nn.Identity()  # ToDo Remove
 
 
 
@@ -62,7 +51,6 @@ class YOLOXHead(BaseYOLOXHead):
         ):
             x = self.stems[k](x)
             cls_x = x
-            #cls_x = self.cls_dropout_layer(cls_x)  # ToDo Remove
 
             reg_x = x
 
@@ -296,11 +284,6 @@ class YOLOXHead(BaseYOLOXHead):
                 cls_feat.view(-1, 320)[fg_masks], cls_targets
             )
         ).sum() / num_fg
-        #loss_duplicates = (   # ToDo Remove
-        #    self.duplicate_loss(  # ToDo Remove
-        #        bbox_preds.view(-1, 4)[fg_masks]  # ToDo Remove
-        #    )  # ToDo Remove
-        #).sum() / num_fg  # ToDo Remove
         if self.use_l1:
             loss_l1 = (
                 self.l1_loss(origin_preds.view(-1, 4)[fg_masks], l1_targets)
@@ -312,7 +295,6 @@ class YOLOXHead(BaseYOLOXHead):
         loss = (reg_weight * loss_iou +
                 loss_obj +
                 loss_cls +
-                #self.duplicate_weight * loss_duplicates +   # ToDo Remove
                 self.cls_emb_weight * loss_cls_emb + loss_l1)
 
         return (
