@@ -21,9 +21,8 @@ class YOLOXHead(BaseYOLOXHead):
         in_channels=[256, 512, 1024],
         act="silu",
         depthwise=False,
-        class_weights=None,
-        cls_emb_loss=None,
-        cls_emb_weight=None
+        cls_feat_loss=None,
+        cls_feat_weight=None
     ):
         super().__init__(
             num_classes,
@@ -33,13 +32,12 @@ class YOLOXHead(BaseYOLOXHead):
             act,
             depthwise
         )
-        self.class_weights = class_weights
-        self.cls_emb_loss = cls_emb_loss
-        self.cls_emb_weight = cls_emb_weight or 0
+        self.cls_feat_loss = cls_feat_loss
+        self.cls_feat_weight = cls_feat_weight or 0
 
 
 
-    def forward(self, xin, labels=None, imgs=None):  # added supervised contrastive loss
+    def forward(self, xin, labels=None, imgs=None):  # added class feat loss
         outputs = []
         origin_preds = []
         x_shifts = []
@@ -51,7 +49,6 @@ class YOLOXHead(BaseYOLOXHead):
         ):
             x = self.stems[k](x)
             cls_x = x
-
             reg_x = x
 
             cls_feat = cls_conv(cls_x)
@@ -274,13 +271,9 @@ class YOLOXHead(BaseYOLOXHead):
             self.bcewithlog_loss(
                 cls_preds.view(-1, self.num_classes)[fg_masks], cls_targets
             )
-        )
-        if self.class_weights is not None:
-            cw = self.class_weights.to(loss_cls.device)
-            loss_cls = loss_cls * cw
-        loss_cls = loss_cls.sum() / num_fg
-        loss_cls_emb = (
-            self.cls_emb_loss(
+        ).sum() / num_fg
+        loss_cls_feat = (
+            self.cls_feat_loss(
                 cls_feat.view(-1, 320)[fg_masks], cls_targets
             )
         ).sum() / num_fg
@@ -292,17 +285,14 @@ class YOLOXHead(BaseYOLOXHead):
             loss_l1 = 0.0
 
         reg_weight = 5.0
-        loss = (reg_weight * loss_iou +
-                loss_obj +
-                loss_cls +
-                self.cls_emb_weight * loss_cls_emb + loss_l1)
+        loss = reg_weight * loss_iou + loss_obj + loss_cls + self.cls_feat_weight * loss_cls_feat + loss_l1
 
         return (
             loss,
             reg_weight * loss_iou,
             loss_obj,
             loss_cls,
-            loss_cls_emb,  # DANGER this allows loss_cls_emb to hijack loss_l1
+            loss_cls_feat,  # DANGER this allows loss_cls_emb to hijack loss_l1
             # loss_l1,
             num_fg / max(num_gts, 1),
         )

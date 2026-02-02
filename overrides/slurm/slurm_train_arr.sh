@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=YOLOX_train_arr # Kurzname des Jobs
-#SBATCH --array=58-64%4            # 59-65%4  # 7 Jobs total running 4 at a time
+#SBATCH --array=45-65%4            # 59-65%4  # 7 Jobs total running 4 at a time
 #SBATCH --output=logs/R-%A-%a.out
 #SBATCH --partition=p2             # p4
 #SBATCH --qos=gpuultimate
@@ -40,6 +40,9 @@ RUN_NAME="${KV[exp_name]:-unnamed_experiment}"
 CFG="${KV[CFG]:-overrides/exps/Images04.py}"
 CKPT="${KV[CKPT]:-checkpoints/yolox_x.pth}"
 
+# Add SLURM_ARRAY_JOB_ID and SLURM_ARRAY_TASK_ID to exp_name
+PARAMS=$(echo "$PARAMS" | sed -E "s/(exp_name[[:space:]]+[^[:space:]]+)/\1_${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}/")
+
 python tools/train.py \
     --exp_file $BASE_DIR/$CFG \
     --devices 1 \
@@ -51,7 +54,7 @@ python tools/train.py \
     --logger wandb \
         wandb-project runs \
         wandb-entity team-noobtoss \
-        wandb-name "${RUN_NAME}_$(date +"%Y-%m-%d_%H-%M")" \
+        wandb-name "${RUN_NAME}_${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}" \
     output_dir $OUTPUT_DIR \
     $PARAMS
 
