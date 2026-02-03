@@ -28,6 +28,9 @@ export WANDB_CONFIG_DIR=/tmp/ths_wandb
 PARAMS_FILE="$BASE_DIR/overrides/slurm/slurm_params.txt"
 PARAMS=$(grep -v '^[[:space:]]*#' "$PARAMS_FILE" | sed -n "$((SLURM_ARRAY_TASK_ID))p")
 
+# Add SLURM_ARRAY_JOB_ID and SLURM_ARRAY_TASK_ID to exp_name
+PARAMS=$(echo "$PARAMS" | sed -E "s/(exp_name[[:space:]]+[^[:space:]]+)/\1_${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}/")
+
 declare -A KV
 read -r -a ARR <<< "$PARAMS"
 for ((i=0; i<${#ARR[@]}; i+=2)); do
@@ -36,12 +39,9 @@ for ((i=0; i<${#ARR[@]}; i+=2)); do
     KV["$key"]="$value"
 done
 OUTPUT_DIR="${BASE_DIR}/runs"
-RUN_NAME="${KV[exp_name]:-unnamed_experiment}"
+EXP_NAME="${KV[exp_name]:-unnamed_experiment}"
 CFG="${KV[CFG]:-overrides/exps/Images04.py}"
 CKPT="${KV[CKPT]:-checkpoints/yolox_x.pth}"
-
-# Add SLURM_ARRAY_JOB_ID and SLURM_ARRAY_TASK_ID to exp_name
-PARAMS=$(echo "$PARAMS" | sed -E "s/(exp_name[[:space:]]+[^[:space:]]+)/\1_${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}/")
 
 python tools/train.py \
     --exp_file $BASE_DIR/$CFG \
@@ -54,8 +54,8 @@ python tools/train.py \
     --logger wandb \
         wandb-project runs \
         wandb-entity team-noobtoss \
-        wandb-name "${RUN_NAME}_${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}" \
+        wandb-name $EXP_NAME \
     output_dir $OUTPUT_DIR \
     $PARAMS
 
-find "$OUTPUT_DIR/$RUN_NAME" -type f ! -name "train_log.txt" ! -name "last_epoch_ckpt.pth" -delete
+find "$OUTPUT_DIR/$EXP_NAME" -type f ! -name "train_log.txt" ! -name "last_epoch_ckpt.pth" -delete
