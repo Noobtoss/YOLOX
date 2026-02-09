@@ -5,10 +5,14 @@
 YOLOX_outputs/
 datasets/
 datasets_archived/
+datasets
 logs/
 runs/
+runs
 results/
+results
 checkpoints/
+checkpoints
 # do not ignore datasets under yolox/data
 !*yolox/data/datasets/
 
