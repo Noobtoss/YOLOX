@@ -275,7 +275,7 @@ class Exp(MyExp):
             238: 'wings',
             239: 'zucchini',
         }
-        self.img_size = (640, 640)  # (height, width)
+        self.img_size = (1280, 1280) # (640, 640)  # (height, width)
 
         # ---------------- model config ---------------- #
 
