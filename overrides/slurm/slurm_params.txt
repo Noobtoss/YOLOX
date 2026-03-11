@@ -83,6 +83,6 @@ exp_name Images05MetaFood2026_scl_8    CFG overrides/exps/Images05MetaFood2026.p
 exp_name Images05MetaFood2026_scl_10   CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth cls_feat_weight 10
 exp_name Images05MetaFood2026_scl_12   CFG overrides/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth cls_feat_weight 12
 # Experiments End Current
-exp_name CAFSD_baseline CFG overrides/exps/CAFSD.py CKPT checkpoints/yolox_x.pth
-exp_name CAFSD_scl_4    CFG overrides/exps/CAFSD.py CKPT checkpoints/yolox_x.pth cls_feat_weight 4
-exp_name CAFSD_scl_8    CFG overrides/exps/CAFSD.py CKPT checkpoints/yolox_x.pth cls_feat_weight 8
+exp_name UNIMIB2016_baseline CFG overrides/exps/UNIMIB2016.py CKPT checkpoints/yolox_x.pth
+exp_name UNIMIB2016_scl_4    CFG overrides/exps/UNIMIB2016.py CKPT checkpoints/yolox_x.pth cls_feat_weight 4
+exp_name UNIMIB2016_scl_8    CFG overrides/exps/UNIMIB2016.py CKPT checkpoints/yolox_x.pth cls_feat_weight 8
