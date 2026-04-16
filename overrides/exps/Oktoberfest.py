@@ -1,4 +1,5 @@
 import os
+import random
 
 from mods.yolox_bmvc_2026 import Exp as MyExp
 from mods.sup_contrastive_loss import SupervisedContrastiveLoss
@@ -14,6 +15,9 @@ class Exp(MyExp):
 
         self.cls_feat_loss = sup_contrastive_loss
         self.cls_feat_weight = 0
+        self.train_subset_fract = None
+        self.train_min_cat_fract = None
+        self.seed = random.randint(0, 2**32 - 1)
 
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
         self.exp_name = f"{self.exp_name}_baseline"

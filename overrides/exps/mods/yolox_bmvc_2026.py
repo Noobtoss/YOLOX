@@ -19,6 +19,9 @@ class Exp(MyExp):
         self.cls_feat_loss       = None   # SupervisedContrastiveLoss()
         self.cls_feat_weight     = None   # 1
         self.save_history_ckpt   = False  # True
+        self.train_subset_fract  = None
+        self.train_min_cat_fract = None
+        self.seed                = 2024
 
     def get_model(self):
         from yolox.models import YOLOX, YOLOPAFPN  # , YOLOXHead # THS
@@ -38,9 +41,10 @@ class Exp(MyExp):
         if getattr(self, "model", None) is None:
             in_channels = [256, 512, 1024]
             backbone = YOLOPAFPN(self.depth, self.width, in_channels=in_channels, act=self.act)
-            head = YOLOXHead(self.num_classes, self.width, in_channels=in_channels, act=self.act,
-                             cls_feat_loss=self.cls_feat_loss,
-                             cls_feat_weight=self.cls_feat_weight)
+            head = YOLOXHead(
+                self.num_classes, self.width, in_channels=in_channels, act=self.act, cls_feat_loss=self.cls_feat_loss,
+                cls_feat_weight=float(self.cls_feat_weight) if self.cls_feat_weight is not None else None,
+            )
             self.model = YOLOX(backbone, head)
 
         self.model.apply(init_yolo)
@@ -58,7 +62,7 @@ class Exp(MyExp):
                 "disk": Caching imgs to disk for fast training.
         """
         from yolox.data import COCODataset, TrainTransform
-        from dataset import Dataset
+        from .dataset import Dataset
 
         return Dataset(
             name="Images",  # self.train_ann.split("annotation_")[-1].removesuffix(".json"),
@@ -72,4 +76,7 @@ class Exp(MyExp):
             ),
             cache=cache,
             cache_type=cache_type,
+            train_subset_fract=float(self.train_subset_fract) if self.train_subset_fract is not None else None,
+            train_min_cat_fract=float(self.train_min_cat_fract) if self.train_min_cat_fract is not None else None,
+            seed=int(self.seed) if self.seed is not None else None,
         )

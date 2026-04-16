@@ -58,7 +58,7 @@ class Exp(MyExp):
                              class_weights=self.class_weights,
                              cls_emb_loss=self.cls_emb_loss,
                              duplicate_loss=self.duplicate_loss,
-                             cls_emb_weight=self.cls_emb_weight,
+                             cls_emb_weight=float(self.cls_emb_weight) if self.cls_emb_weight is not None else None,
                              duplicate_weight=self.duplicate_weight,
                              cls_dropout_p=self.cls_dropout_p)
             self.model = YOLOX(backbone, head)
