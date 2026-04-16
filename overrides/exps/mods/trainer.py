@@ -3,7 +3,7 @@ from loguru import logger
 from yolox.core import Trainer as BaseTrainer
 
 
-# THS, based on: yolox.core.trainer
+# THS, Copied from yolox.core.trainer
 
 
 class Trainer(BaseTrainer):

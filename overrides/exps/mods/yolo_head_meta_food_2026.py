@@ -9,7 +9,7 @@ from yolox.utils import bboxes_iou, cxcywh2xyxy, meshgrid, visualize_assign
 from yolox.models.yolo_head import YOLOXHead as BaseYOLOXHead
 
 
-# THS, based on: yolox.models.yolo_head
+# THS, Copied from yolox.models.yolo_head
 
 
 class YOLOXHead(BaseYOLOXHead):
@@ -59,7 +59,9 @@ class YOLOXHead(BaseYOLOXHead):
             obj_output = self.obj_preds[k](reg_feat)
 
             if self.training:
+                # >>> MOD
                 output = torch.cat([reg_output, obj_output, cls_output, cls_feat], 1)
+                # <<< MOD
                 output, grid = self.get_output_and_grid(
                     output, k, stride_this_level, xin[0].type()
                 )
@@ -82,9 +84,11 @@ class YOLOXHead(BaseYOLOXHead):
                     origin_preds.append(reg_output.clone())
 
             else:
+                # >>> MOD
                 output = torch.cat(
                     [reg_output, obj_output.sigmoid(), cls_output.sigmoid(), cls_feat], 1
                 )
+                # <<< MOD
 
             outputs.append(output)
 
@@ -114,7 +118,9 @@ class YOLOXHead(BaseYOLOXHead):
         grid = self.grids[k]
 
         batch_size = output.shape[0]
+        # >>> MOD
         n_ch = 5 + self.num_classes + 320
+        # <<< MOD
         hsize, wsize = output.shape[-2:]
         if grid.shape[2:4] != output.shape[2:4]:
             yv, xv = meshgrid([torch.arange(hsize), torch.arange(wsize)])
@@ -144,7 +150,9 @@ class YOLOXHead(BaseYOLOXHead):
         bbox_preds = outputs[:, :, :4]  # [batch, n_anchors_all, 4]
         obj_preds = outputs[:, :, 4:5]  # [batch, n_anchors_all, 1]
         cls_preds = outputs[:, :, 5:5 + self.num_classes]  # [batch, n_anchors_all, n_cls]
+        # >>> MOD
         cls_feat = outputs[:, :, 5 + self.num_classes:]  # [batch, n_anchors_all, n_cls_feat] n_cls_feat = 320
+        # <<< MOD
 
         # calculate targets
         nlabel = (labels.sum(dim=2) > 0).sum(dim=1)  # number of objects
@@ -272,11 +280,13 @@ class YOLOXHead(BaseYOLOXHead):
                 cls_preds.view(-1, self.num_classes)[fg_masks], cls_targets
             )
         ).sum() / num_fg
+        # >>> MOD
         loss_cls_feat = (
             self.cls_feat_loss(
                 cls_feat.view(-1, 320)[fg_masks], cls_targets
             )
         ).sum() / num_fg
+        # <<< MOD
         if self.use_l1:
             loss_l1 = (
                 self.l1_loss(origin_preds.view(-1, 4)[fg_masks], l1_targets)
@@ -285,6 +295,7 @@ class YOLOXHead(BaseYOLOXHead):
             loss_l1 = 0.0
 
         reg_weight = 5.0
+        # >>> MOD
         loss = reg_weight * loss_iou + loss_obj + loss_cls + self.cls_feat_weight * loss_cls_feat + loss_l1
 
         return (
@@ -296,3 +307,4 @@ class YOLOXHead(BaseYOLOXHead):
             # loss_l1,
             num_fg / max(num_gts, 1),
         )
+        # <<< MOD

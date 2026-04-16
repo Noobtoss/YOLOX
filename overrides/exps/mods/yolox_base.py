@@ -8,7 +8,7 @@ import torch.nn as nn
 from yolox.exp import Exp as BaseExp
 
 
-# THS, based on: yolox.exp.yolox_base.py
+# THS, Copied from yolox.exp.yolox_base.py
 
 
 class Exp(BaseExp):

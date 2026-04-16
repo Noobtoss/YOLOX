@@ -9,7 +9,7 @@ from loguru import logger
 from .yolox_base import Exp as MyExp
 
 
-# THS, based on: yolox.exp.yolox_base.py
+# THS, Copied from yolox.exp.yolox_base.py
 
 
 class Exp(MyExp):
