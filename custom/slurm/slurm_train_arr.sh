@@ -11,7 +11,7 @@
 #SBATCH --mem-per-cpu=64G          # RAM pro CPU Kern #20G #32G #64G
 
 BASE_DIR=/nfs/scratch/staff/schmittth/code_nexus/YOLOX
-# CFG=${1:-overrides/exps/Images04.py}
+# CFG=${1:-custom/exps/Images04.py}
 # CKPT=${2:-checkpoints/yolox_x.pth}
 
 module purge
@@ -25,7 +25,7 @@ export WANDB_DIR=/tmp/ths_wandb
 export WANDB_CACHE_DIR=/tmp/ths_wandb
 export WANDB_CONFIG_DIR=/tmp/ths_wandb
 
-PARAMS_FILE="$BASE_DIR/overrides/slurm/slurm_params.txt"
+PARAMS_FILE="$BASE_DIR/custom/slurm/slurm_params.txt"
 PARAMS=$(grep -v '^[[:space:]]*#' "$PARAMS_FILE" | sed -n "$((SLURM_ARRAY_TASK_ID))p")
 
 # Add SLURM_ARRAY_JOB_ID and SLURM_ARRAY_TASK_ID to exp_name
@@ -40,7 +40,7 @@ for ((i=0; i<${#ARR[@]}; i+=2)); do
 done
 OUTPUT_DIR="${BASE_DIR}/runs"
 EXP_NAME="${KV[exp_name]:-unnamed_experiment}"
-CFG="${KV[CFG]:-overrides/exps/Images04.py}"
+CFG="${KV[CFG]:-custom/exps/Images04.py}"
 CKPT="${KV[CKPT]:-checkpoints/yolox_x.pth}"
 
 python tools/train.py \
