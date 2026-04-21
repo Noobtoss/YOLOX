@@ -60,3 +60,4 @@ python tools/train.py \
 
 KEEP_FILES=("train_log.txt" "last_epoch_ckpt.pth")
 eval find "$OUTPUT_DIR/$EXP_NAME" -type f $(printf ' ! -name "%s"' "${KEEP_FILES[@]}") -delete
+# find "$OUTPUT_DIR/$EXP_NAME" -type f ! -name "train_log.txt" ! -name "last_epoch_ckpt.pth" -delete
