@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=YOLOX_train_arr # Kurzname des Jobs
-#SBATCH --array=77-79%3           # 45-65%4  # 7 Jobs total running 4 at a time
+#SBATCH --array=83-85%3           # 45-65%4  # 7 Jobs total running 4 at a time
 #SBATCH --output=logs/R-%A-%a.out
 #SBATCH --partition=p2             # p4
 #SBATCH --qos=gpuultimate
@@ -30,7 +30,6 @@ PARAMS=$(grep -v '^[[:space:]]*#' "$PARAMS_FILE" | sed -n "$((SLURM_ARRAY_TASK_I
 
 # Add SLURM_ARRAY_JOB_ID and SLURM_ARRAY_TASK_ID to exp_name
 PARAMS=$(echo "$PARAMS" | sed -E "s/(exp_name[[:space:]]+[^[:space:]]+)/\1_${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}/")
-
 declare -A KV
 read -r -a ARR <<< "$PARAMS"
 for ((i=0; i<${#ARR[@]}; i+=2)); do
@@ -38,10 +37,11 @@ for ((i=0; i<${#ARR[@]}; i+=2)); do
     value="${ARR[$i+1]}"
     KV["$key"]="$value"
 done
+
 OUTPUT_DIR="${BASE_DIR}/runs"
 EXP_NAME="${KV[exp_name]:-unnamed_experiment}"
-CFG="${KV[CFG]:-custom/exps/Images04.py}"
-CKPT="${KV[CKPT]:-checkpoints/yolox_x.pth}"
+CFG="${KV[cfg]:-custom/exps/Images04.py}"
+CKPT="${KV[ckpt]:-checkpoints/yolox_x.pth}"
 
 python tools/train.py \
     --exp_file $BASE_DIR/$CFG \

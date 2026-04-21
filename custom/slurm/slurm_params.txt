@@ -1,92 +1,102 @@
 # Experiments Images05_cls_train init cls_train
-exp_name Images05_dropout_09              CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 cls_dropout_p 0.9
-exp_name Images05_dropout_07              CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 cls_dropout_p 0.7
-exp_name Images05_dropout_05              CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 cls_dropout_p 0.5
-exp_name Images05_sup_con_loss            CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth cls_emb_weight 1 cls_dropout_p 0
-exp_name Images05_sup_con_loss_double     CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth cls_emb_weight 2 cls_dropout_p 0
-exp_name Images05_duplicate_loss          CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 duplicate_weight 4 cls_dropout_p 0
-exp_name Images05_longer_aug              CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 0 duplicate_weight 0 cls_dropout_p 0
-exp_name Images05_longer_aug_dropout_05   CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 0 cls_dropout_p 0.5
-exp_name Images05_longer_aug_sup_con_loss CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 1 cls_dropout_p 0
-exp_name Images05_less_aug                CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth hsv_prob 0.4
-exp_name Images05_less_aug_dropout_05     CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth cls_emb_weight 0 cls_dropout_p 0.5 hsv_prob 0.4
-exp_name Images05_less_aug_sup_con_loss   CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth cls_emb_weight 1 cls_dropout_p 0 hsv_prob 0.4
-exp_name Images05_baseline                CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth
+exp_name Images05_dropout_09              cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth cls_emb_weight 0 cls_dropout_p 0.9
+exp_name Images05_dropout_07              cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth cls_emb_weight 0 cls_dropout_p 0.7
+exp_name Images05_dropout_05              cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth cls_emb_weight 0 cls_dropout_p 0.5
+exp_name Images05_sup_con_loss            cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth cls_emb_weight 1 cls_dropout_p 0
+exp_name Images05_sup_con_loss_double     cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth cls_emb_weight 2 cls_dropout_p 0
+exp_name Images05_duplicate_loss          cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth cls_emb_weight 0 duplicate_weight 4 cls_dropout_p 0
+exp_name Images05_longer_aug              cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 0 duplicate_weight 0 cls_dropout_p 0
+exp_name Images05_longer_aug_dropout_05   cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 0 cls_dropout_p 0.5
+exp_name Images05_longer_aug_sup_con_loss cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 1 cls_dropout_p 0
+exp_name Images05_less_aug                cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth hsv_prob 0.4
+exp_name Images05_less_aug_dropout_05     cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth cls_emb_weight 0 cls_dropout_p 0.5 hsv_prob 0.4
+exp_name Images05_less_aug_sup_con_loss   cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth cls_emb_weight 1 cls_dropout_p 0 hsv_prob 0.4
+exp_name Images05_baseline                cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth
 # Experiments Images05_cls_train cls_emb_weight
-exp_name Images05_sup_con_loss    CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth cls_emb_weight 1
-exp_name Images05_sup_con_loss_2  CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth cls_emb_weight 2
-exp_name Images05_sup_con_loss_3  CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth cls_emb_weight 3
-exp_name Images05_sup_con_loss_4  CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth cls_emb_weight 4
-exp_name Images05_sup_con_loss_5  CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth cls_emb_weight 5
-exp_name Images05_sup_con_loss_6  CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth cls_emb_weight 6
-exp_name Images05_sup_con_loss_7  CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth cls_emb_weight 7
-exp_name Images05_sup_con_loss_8  CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth cls_emb_weight 8
-exp_name Images05_sup_con_loss_9  CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth cls_emb_weight 9
-exp_name Images05_sup_con_loss_10 CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth cls_emb_weight 10
-exp_name Images05_baseline        CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth
-exp_name Images05_baseline_2      CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth
-exp_name Images05_baseline_3      CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth
-exp_name Images05_baseline_4      CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth
+exp_name Images05_sup_con_loss    cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth cls_emb_weight 1
+exp_name Images05_sup_con_loss_2  cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth cls_emb_weight 2
+exp_name Images05_sup_con_loss_3  cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth cls_emb_weight 3
+exp_name Images05_sup_con_loss_4  cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth cls_emb_weight 4
+exp_name Images05_sup_con_loss_5  cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth cls_emb_weight 5
+exp_name Images05_sup_con_loss_6  cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth cls_emb_weight 6
+exp_name Images05_sup_con_loss_7  cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth cls_emb_weight 7
+exp_name Images05_sup_con_loss_8  cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth cls_emb_weight 8
+exp_name Images05_sup_con_loss_9  cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth cls_emb_weight 9
+exp_name Images05_sup_con_loss_10 cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth cls_emb_weight 10
+exp_name Images05_baseline        cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth
+exp_name Images05_baseline_2      cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth
+exp_name Images05_baseline_3      cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth
+exp_name Images05_baseline_4      cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth
 # Experiments Images05_cls_train longer/less aug
-exp_name Images05_longer_aug         CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0
-exp_name Images05_less_aug           CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth hsv_prob 0.4
-exp_name Images05_less_02_aug        CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth hsv_prob 0.2
-exp_name Images05_less_00_aug        CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth hsv_prob 0
-exp_name Images05_longer_less_aug    CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0.4
-exp_name Images05_longer_less_02_aug CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0.2
-exp_name Images05_longer_less_00_aug CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0
+exp_name Images05_longer_aug         cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth no_aug_epochs 0
+exp_name Images05_less_aug           cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth hsv_prob 0.4
+exp_name Images05_less_02_aug        cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth hsv_prob 0.2
+exp_name Images05_less_00_aug        cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth hsv_prob 0
+exp_name Images05_longer_less_aug    cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0.4
+exp_name Images05_longer_less_02_aug cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0.2
+exp_name Images05_longer_less_00_aug cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0
 # Experiments Images05_cls_train best01 training
-exp_name Images05_sup_con_loss_longer_aug           CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 1
-exp_name Images05_sup_con_loss_4_longer_aug         CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 4
-exp_name Images05_sup_con_loss_less_aug             CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth hsv_prob 0.4 cls_emb_weight 1
-exp_name Images05_sup_con_loss_less_02_aug          CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth hsv_prob 0.2 cls_emb_weight 1
-exp_name Images05_sup_con_loss_4_less_aug           CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth hsv_prob 0.4 cls_emb_weight 4
-exp_name Images05_sup_con_loss_4_less_02_aug        CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth hsv_prob 0.2 cls_emb_weight 4
-exp_name Images05_sup_con_loss_longer_less_aug      CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0.4 cls_emb_weight 1
-exp_name Images05_sup_con_loss_longer_less_02_aug   CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0.2 cls_emb_weight 1
-exp_name Images05_sup_con_loss_4_longer_less_aug    CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0.4 cls_emb_weight 4
-exp_name Images05_sup_con_loss_4_longer_less_02_aug CFG custom/exps/Images05ClsTrain.py CKPT checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0.2 cls_emb_weight 4
+exp_name Images05_sup_con_loss_longer_aug           cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 1
+exp_name Images05_sup_con_loss_4_longer_aug         cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth no_aug_epochs 0 cls_emb_weight 4
+exp_name Images05_sup_con_loss_less_aug             cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth hsv_prob 0.4 cls_emb_weight 1
+exp_name Images05_sup_con_loss_less_02_aug          cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth hsv_prob 0.2 cls_emb_weight 1
+exp_name Images05_sup_con_loss_4_less_aug           cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth hsv_prob 0.4 cls_emb_weight 4
+exp_name Images05_sup_con_loss_4_less_02_aug        cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth hsv_prob 0.2 cls_emb_weight 4
+exp_name Images05_sup_con_loss_longer_less_aug      cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0.4 cls_emb_weight 1
+exp_name Images05_sup_con_loss_longer_less_02_aug   cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0.2 cls_emb_weight 1
+exp_name Images05_sup_con_loss_4_longer_less_aug    cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0.4 cls_emb_weight 4
+exp_name Images05_sup_con_loss_4_longer_less_02_aug cfg custom/exps/Images05ClsTrain.py ckpt checkpoints/yolox_x.pth no_aug_epochs 0 hsv_prob 0.2 cls_emb_weight 4
 # Experiments MetaFood2026 25pct
-exp_name Images05MetaFood2026_25pct_baseline CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_25pct.json
-exp_name Images05MetaFood2026_25pct_scl_1    CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_25pct.json cls_feat_weight 1
-exp_name Images05MetaFood2026_25pct_scl_2    CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_25pct.json cls_feat_weight 2
-exp_name Images05MetaFood2026_25pct_scl_4    CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_25pct.json cls_feat_weight 4
-exp_name Images05MetaFood2026_25pct_scl_6    CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_25pct.json cls_feat_weight 6
-exp_name Images05MetaFood2026_25pct_scl_8    CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_25pct.json cls_feat_weight 8
-exp_name Images05MetaFood2026_25pct_scl_10   CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_25pct.json cls_feat_weight 10
-exp_name Images05MetaFood2026_25pct_scl_12   CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_25pct.json cls_feat_weight 12
+exp_name Images05MetaFood2026_25pct_baseline cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_25pct.json
+exp_name Images05MetaFood2026_25pct_scl_1    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_25pct.json cls_feat_weight 1
+exp_name Images05MetaFood2026_25pct_scl_2    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_25pct.json cls_feat_weight 2
+exp_name Images05MetaFood2026_25pct_scl_4    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_25pct.json cls_feat_weight 4
+exp_name Images05MetaFood2026_25pct_scl_6    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_25pct.json cls_feat_weight 6
+exp_name Images05MetaFood2026_25pct_scl_8    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_25pct.json cls_feat_weight 8
+exp_name Images05MetaFood2026_25pct_scl_10   cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_25pct.json cls_feat_weight 10
+exp_name Images05MetaFood2026_25pct_scl_12   cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_25pct.json cls_feat_weight 12
 # Experiments MetaFood2026 50pct
-exp_name Images05MetaFood2026_50pct_baseline CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_50pct.json
-exp_name Images05MetaFood2026_50pct_scl_1    CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_50pct.json cls_feat_weight 1
-exp_name Images05MetaFood2026_50pct_scl_2    CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_50pct.json cls_feat_weight 2
-exp_name Images05MetaFood2026_50pct_scl_4    CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_50pct.json cls_feat_weight 4
-exp_name Images05MetaFood2026_50pct_scl_6    CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_50pct.json cls_feat_weight 6
-exp_name Images05MetaFood2026_50pct_scl_8    CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_50pct.json cls_feat_weight 8
-exp_name Images05MetaFood2026_50pct_scl_10   CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_50pct.json cls_feat_weight 10
-exp_name Images05MetaFood2026_50pct_scl_12   CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_50pct.json cls_feat_weight 12
+exp_name Images05MetaFood2026_50pct_baseline cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_50pct.json
+exp_name Images05MetaFood2026_50pct_scl_1    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_50pct.json cls_feat_weight 1
+exp_name Images05MetaFood2026_50pct_scl_2    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_50pct.json cls_feat_weight 2
+exp_name Images05MetaFood2026_50pct_scl_4    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_50pct.json cls_feat_weight 4
+exp_name Images05MetaFood2026_50pct_scl_6    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_50pct.json cls_feat_weight 6
+exp_name Images05MetaFood2026_50pct_scl_8    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_50pct.json cls_feat_weight 8
+exp_name Images05MetaFood2026_50pct_scl_10   cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_50pct.json cls_feat_weight 10
+exp_name Images05MetaFood2026_50pct_scl_12   cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_50pct.json cls_feat_weight 12
 # Experiments MetaFood2026 smart50pct
-exp_name Images05MetaFood2026_smart50pct_baseline CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_smart50pct.json
-exp_name Images05MetaFood2026_smart50pct_scl_1    CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_smart50pct.json cls_feat_weight 1
-exp_name Images05MetaFood2026_smart50pct_scl_2    CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_smart50pct.json cls_feat_weight 2
-exp_name Images05MetaFood2026_smart50pct_scl_4    CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_smart50pct.json cls_feat_weight 4
-exp_name Images05MetaFood2026_smart50pct_scl_6    CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_smart50pct.json cls_feat_weight 6
-exp_name Images05MetaFood2026_smart50pct_scl_8    CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_smart50pct.json cls_feat_weight 8
-exp_name Images05MetaFood2026_smart50pct_scl_10   CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_smart50pct.json cls_feat_weight 10
-exp_name Images05MetaFood2026_smart50pct_scl_12   CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_smart50pct.json cls_feat_weight 12
+exp_name Images05MetaFood2026_smart50pct_baseline cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_smart50pct.json
+exp_name Images05MetaFood2026_smart50pct_scl_1    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_smart50pct.json cls_feat_weight 1
+exp_name Images05MetaFood2026_smart50pct_scl_2    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_smart50pct.json cls_feat_weight 2
+exp_name Images05MetaFood2026_smart50pct_scl_4    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_smart50pct.json cls_feat_weight 4
+exp_name Images05MetaFood2026_smart50pct_scl_6    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_smart50pct.json cls_feat_weight 6
+exp_name Images05MetaFood2026_smart50pct_scl_8    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_smart50pct.json cls_feat_weight 8
+exp_name Images05MetaFood2026_smart50pct_scl_10   cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_smart50pct.json cls_feat_weight 10
+exp_name Images05MetaFood2026_smart50pct_scl_12   cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth data_dir datasets/Images05MetaFood2026 ann_file datasets/Images05MetaFood2026/annotations/annotation_train_smart50pct.json cls_feat_weight 12
 # Experiments MetaFood2026
-exp_name Images05MetaFood2026_baseline CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth
-exp_name Images05MetaFood2026_scl_1    CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth cls_feat_weight 1
-exp_name Images05MetaFood2026_scl_2    CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth cls_feat_weight 2
-exp_name Images05MetaFood2026_scl_4    CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth cls_feat_weight 4
-exp_name Images05MetaFood2026_scl_6    CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth cls_feat_weight 6
-exp_name Images05MetaFood2026_scl_8    CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth cls_feat_weight 8
-exp_name Images05MetaFood2026_scl_10   CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth cls_feat_weight 10
-exp_name Images05MetaFood2026_scl_12   CFG custom/exps/Images05MetaFood2026.py CKPT checkpoints/yolox_x.pth cls_feat_weight 12
+exp_name Images05MetaFood2026_baseline cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth
+exp_name Images05MetaFood2026_scl_1    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth cls_feat_weight 1
+exp_name Images05MetaFood2026_scl_2    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth cls_feat_weight 2
+exp_name Images05MetaFood2026_scl_4    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth cls_feat_weight 4
+exp_name Images05MetaFood2026_scl_6    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth cls_feat_weight 6
+exp_name Images05MetaFood2026_scl_8    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth cls_feat_weight 8
+exp_name Images05MetaFood2026_scl_10   cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth cls_feat_weight 10
+exp_name Images05MetaFood2026_scl_12   cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth cls_feat_weight 12
 # Experiments Oktoberfest
-exp_name Oktoberfest_baseline       CFG custom/exps/Oktoberfest.py CKPT checkpoints/yolox_x.pth
-exp_name Oktoberfest_scl_4          CFG custom/exps/Oktoberfest.py CKPT checkpoints/yolox_x.pth cls_feat_weight 4
-exp_name Oktoberfest_scl_8          CFG custom/exps/Oktoberfest.py CKPT checkpoints/yolox_x.pth cls_feat_weight 8
-exp_name Oktoberfest_50pct_baseline CFG custom/exps/Oktoberfest.py CKPT checkpoints/yolox_x.pth train_subset_fract 0.5 seed 2024
-exp_name Oktoberfest_50pct_scl_4    CFG custom/exps/Oktoberfest.py CKPT checkpoints/yolox_x.pth cls_feat_weight 4 train_subset_fract 0.5 seed 2024
-exp_name Oktoberfest_50pct_scl_8    CFG custom/exps/Oktoberfest.py CKPT checkpoints/yolox_x.pth cls_feat_weight 8 train_subset_fract 0.5 seed 2024
+exp_name Oktoberfest_baseline       cfg custom/exps/Oktoberfest.py ckpt checkpoints/yolox_x.pth
+exp_name Oktoberfest_scl_4          cfg custom/exps/Oktoberfest.py ckpt checkpoints/yolox_x.pth cls_feat_weight 4
+exp_name Oktoberfest_scl_8          cfg custom/exps/Oktoberfest.py ckpt checkpoints/yolox_x.pth cls_feat_weight 8
+exp_name Oktoberfest_50pct_baseline cfg custom/exps/Oktoberfest.py ckpt checkpoints/yolox_x.pth train_subset_fract 0.5 seed 2024
+exp_name Oktoberfest_50pct_scl_4    cfg custom/exps/Oktoberfest.py ckpt checkpoints/yolox_x.pth cls_feat_weight 4 train_subset_fract 0.5 seed 2024
+exp_name Oktoberfest_50pct_scl_8    cfg custom/exps/Oktoberfest.py ckpt checkpoints/yolox_x.pth cls_feat_weight 8 train_subset_fract 0.5 seed 2024
+exp_name Oktoberfest_baseline       cfg custom/exps/Oktoberfest.py ckpt checkpoints/yolox_x.pth max_epoch 250
+exp_name Oktoberfest_scl_4          cfg custom/exps/Oktoberfest.py ckpt checkpoints/yolox_x.pth cls_feat_weight 4 max_epoch 250
+exp_name Oktoberfest_scl_8          cfg custom/exps/Oktoberfest.py ckpt checkpoints/yolox_x.pth cls_feat_weight 8 max_epoch 250
+# Experiments UNIMIB2016
+exp_name UNIMIB2016_baseline       cfg custom/exps/UNIMIB2016.py ckpt checkpoints/yolox_x.pth
+exp_name UNIMIB2016_scl_4          cfg custom/exps/UNIMIB2016.py ckpt checkpoints/yolox_x.pth cls_feat_weight 4
+exp_name UNIMIB2016_scl_8          cfg custom/exps/UNIMIB2016.py ckpt checkpoints/yolox_x.pth cls_feat_weight 8
+exp_name UNIMIB2016_50pct_baseline cfg custom/exps/UNIMIB2016.py ckpt checkpoints/yolox_x.pth train_subset_fract 0.5 seed 2024
+exp_name UNIMIB2016_50pct_scl_4    cfg custom/exps/UNIMIB2016.py ckpt checkpoints/yolox_x.pth cls_feat_weight 4 train_subset_fract 0.5 seed 2024
+exp_name UNIMIB2016_50pct_scl_8    cfg custom/exps/UNIMIB2016.py ckpt checkpoints/yolox_x.pth cls_feat_weight 8 train_subset_fract 0.5 seed 2024
 # Experiments End Current
