@@ -58,4 +58,5 @@ python tools/train.py \
     output_dir $OUTPUT_DIR \
     $PARAMS
 
-find "$OUTPUT_DIR/$EXP_NAME" -type f ! -name "train_log.txt" ! -name "last_epoch_ckpt.pth" -delete
+KEEP_FILES=("train_log.txt" "last_epoch_ckpt.pth" "results.csv")
+eval find "$OUTPUT_DIR/$EXP_NAME" -type f $(printf ' ! -name "%s"' "${KEEP_FILES[@]}") -delete
