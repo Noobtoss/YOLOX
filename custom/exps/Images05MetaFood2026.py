@@ -1,7 +1,7 @@
 import os
 
-from .mods.yolox_meta_food_2026 import Exp as MyExp
-from .mods.sup_contrastive_loss import SupervisedContrastiveLoss
+from mods.yolox_meta_food_2026 import Exp as MyExp
+from mods.sup_contrastive_loss import SupervisedContrastiveLoss
 
 
 class Exp(MyExp):
