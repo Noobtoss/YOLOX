@@ -1,8 +1,8 @@
 import os
 import random
 
-from mods.yolox_bmvc_2026 import Exp as MyExp
-from mods.sup_contrastive_loss import SupervisedContrastiveLoss
+from .mods.yolox_bmvc_2026 import Exp as MyExp
+from .mods.sup_contrastive_loss import SupervisedContrastiveLoss
 
 
 class Exp(MyExp):

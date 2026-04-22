@@ -1,11 +1,11 @@
 import os
 import torch
 
-from mods.yolox_cls_train import Exp as MyExp
-from mods.ams_loss import AMSoftmaxLoss
-from mods.sup_contrastive_loss import SupervisedContrastiveLoss
-from mods.duplicate_loss import DuplicateLoss
-from mods.scheduler import Scheduler
+from .mods.yolox_cls_train import Exp as MyExp
+from .mods.ams_loss import AMSoftmaxLoss
+from .mods.sup_contrastive_loss import SupervisedContrastiveLoss
+from .mods.duplicate_loss import DuplicateLoss
+from .mods.scheduler import Scheduler
 
 
 class Exp(MyExp):
