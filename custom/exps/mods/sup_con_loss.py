@@ -10,52 +10,38 @@ from math import log
 # https://github.com/huggingface/sentence-transformers/tree/master/sentence_transformers/losses
 
 
-def undersampling(projections, onehot_targets):
-    targets = onehot_targets.argmax(dim=1)
-
-    max_samples = 512  # Danger at batch_size = 8, this selects max = 64 bboxes per img
-    if projections.shape[0] > max_samples:
-        idx = torch.randperm(projections.shape[0])[:max_samples]
-        projections = projections[idx]
-        targets = targets[idx]
-    projections = F.normalize(projections, dim=1)
-
-    return projections, targets
-
-
 def divide_no_nan(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
     """
     PyTorch equivalent of tf.math.divide_no_nan.
     Returns x / y, with zeros where y == 0.
     Differentiable and safe for autograd.
     """
-    y_safe = torch.where(y == 0, torch.ones_like(y), y)  # prevent div by 0
+    y_safe = torch.where(y == 0, torch.ones_like(y), y)
     result = x / y_safe
     result = torch.where(y == 0, torch.zeros_like(result), result)
     return result
 
 
-class SupervisedContrastiveLoss(nn.Module):
+class SupConLoss(nn.Module):
     def __init__(self, temperature=0.07):
         """
-        Implementation of the loss described in the paper Supervised Contrastive Learning :
+        Implementation of the loss described in the paper Supervised Contrastive Learning:
         https://arxiv.org/abs/2004.11362
 
-        :param temperature: int
+        :param temperature: float
         """
         super().__init__()
         self.temperature = temperature
 
     def forward(self, projections, targets):
         """
-
         :param projections: torch.Tensor, shape [batch_size, projection_dim]
-        :param targets: torch.Tensor, shape [batch_size, num_classes]
-        :return: torch.Tensor, scalar
+        :param targets: torch.Tensor, shape [batch_size]
+        :return: torch.Tensor, shape [batch_size] — per-sample loss (0 where no positives)
         """
-        projections, targets = undersampling(projections, targets)
+        projections = F.normalize(projections, dim=1)  # L2 normalizes
 
-        device = torch.device("cuda") if projections.is_cuda else torch.device("cpu")
+        device = projections.device
 
         dot_product_tempered = torch.mm(projections, projections.T) / self.temperature
         # Minus max for numerical stability with exponential. Same done in cross entropy. Epsilon added to avoid log(0)

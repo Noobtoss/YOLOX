@@ -1,7 +1,7 @@
 import os
 
 from mods.yolox_meta_food_2026 import Exp as MyExp
-from mods.sup_contrastive_loss import SupervisedContrastiveLoss
+from mods.sup_con_loss import SupConLoss
 
 
 class Exp(MyExp):
@@ -10,10 +10,8 @@ class Exp(MyExp):
         super().__init__()
         self.num_classes = 37
 
-        sup_contrastive_loss = SupervisedContrastiveLoss()  # temperature=0.07
-
-        self.cls_feat_loss = sup_contrastive_loss
-        self.cls_feat_weight = 0
+        self.cls_emb_loss = SupConLoss()  # temperature=0.07
+        self.cls_emb_weight = 0
 
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
         self.exp_name = f"{self.exp_name}_baseline"

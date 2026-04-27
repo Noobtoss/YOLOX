@@ -2,7 +2,7 @@ import os
 import random
 
 from mods.yolox_bmvc_2026 import Exp as MyExp
-from mods.sup_contrastive_loss import SupervisedContrastiveLoss
+from mods.sup_con_loss import SupConLoss
 
 
 class Exp(MyExp):
@@ -11,10 +11,8 @@ class Exp(MyExp):
         super().__init__()
         self.num_classes = 74
 
-        sup_contrastive_loss = SupervisedContrastiveLoss()  # temperature=0.07
-
-        self.cls_feat_loss = sup_contrastive_loss
-        self.cls_feat_weight = 0
+        self.cls_emb_loss = SupConLoss()  # temperature=0.07
+        self.cls_emb_weight = 0
         self.train_subset_fract = None
         self.train_min_cat_fract = None
         self.seed = random.randint(0, 2**32 - 1)
