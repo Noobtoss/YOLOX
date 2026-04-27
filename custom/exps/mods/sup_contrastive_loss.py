@@ -50,7 +50,7 @@ class SupervisedContrastiveLoss(nn.Module):
         """
 
         :param projections: torch.Tensor, shape [batch_size, projection_dim]
-        :param targets: torch.Tensor, shape [batch_size]
+        :param targets: torch.Tensor, shape [batch_size, num_classes]
         :return: torch.Tensor, scalar
         """
         projections, targets = undersampling(projections, targets)
