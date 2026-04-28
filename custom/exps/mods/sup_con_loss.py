@@ -27,7 +27,14 @@ class SupConLoss(nn.Module):
         Implementation of the loss described in the paper Supervised Contrastive Learning:
         https://arxiv.org/abs/2004.11362
 
-        :param temperature: float
+        :param temperature: float — controls sharpness of the contrastive distribution.
+            Lower values → sharper, harder contrast (sensitive to hardest negatives).
+            Higher values → softer, more uniform distribution over negatives.
+
+            Rough guidelines:
+                batch_size ~32,  n_classes ~5-10  → 0.07 (paper default)
+                batch_size ~128, n_classes ~10-20 → 0.1
+                batch_size ~300, n_classes ~30    → 0.1 - 0.2
         """
         super().__init__()
         self.temperature = temperature
