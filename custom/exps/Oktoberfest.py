@@ -11,8 +11,8 @@ class Exp(MyExp):
         super().__init__()
         self.num_classes = 15
 
-        self.cls_emb_loss = SupConLoss()  # temperature=0.07
-        self.cls_emb_weight = 0
+        self.cls_feat_loss = SupConLoss()  # temperature=0.07
+        self.cls_feat_weight = 0
         self.train_subset_fract = None
         self.train_min_cat_fract = None
         self.seed = random.randint(0, 2**32 - 1)

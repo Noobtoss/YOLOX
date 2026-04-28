@@ -21,8 +21,8 @@ class YOLOXHead(BaseYOLOXHead):
         in_channels=[256, 512, 1024],
         act="silu",
         depthwise=False,
-        cls_emb_loss=None,
-        cls_emb_weight=None
+        cls_feat_loss=None,
+        cls_feat_weight=None
     ):
         super().__init__(
             num_classes,
@@ -32,8 +32,8 @@ class YOLOXHead(BaseYOLOXHead):
             act,
             depthwise
         )
-        self.cls_emb_loss = cls_emb_loss
-        self.cls_emb_weight = cls_emb_weight or 0
+        self.cls_feat_loss = cls_feat_loss
+        self.cls_feat_weight = cls_feat_weight or 0
 
 
 
@@ -51,8 +51,8 @@ class YOLOXHead(BaseYOLOXHead):
             cls_x = x
             reg_x = x
 
-            cls_embs = cls_conv(cls_x)
-            cls_output = self.cls_preds[k](cls_embs)
+            cls_feats = cls_conv(cls_x)
+            cls_output = self.cls_preds[k](cls_feats)
 
             reg_feat = reg_conv(reg_x)
             reg_output = self.reg_preds[k](reg_feat)
@@ -60,7 +60,7 @@ class YOLOXHead(BaseYOLOXHead):
 
             if self.training:
                 # >>> MOD
-                output = torch.cat([reg_output, obj_output, cls_output, cls_embs], 1)
+                output = torch.cat([reg_output, obj_output, cls_output, cls_feats], 1)
                 # <<< MOD
                 output, grid = self.get_output_and_grid(
                     output, k, stride_this_level, xin[0].type()
@@ -86,7 +86,7 @@ class YOLOXHead(BaseYOLOXHead):
             else:
                 # >>> MOD
                 output = torch.cat(
-                    [reg_output, obj_output.sigmoid(), cls_output.sigmoid(), cls_embs], 1
+                    [reg_output, obj_output.sigmoid(), cls_output.sigmoid(), cls_feats], 1
                 )
                 # <<< MOD
 
@@ -151,7 +151,7 @@ class YOLOXHead(BaseYOLOXHead):
         obj_preds = outputs[:, :, 4:5]  # [batch, n_anchors_all, 1]
         cls_preds = outputs[:, :, 5:5 + self.num_classes]  # [batch, n_anchors_all, n_cls]
         # >>> MOD
-        cls_embs = outputs[:, :, 5 + self.num_classes:]  # [batch, n_anchors_all, n_cls_embs] n_cls_embs = 320
+        cls_feats = outputs[:, :, 5 + self.num_classes:]  # [batch, n_anchors_all, n_cls_feats] n_cls_feats = 320
         # <<< MOD
 
         # calculate targets
@@ -289,19 +289,19 @@ class YOLOXHead(BaseYOLOXHead):
 
         reg_weight = 5.0
         # >>> MOD
-        loss_cls_embs = (
-            self.cls_emb_loss(
-                cls_embs.view(-1, 320)[fg_masks], cls_targets.argmax(dim=1)
+        loss_cls_feats = (
+            self.cls_feat_loss(
+                cls_feats.view(-1, 320)[fg_masks], cls_targets.argmax(dim=1)
             )
         ).sum() / num_fg
-        loss = reg_weight * loss_iou + loss_obj + loss_cls + self.cls_emb_weight * loss_cls_embs + loss_l1
+        loss = reg_weight * loss_iou + loss_obj + loss_cls + self.cls_feat_weight * loss_cls_feats + loss_l1
 
         return (
             loss,
             reg_weight * loss_iou,
             loss_obj,
             loss_cls,
-            loss_cls_embs,  # DANGER this allows loss_cls_embs to hijack loss_l1
+            loss_cls_feats,  # DANGER this allows loss_cls_feats to hijack loss_l1
             # loss_l1,
             num_fg / max(num_gts, 1),
         )
