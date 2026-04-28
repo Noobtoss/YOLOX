@@ -23,26 +23,40 @@ def divide_no_nan(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
 
 class SupConLoss(nn.Module):
     def __init__(self, temperature: float = 0.07):
+        """
+        Implementation of the loss described in the paper Supervised Contrastive Learning:
+        https://arxiv.org/abs/2004.11362
+
+        :param temperature: float
+        """
         super().__init__()
         self.temperature = temperature
 
     def forward(self, projections: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
-        projections = F.normalize(projections, dim=1)   # L2 normalizes
+        """
+        :param projections: torch.Tensor, shape [batch_size, projection_dim]
+        :param targets: torch.Tensor, shape [batch_size]
+        :return: torch.Tensor, shape [batch_size] — per-sample loss (0 where no positives)
+        """
+        projections = F.normalize(projections, dim=1)  # L2 normalizes
 
-        sim = torch.mm(projections, projections.T) / self.temperature
-        sim = sim - sim.max(dim=1, keepdim=True)[0]  # numerical stability
-        exp_sim = torch.exp(sim)
+        device = projections.device
 
-        mask_self = (1 - torch.eye(projections.shape[0], device=projections.device)).bool()
-        mask_pos = (targets.unsqueeze(1) == targets.unsqueeze(0)) & mask_self
+        dot_product_tempered = torch.mm(projections, projections.T) / self.temperature
+        exp_dot_tempered = torch.exp(
+            dot_product_tempered - torch.max(dot_product_tempered, dim=1, keepdim=True)[0].detach()
+        )
 
-        # log prob for each pair
-        denom = exp_sim.masked_fill(~mask_self, 0).sum(dim=1, keepdim=True)
-        log_prob = sim - torch.log(denom + 1e-8)
+        mask_similar_class = (targets.unsqueeze(1).repeat(1, targets.shape[0]) == targets).to(device)
+        mask_anchor_out = (1 - torch.eye(exp_dot_tempered.shape[0])).to(device)
+        mask_combined = mask_similar_class * mask_anchor_out
+        cardinality_per_samples = torch.sum(mask_combined, dim=1)
 
+        log_prob = -torch.log(
+            exp_dot_tempered / (torch.sum(exp_dot_tempered * mask_anchor_out, dim=1, keepdim=True) + 1e-8)
+        )
         loss_per_sample = divide_no_nan(
-            (log_prob * mask_pos).sum(dim=1),
-            mask_pos.sum(dim=1).float()
+            torch.sum(log_prob * mask_combined, dim=1), cardinality_per_samples
         )
 
         return loss_per_sample
