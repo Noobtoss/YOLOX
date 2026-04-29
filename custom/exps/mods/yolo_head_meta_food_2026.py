@@ -54,6 +54,25 @@ class YOLOXHead(BaseYOLOXHead):
             cls_feats = cls_conv(cls_x)
             cls_output = self.cls_preds[k](cls_feats)
 
+            # >>> MOD
+            """
+            # Insanity check
+            tmp = cls_output.clone()
+            cls_feats[0, :, 0, 0] = 2
+            cls_feats[0, :, 3, 3] = 2
+            cls_output = self.cls_preds[k](cls_feats)
+            print(cls_feats.shape)
+            print(cls_output.shape)
+            print(torch.all(tmp[0, :, 0, 0] == cls_output[0, :, 0, 0]))  # False — changed
+            print(torch.all(tmp[0, :, 3, 3] == cls_output[0, :, 3, 3]))  # False — changed
+            # exclude both modified positions
+            mask = torch.ones(tmp.shape[2:], dtype=torch.bool)
+            mask[0, 0] = False
+            mask[3, 3] = False
+            print(torch.all(tmp[0, :, mask] == cls_output[0, :, mask]))  # True — all others unchanged
+            """
+            # <<< MOD
+
             reg_feat = reg_conv(reg_x)
             reg_output = self.reg_preds[k](reg_feat)
             obj_output = self.obj_preds[k](reg_feat)
