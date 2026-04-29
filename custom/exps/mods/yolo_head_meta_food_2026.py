@@ -57,19 +57,18 @@ class YOLOXHead(BaseYOLOXHead):
             # >>> MOD
             """
             # Insanity check
-            tmp = cls_output.clone()
-            cls_feats[0, :, 0, 0] = 2
-            cls_feats[0, :, 3, 3] = 2
-            cls_output = self.cls_preds[k](cls_feats)
-            print(cls_feats.shape)
-            print(cls_output.shape)
-            print(torch.all(tmp[0, :, 0, 0] == cls_output[0, :, 0, 0]))  # False — changed
-            print(torch.all(tmp[0, :, 3, 3] == cls_output[0, :, 3, 3]))  # False — changed
-            # exclude both modified positions
-            mask = torch.ones(tmp.shape[2:], dtype=torch.bool)
-            mask[0, 0] = False
-            mask[3, 3] = False
-            print(torch.all(tmp[0, :, mask] == cls_output[0, :, mask]))  # True — all others unchanged
+            cls_feats_rf = cls_feats.detach().clone().requires_grad_(True)
+            with torch.enable_grad():
+                cls_output_rf = self.cls_preds[k](cls_feats_rf)
+                h, w = cls_feats.shape[2], cls_feats.shape[3]
+                for hi in range(h):
+                    for wi in range(w):
+                        if cls_feats_rf.grad is not None:
+                            cls_feats_rf.grad.zero_()
+                        cls_output_rf[0, 0, hi, wi].backward(retain_graph=True)
+                        affected = cls_feats_rf.grad[0, 0, :, :].nonzero(as_tuple=False)
+                        print(f"input ({hi},{wi}) affects outputs: {affected.tolist()}")
+            raise SystemExit("Insanity check done")  # stops training after first forward pass
             """
             # <<< MOD
 
