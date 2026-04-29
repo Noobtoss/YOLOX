@@ -100,3 +100,7 @@ exp_name UNIMIB2016_50pct_baseline cfg custom/exps/UNIMIB2016.py ckpt checkpoint
 exp_name UNIMIB2016_50pct_scl_4    cfg custom/exps/UNIMIB2016.py ckpt checkpoints/yolox_x.pth cls_feat_weight 4 train_subset_fract 0.5 seed 2024
 exp_name UNIMIB2016_50pct_scl_8    cfg custom/exps/UNIMIB2016.py ckpt checkpoints/yolox_x.pth cls_feat_weight 8 train_subset_fract 0.5 seed 2024
 # Experiments End Current
+exp_name Images05MetaFood2026_baseline cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth
+exp_name Images05MetaFood2026_scl_1    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth cls_feat_weight 1
+exp_name Images05MetaFood2026_scl_4    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth cls_feat_weight 4
+exp_name Images05MetaFood2026_scl_8    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth cls_feat_weight 8
