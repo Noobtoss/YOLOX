@@ -22,7 +22,7 @@ class YOLOXHead(BaseYOLOXHead):
         act="silu",
         depthwise=False,
         cls_feat_loss=None,
-        cls_feat_weight=None
+        cls_feat=None
     ):
         super().__init__(
             num_classes,
@@ -33,7 +33,7 @@ class YOLOXHead(BaseYOLOXHead):
             depthwise
         )
         self.cls_feat_loss = cls_feat_loss
-        self.cls_feat_weight = cls_feat_weight or 0
+        self.cls_feat = cls_feat or 0
 
 
 
@@ -312,7 +312,7 @@ class YOLOXHead(BaseYOLOXHead):
                 cls_feats.view(-1, 320)[fg_masks], cls_targets.argmax(dim=1)
             )
         ).sum() / num_fg
-        loss = reg_weight * loss_iou + loss_obj + loss_cls + self.cls_feat_weight * loss_cls_feats + loss_l1
+        loss = reg_weight * loss_iou + loss_obj + loss_cls + self.cls_feat * loss_cls_feats + loss_l1
 
         return (
             loss,

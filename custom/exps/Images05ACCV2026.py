@@ -1,6 +1,6 @@
 import os
 
-from mods.yolox_meta_food_2026 import Exp as MyExp
+from mods.yolox_accv_2026 import Exp as MyExp
 from mods.sup_con_loss import SupConLoss
 from mods.cls_feat_losses import ClsFeatLossFactory
 
@@ -20,7 +20,7 @@ class Exp(MyExp):
         # ---------------- dataloader config ---------------- #
 
         # Define yourself dataset path
-        self.data_dir = "datasets/Images05MetaFood2026"
+        self.data_dir = "datasets/Images05ACCV2026"
         self.train_ann = "annotation_train.json"
         self.val_ann = "annotation_test.json"
 

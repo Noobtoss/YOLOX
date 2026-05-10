@@ -16,8 +16,8 @@ class Exp(MyExp):
     def __init__(self):
         super().__init__()
         self.save_history_ckpt   = False  # True
-        self.cls_feat_loss        = None   # SupervisedContrastiveLoss()
-        self.cls_feat_weight      = None   # 1
+        self.cls_feat_loss       = None   # SupervisedContrastiveLoss()
+        self.cls_feat            = None   # 1
         self.save_history_ckpt   = False  # True
 
     def get_model(self):
@@ -40,7 +40,7 @@ class Exp(MyExp):
             backbone = YOLOPAFPN(self.depth, self.width, in_channels=in_channels, act=self.act)
             head = YOLOXHead(self.num_classes, self.width, in_channels=in_channels, act=self.act,
                              cls_feat_loss=self.cls_feat_loss,
-                             cls_feat_weight=float(self.cls_feat_weight) if self.cls_feat_weight is not None else None)
+                             cls_feat=float(self.cls_feat) if self.cls_feat is not None else None)
             self.model = YOLOX(backbone, head)
 
         self.model.apply(init_yolo)

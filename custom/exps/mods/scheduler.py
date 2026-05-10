@@ -2,9 +2,9 @@ from yolox.models import YOLOX
 
 
 class Scheduler:
-    def __init__(self, model: YOLOX, cls_feat_weight: float = 1, cls_dropout_p: float = 0.5, max_epoch: int = None):
+    def __init__(self, model: YOLOX, cls_feat: float = 1, cls_dropout_p: float = 0.5, max_epoch: int = None):
         self.model = model
-        self.cls_feat_weight = cls_feat_weight
+        self.cls_feat = cls_feat
         self.cls_dropout_p = cls_dropout_p
         self.max_epoch = max_epoch
 
