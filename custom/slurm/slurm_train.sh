@@ -9,23 +9,27 @@
 #SBATCH --cpus-per-task=1        # CPU Kerne pro Task (>1 für multi-threaded Tasks)
 #SBATCH --mem-per-cpu=64G        # RAM pro CPU Kern #20G #32G #64G
 
+# ----- BASE_DIR ----------------------------------------------------
 BASE_DIR=/nfs/scratch/staff/schmittth/code_nexus/YOLOX
+
+# ----- GET ARGS ----------------------------------------------------
 CFG=${1:-custom/exps/Images04.py}
 CKPT=${2:-checkpoints/yolox_x.pth}
 
+# ----- ENVIRONMENT SETUP -------------------------------------------
 module purge
 module load python/anaconda3
 eval "$(conda shell.bash hook)"
 
 conda activate conda-YOLOX
 
+# ----- WANDB -------------------------------------------------------
 export WANDB_API_KEY=95177947f5f36556806da90ea7a0bf93ed857d58
 export WANDB_DIR=/tmp/ths_wandb
 export WANDB_CACHE_DIR=/tmp/ths_wandb
 export WANDB_CONFIG_DIR=/tmp/ths_wandb
 
-# python3 setup.py develop
-
+# ----- TRAINING ----------------------------------------------------
 python tools/train.py \
     --exp_file $BASE_DIR/$CFG \
     --devices 1 \
