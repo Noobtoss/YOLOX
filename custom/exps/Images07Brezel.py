@@ -1,9 +1,9 @@
 import os
 
-from mods.yolox_base import Exp as MyExp
+from mods import ExpBase
 
 
-class Exp(MyExp):
+class Exp(ExpBase):
     def __init__(self):
         super().__init__()
 

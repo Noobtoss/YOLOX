@@ -1,17 +1,12 @@
 import os
-import random
 
-import torch
-import torch.distributed as dist
-import torch.nn as nn
-
-from yolox.exp import Exp as BaseExp
+from yolox.exp import Exp as _Exp
 
 
 # THS, Copied from yolox.exp.yolox_base.py
 
 
-class Exp(BaseExp):
+class Exp(_Exp):
     def __init__(self):
         super().__init__()
 

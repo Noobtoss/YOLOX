@@ -1,18 +1,16 @@
-import math
 from loguru import logger
 
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
 
 from yolox.utils import bboxes_iou, cxcywh2xyxy, meshgrid, visualize_assign
-from yolox.models.yolo_head import YOLOXHead as BaseYOLOXHead
+from yolox.models.yolo_head import YOLOXHead as _YOLOXHead
 
 
 # THS, Copied from yolox.models.yolo_head
 
 
-class YOLOXHead(BaseYOLOXHead):
+class YOLOXHead(_YOLOXHead):
     def __init__(
         self,
         num_classes,
@@ -21,8 +19,8 @@ class YOLOXHead(BaseYOLOXHead):
         in_channels=[256, 512, 1024],
         act="silu",
         depthwise=False,
-        cls_feat_loss=None,
-        cls_feat=None
+        cls_feat=None,
+        cls_feat_loss=None
     ):
         super().__init__(
             num_classes,
@@ -32,8 +30,8 @@ class YOLOXHead(BaseYOLOXHead):
             act,
             depthwise
         )
-        self.cls_feat_loss = cls_feat_loss
         self.cls_feat = cls_feat or 0
+        self.cls_feat_loss = cls_feat_loss
 
 
 

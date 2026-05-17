@@ -1,12 +1,10 @@
-from loguru import logger
-
-from yolox.core import Trainer as BaseTrainer
+from yolox.core import Trainer as _Trainer
 
 
 # THS, Copied from yolox.core.trainer
 
 
-class Trainer(BaseTrainer):
+class Trainer(_Trainer):
     def __init__(self, exp, args):
         super().__init__(exp, args)
         self.extra_scheduler = None

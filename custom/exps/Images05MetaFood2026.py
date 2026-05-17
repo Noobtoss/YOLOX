@@ -1,18 +1,16 @@
 import os
 
-from mods.yolox_meta_food_2026 import Exp as MyExp
-from mods.sup_con_loss import SupConLoss
-from mods.cls_feat_losses import ClsFeatLossFactory
+from mods import ClsFeatLossFactory, ExpMetaFood2026
 
 
-class Exp(MyExp):
+class Exp(ExpMetaFood2026):
 
     def __init__(self):
         super().__init__()
         self.num_classes = 37
 
-        self.cls_feat_loss = ClsFeatLossFactory.get("sup_con_loss", temperature=0.07)
         self.cls_feat = 0
+        self.cls_feat_loss = ClsFeatLossFactory.get("sup_con_loss", temperature=0.07)
 
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
         self.exp_name = f"{self.exp_name}_baseline"
