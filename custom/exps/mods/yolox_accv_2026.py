@@ -11,8 +11,9 @@ class Exp(_Exp):
     def __init__(self):
         super().__init__()
         self.save_history_ckpt   = False  # True
-        self.cls_feat_loss       = None   # SupervisedContrastiveLoss()
         self.cls_feat            = None   # 1
+        self.cls_feat_loss       = None   # SupervisedContrastiveLoss()
+        self.cls_feat_proj_head  = None
         self.save_history_ckpt   = False  # True
         self.train_subset_fract  = None
         self.train_min_cat_fract = None
