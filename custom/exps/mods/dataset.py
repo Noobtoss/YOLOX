@@ -1,9 +1,7 @@
 import os
 import random
 from collections import defaultdict
-
 from pycocotools.coco import COCO
-
 from yolox.data.dataloading import get_yolox_datadir
 from yolox.data.datasets.coco import COCODataset, remove_useless_info
 from yolox.data.datasets.datasets_wrapper import CacheDataset

@@ -1,17 +1,37 @@
 import os
 
-from mods import ClsFeatLossFactory, ClsFeatProjHeadFactory, ExpACCV2026
+from mods import ClsFeatLoss, ClsFeatProjHeadFactory, ExpACCV2026
+
+
+def refresh_exp_value(exp):
+    kwargs = {k.removeprefix("cls_feat_"): v for k, v in vars(exp).items() if k.startswith("cls_feat_")}
+
+    if hasattr(exp, "cls_feat") and isinstance(exp.cls_feat, str):
+        exp.cls_feat = float(exp.cls_feat)
+
+    if hasattr(exp, "cls_feat_loss") and isinstance(exp.cls_feat_loss, str):
+        exp.cls_feat_loss = ClsFeatLoss(**kwargs)
+
+    if hasattr(exp, "cls_feat_proj_head") and isinstance(exp.cls_feat_proj_head, str):
+        exp.cls_feat_proj_head = ClsFeatProjHeadFactory.get(**kwargs)
 
 
 class Exp(ExpACCV2026):
-
     def __init__(self):
         super().__init__()
         self.num_classes = 37
 
+        self.cls_feat_dim = 320  # hard encoding dangerous
         self.cls_feat = 0
-        self.cls_feat_loss = ClsFeatLossFactory.get("sup_con_loss", temperature=0.07)
+        self.cls_feat_loss = "sup_con_loss"  # ClsFeatLossFactory.get("sup_con_loss", temperature=self.cls_feat_temperature)
+        self.cls_feat_temperature = 0.07
+        self.cls_feat_mask = "conf"
+        self.cls_feat_top_rel = 0.4
+        self.cls_feat_weight= "conf"
         self.cls_feat_proj_head = ClsFeatProjHeadFactory.get("s")
+
+        kwargs = {k.removeprefix("cls_feat_"): v for k, v in vars(self).items() if k.startswith("cls_feat_")}
+        self.cls_feat_loss = ClsFeatLoss(**kwargs)
 
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
         self.exp_name = f"{self.exp_name}_baseline"
@@ -91,3 +111,7 @@ class Exp(ExpACCV2026):
             self.width = 1.25
 
         # self.ckpt = f"checkpoints/{scale}.pth"
+
+    def merge(self, *args, **kwargs):
+        super().merge(*args, **kwargs)
+        refresh_exp_value(self)

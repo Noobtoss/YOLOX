@@ -1,5 +1,4 @@
 import os
-
 from yolox.exp import Exp as _Exp
 
 

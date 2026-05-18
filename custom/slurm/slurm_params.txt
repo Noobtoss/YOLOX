@@ -8,7 +8,7 @@ exp_name Images05MetaFood2026_scl_8    cfg custom/exps/Images05MetaFood2026.py c
 exp_name Images05MetaFood2026_scl_10   cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth cls_feat 10
 exp_name Images05MetaFood2026_scl_12   cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth cls_feat 12
 # Experiments ACCV2026
-exp_name Images05ACCV2026_baseline     cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth
+exp_name tmp_Images05ACCV2026_baseline     cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth
 exp_name Images05ACCV2026_scl_1        cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 1
 exp_name Images05ACCV2026_scl_2        cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 2
 exp_name Images05ACCV2026_scl_4        cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 4

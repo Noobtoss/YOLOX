@@ -2,7 +2,7 @@
 #SBATCH --job-name=YOLOX_train_arr # Kurzname des Jobs
 #SBATCH --array=9-9%4              # 9-16%4  # 7 Jobs total running 4 at a time
 #SBATCH --output=logs/R-%A-%a.out
-#SBATCH --partition=p2             # p4
+#SBATCH --partition=p2,p3,p4,p5,p6             # p4
 #SBATCH --qos=gpuultimate
 #SBATCH --gres=gpu:1
 #SBATCH --nodes=1                  # Anzahl Knoten

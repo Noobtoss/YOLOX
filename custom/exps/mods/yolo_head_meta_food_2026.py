@@ -1,8 +1,6 @@
 from loguru import logger
-
 import torch
 import torch.nn.functional as F
-
 from yolox.utils import bboxes_iou, cxcywh2xyxy, meshgrid, visualize_assign
 from yolox.models.yolo_head import YOLOXHead as _YOLOXHead
 

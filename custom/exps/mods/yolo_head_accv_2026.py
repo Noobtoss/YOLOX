@@ -1,8 +1,7 @@
 from loguru import logger
-
+import warnings
 import torch
 import torch.nn.functional as F
-
 from yolox.utils import bboxes_iou, cxcywh2xyxy, meshgrid, visualize_assign
 from yolox.models.yolo_head import YOLOXHead as _YOLOXHead
 
@@ -23,6 +22,7 @@ class YOLOXHead(_YOLOXHead):
         cls_feat_loss=None,
         cls_feat_proj_head=None
     ):
+        warnings.warn("[Modded] YOLOXHead")
         super().__init__(
             num_classes,
             width,
@@ -266,6 +266,11 @@ class YOLOXHead(_YOLOXHead):
         reg_targets = torch.cat(reg_targets, 0)
         obj_targets = torch.cat(obj_targets, 0)
         fg_masks = torch.cat(fg_masks, 0)
+        # >>> MOD
+        cls_feats = cls_feats.view(-1, self.cls_feat_dim)[fg_masks]
+        if self.cls_feat_proj_head is not None:
+            cls_feats = self.cls_feat_proj_head(cls_feats)
+        # <<< MOD
         if self.use_l1:
             l1_targets = torch.cat(l1_targets, 0)
 
@@ -292,7 +297,9 @@ class YOLOXHead(_YOLOXHead):
         # >>> MOD
         loss_cls_feats = (
             self.cls_feat_loss(
-                cls_feats.view(-1, self.cls_feat_dim)[fg_masks], cls_targets.argmax(dim=1)
+                cls_feats,
+                cls_preds.view(-1, self.num_classes)[fg_masks],
+                cls_targets
             )
         ).sum() / num_fg
         loss = reg_weight * loss_iou + loss_obj + loss_cls + self.cls_feat * loss_cls_feats + loss_l1
