@@ -1,7 +1,8 @@
+import warnings
+import torch
 import torch.nn as nn
 
 from .yolox_base import Exp as _Exp
-from .yolo_head_accv_2026 import YOLOXHead
 
 
 # THS, Copied from yolox.exp.yolox_base.py
@@ -18,34 +19,6 @@ class Exp(_Exp):
         self.train_subset_fract  = None
         self.train_min_cat_fract = None
         self.seed                = 2024
-
-    def get_model(self):
-        from yolox.models import YOLOX, YOLOPAFPN  # , YOLOXHead # THS
-
-        if self.cls_feat_loss is None:
-            raise NotImplementedError("cls_feat_loss must be set before calling get_model().")
-        else:
-            print(f"cls_feat_loss: {self.cls_feat_loss}")
-
-        def init_yolo(M):
-            for m in M.modules():
-                if isinstance(m, nn.BatchNorm2d):
-                    m.eps = 1e-3
-                    m.momentum = 0.03
-
-        if getattr(self, "model", None) is None:
-            in_channels = [256, 512, 1024]
-            backbone = YOLOPAFPN(self.depth, self.width, in_channels=in_channels, act=self.act)
-            head = YOLOXHead(self.num_classes, self.width, in_channels=in_channels, act=self.act,
-                             cls_feat=float(self.cls_feat) if self.cls_feat is not None else None,
-                             cls_feat_loss=self.cls_feat_loss,
-                             cls_feat_proj_head=self.cls_feat_proj_head)
-            self.model = YOLOX(backbone, head)
-
-        self.model.apply(init_yolo)
-        self.model.head.initialize_biases(1e-2)
-        self.model.train()
-        return self.model
 
     def get_dataset(self, cache: bool = False, cache_type: str = "ram"):
         """
@@ -75,3 +48,68 @@ class Exp(_Exp):
             train_min_cat_fract=float(self.train_min_cat_fract) if self.train_min_cat_fract is not None else None,
             seed=int(self.seed) if self.seed is not None else None,
         )
+
+    def get_trainer(self, args):
+        from .trainer import Trainer
+        trainer = Trainer(self, args)
+        # NOTE: trainer shouldn't be an attribute of exp object
+        return trainer
+
+    def get_optimizer(self, batch_size):
+        optimizer = super().get_optimizer(batch_size)
+
+        cls_feat_proj_head_params = [
+            p for k, p in self.model.named_parameters()
+            if p.requires_grad and "cls_feat_proj_head" in k
+        ]
+
+        if cls_feat_proj_head_params:
+            if self.warmup_epochs > 0:
+                lr = self.warmup_lr
+            else:
+                # or is parent default
+                lr = getattr(self, "cls_feat_proj_head_lr", None) or self.basic_lr_per_img * batch_size
+
+            ids = {id(p) for p in cls_feat_proj_head_params}
+            for group in self.optimizer.param_groups:
+                group['params'] = [p for p in group['params'] if id(p) not in ids]
+
+            self.optimizer.add_param_group({
+                "params": cls_feat_proj_head_params,
+                "lr": lr,
+                "weight_decay": self.weight_decay,
+            })
+            warnings.warn(f"[Modded] Moved cls_feat_proj_head to new group lr={lr}")
+
+        return self.optimizer
+
+
+    def get_model(self):
+        from yolox.models import YOLOPAFPN  # , YOLOXHead # THS
+        from .yolox import YOLOX
+        from .yolo_head_accv_2026 import YOLOXHead
+
+        if self.cls_feat_loss is None:
+            raise NotImplementedError("cls_feat_loss must be set before calling get_model().")
+        else:
+            print(f"cls_feat_loss: {self.cls_feat_loss}")
+
+        def init_yolo(M):
+            for m in M.modules():
+                if isinstance(m, nn.BatchNorm2d):
+                    m.eps = 1e-3
+                    m.momentum = 0.03
+
+        if getattr(self, "model", None) is None:
+            in_channels = [256, 512, 1024]
+            backbone = YOLOPAFPN(self.depth, self.width, in_channels=in_channels, act=self.act)
+            head = YOLOXHead(self.num_classes, self.width, in_channels=in_channels, act=self.act,
+                             cls_feat=float(self.cls_feat) if self.cls_feat is not None else None,
+                             cls_feat_loss=self.cls_feat_loss,
+                             cls_feat_proj_head=self.cls_feat_proj_head)
+            self.model = YOLOX(backbone, head)
+
+        self.model.apply(init_yolo)
+        self.model.head.initialize_biases(1e-2)
+        self.model.train()
+        return self.model
