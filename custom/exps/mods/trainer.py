@@ -1,6 +1,9 @@
-import warnings
 import time
+from loguru import logger
+import warnings
 import torch
+from yolox.utils import adjust_status, is_parallel, synchronize
+
 from yolox.core import Trainer as _Trainer
 
 
@@ -66,6 +69,53 @@ class Trainer(_Trainer):
             **outputs,
         )
         # <<< MOD
+
+    def evaluate_and_save_model(self):
+        if self.use_model_ema:
+            evalmodel = self.ema_model.ema
+        else:
+            evalmodel = self.model
+            if is_parallel(evalmodel):
+                evalmodel = evalmodel.module
+
+        with adjust_status(evalmodel, training=False):
+            (metrics, summary), predictions = self.exp.eval(
+                evalmodel, self.evaluator, self.is_distributed, return_outputs=True
+            )
+        ap50 = metrics["mAP50"]
+        ap50_95 = metrics["mAP50-95"]
+        # metrics = {f"val/{k}": v for k, v in metrics.items()}
+
+        update_best_ckpt = ap50_95 > self.best_ap
+        self.best_ap = max(self.best_ap, ap50_95)
+
+        if self.rank == 0:
+            if self.args.logger == "tensorboard":
+                for k, v in metrics.items():
+                    self.tblogger.add_scalar(k, v, self.epoch + 1)
+            if self.args.logger == "wandb":
+                self.wandb_logger.log_metrics({**metrics, "train/epoch": self.epoch + 1})
+                self.wandb_logger.log_images(predictions)
+            if self.args.logger == "mlflow":
+                logs = {**metrics, "val/best_ap": round(self.best_ap, 3), "train/epoch": self.epoch + 1}
+                self.mlflow_logger.on_log(self.args, self.exp, self.epoch+1, logs)
+            logger.info("\n" + summary)
+        synchronize()
+
+        self.save_ckpt("last_epoch", update_best_ckpt, ap=ap50_95)
+        if self.save_history_ckpt:
+            self.save_ckpt(f"epoch_{self.epoch + 1}", ap=ap50_95)
+
+        if self.args.logger == "mlflow":
+            metadata = {
+                    "epoch": self.epoch + 1,
+                    "input_size": self.input_size,
+                    'start_ckpt': self.args.ckpt,
+                    'exp_file': self.args.exp_file,
+                    "best_ap": float(self.best_ap)
+                }
+            self.mlflow_logger.save_checkpoints(self.args, self.exp, self.file_name, self.epoch,
+                                                metadata, update_best_ckpt)
 
     def after_iter(self):
         super().after_iter()
