@@ -298,8 +298,8 @@ class YOLOXHead(_YOLOXHead):
         loss_cls_feats = (
             self.cls_feat_loss(
                 cls_feats,
-                cls_preds.view(-1, self.num_classes)[fg_masks],
-                cls_targets
+                cls_preds.view(-1, self.num_classes)[fg_masks].detach(),
+                cls_targets,
             )
         ).sum() / num_fg
         loss = reg_weight * loss_iou + loss_obj + loss_cls + self.cls_feat * loss_cls_feats + loss_l1
@@ -309,8 +309,8 @@ class YOLOXHead(_YOLOXHead):
             reg_weight * loss_iou,
             loss_obj,
             loss_cls,
-            loss_cls_feats,  # DANGER this allows loss_cls_feats to hijack loss_l1
-            # loss_l1,
+            loss_l1,
+            loss_cls_feats,
             num_fg / max(num_gts, 1),
         )
         # <<< MOD
