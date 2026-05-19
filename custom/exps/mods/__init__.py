@@ -1,4 +1,4 @@
-from .cls_feat_losses import ClsFeatLoss
+from .cls_feat_loss import ClsFeatLoss
 from .cls_feat_proj_heads import ClsFeatProjHeadFactory
 from .yolox_base import Exp as ExpBase
 from .yolox_meta_food_2026 import Exp as ExpMetaFood2026

@@ -28,10 +28,11 @@ class Exp(ExpACCV2026):
         self.cls_feat_mask = "conf"
         self.cls_feat_top_rel = 0.4
         self.cls_feat_weight= "conf"
-        self.cls_feat_proj_head = ClsFeatProjHeadFactory.get("s")
-
+        self.cls_feat_proj_head = "s"
+        self.cls_feat_proj_head_lr = 0.01
         kwargs = {k.removeprefix("cls_feat_"): v for k, v in vars(self).items() if k.startswith("cls_feat_")}
         self.cls_feat_loss = ClsFeatLoss(**kwargs)
+        self.cls_feat_proj_head = ClsFeatProjHeadFactory.get(**kwargs)
 
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
         self.exp_name = f"{self.exp_name}_baseline"
