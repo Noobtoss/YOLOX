@@ -3,8 +3,9 @@ import random
 from collections import defaultdict
 from pycocotools.coco import COCO
 from yolox.data.dataloading import get_yolox_datadir
-from yolox.data.datasets.coco import COCODataset, remove_useless_info
+from yolox.data.datasets.coco import remove_useless_info
 from yolox.data.datasets.datasets_wrapper import CacheDataset
+from yolox.data.datasets.coco import COCODataset as _COCODataset
 
 
 # THS, Copied from yolox.data.dataset.coco
@@ -75,7 +76,7 @@ def coco_subsample(coco: COCO, subset_fract: float, min_cat_fract: float = None,
     return new_coco
 
 
-class Dataset(COCODataset):
+class COCODataset(_COCODataset):
     def __init__(
             self,
             data_dir=None,
