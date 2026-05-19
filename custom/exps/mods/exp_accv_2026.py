@@ -2,7 +2,7 @@ import warnings
 import torch
 import torch.nn as nn
 
-from .yolox_base import Exp as _Exp
+from .exp import Exp as _Exp
 
 
 # THS, Copied from yolox.exp.yolox_base.py
@@ -29,10 +29,10 @@ class Exp(_Exp):
                 "ram" : Caching imgs to ram for fast training.
                 "disk": Caching imgs to disk for fast training.
         """
-        from yolox.data import COCODataset, TrainTransform
-        from .dataset import Dataset
+        from yolox.data import TrainTransform
+        from .coco_dataset import COCODataset
 
-        return Dataset(
+        return COCODataset(
             name="Images",  # self.train_ann.split("annotation_")[-1].removesuffix(".json"),
             data_dir=self.data_dir,
             json_file=self.train_ann,
@@ -49,11 +49,18 @@ class Exp(_Exp):
             seed=int(self.seed) if self.seed is not None else None,
         )
 
-    def get_trainer(self, args):
-        from .trainer import Trainer
-        trainer = Trainer(self, args)
-        # NOTE: trainer shouldn't be an attribute of exp object
-        return trainer
+    def get_evaluator(self, batch_size, is_distributed, testdev=False, legacy=False):
+        from .coco_evaluator import COCOEvaluator
+
+        return COCOEvaluator(
+            dataloader=self.get_eval_loader(batch_size, is_distributed,
+                                            testdev=testdev, legacy=legacy),
+            img_size=self.test_size,
+            confthre=self.test_conf,
+            nmsthre=self.nmsthre,
+            num_classes=self.num_classes,
+            testdev=testdev,
+        )
 
     def get_optimizer(self, batch_size):
         optimizer = super().get_optimizer(batch_size)
@@ -83,11 +90,16 @@ class Exp(_Exp):
 
         return self.optimizer
 
+    def get_trainer(self, args):
+        from .trainer import Trainer
+        trainer = Trainer(self, args)
+        # NOTE: trainer shouldn't be an attribute of exp object
+        return trainer
 
     def get_model(self):
         from yolox.models import YOLOPAFPN  # , YOLOXHead # THS
         from .yolox import YOLOX
-        from .yolo_head_accv_2026 import YOLOXHead
+        from .yolox_head_accv_2026 import YOLOXHead
 
         if self.cls_feat_loss is None:
             raise NotImplementedError("cls_feat_loss must be set before calling get_model().")

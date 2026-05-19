@@ -1,9 +1,9 @@
 import os
 
-from mods import ExpBase
+from mods import Exp as _Exp
 
 
-class Exp(ExpBase):
+class Exp(_Exp):
     def __init__(self):
         super().__init__()
 

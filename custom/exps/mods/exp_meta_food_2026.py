@@ -1,7 +1,7 @@
 import torch.nn as nn
 
-from .yolox_base import Exp as _Exp
-from .yolo_head_meta_food_2026 import YOLOXHead
+from .exp import Exp as _Exp
+from .yolox_head_meta_food_2026 import YOLOXHead
 
 # THS, Copied from yolox.exp.yolox_base.py
 
