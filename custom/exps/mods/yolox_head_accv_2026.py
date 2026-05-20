@@ -301,7 +301,7 @@ class YOLOXHead(_YOLOXHead):
                 cls_preds.view(-1, self.num_classes)[fg_masks].detach(),
                 cls_targets,
             )
-        ).sum() / num_fg
+        )
         loss = reg_weight * loss_iou + loss_obj + loss_cls + self.cls_feat * loss_cls_feats + loss_l1
 
         return (

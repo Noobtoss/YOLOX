@@ -1,7 +1,12 @@
+import warnings
 from yolox.models.yolox import YOLOX
 
 
 class YOLOX(YOLOX):
+    def __init__(self, *args, **kwargs):
+        warnings.warn("[Modded] YOLOX")
+        super().__init__(*args, **kwargs)
+
     def forward(self, x, targets=None):
         # fpn output content features of [dark3, dark4, dark5]
         fpn_outs = self.backbone(x)

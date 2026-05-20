@@ -1,9 +1,10 @@
 import os
+import warnings
 
 from mods import ClsFeatLoss, ClsFeatProjHeadFactory, ExpACCV2026
 
 
-def refresh_exp_value(exp):
+def check_exp_value(exp):
     kwargs = {k.removeprefix("cls_feat_"): v for k, v in vars(exp).items() if k.startswith("cls_feat_")}
 
     if hasattr(exp, "cls_feat") and isinstance(exp.cls_feat, str):
@@ -11,9 +12,14 @@ def refresh_exp_value(exp):
 
     if hasattr(exp, "cls_feat_loss") and isinstance(exp.cls_feat_loss, str):
         exp.cls_feat_loss = ClsFeatLoss(**kwargs)
+        warnings.warn(f"[Modded] cls_feat_loss: {exp.cls_feat_loss}")
 
     if hasattr(exp, "cls_feat_proj_head") and isinstance(exp.cls_feat_proj_head, str):
         exp.cls_feat_proj_head = ClsFeatProjHeadFactory.get(**kwargs)
+        warnings.warn(f"[Modded] cls_feat_proj_head: {exp.cls_feat_proj_head}")
+
+    if hasattr(exp, "epochs"):
+        exp.max_epoch = exp.epochs
 
 
 class Exp(ExpACCV2026):
@@ -27,12 +33,12 @@ class Exp(ExpACCV2026):
         self.cls_feat_temperature = 0.07
         # self.cls_feat_mask = "conf"
         # self.cls_feat_top_rel = 0.4
-        # self.cls_feat_weight= "conf"
-        self.cls_feat_proj_head = "s"
-        self.cls_feat_proj_head_lr = 0.01
-        kwargs = {k.removeprefix("cls_feat_"): v for k, v in vars(self).items() if k.startswith("cls_feat_")}
-        self.cls_feat_loss = ClsFeatLoss(**kwargs)
-        self.cls_feat_proj_head = ClsFeatProjHeadFactory.get(**kwargs)
+        # self.cls_feat_weight = "conf"
+        # self.cls_feat_proj_head = "s"
+        # self.cls_feat_proj_head_lr = 0.01
+        # kwargs = {k.removeprefix("cls_feat_"): v for k, v in vars(self).items() if k.startswith("cls_feat_")}
+        # self.cls_feat_loss = ClsFeatLoss(**kwargs)
+        # self.cls_feat_proj_head = ClsFeatProjHeadFactory.get(**kwargs)
 
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
         self.exp_name = f"{self.exp_name}_baseline"
@@ -43,6 +49,9 @@ class Exp(ExpACCV2026):
         self.data_dir = "datasets/Images05ACCV2026"
         self.train_ann = "annotation_train.json"
         self.val_ann = "annotation_test.json"
+
+        self.train_subset_fract = None
+        self.train_min_cat_fract = None
 
         # --------------  training config --------------------- #
 
@@ -115,4 +124,4 @@ class Exp(ExpACCV2026):
 
     def merge(self, *args, **kwargs):
         super().merge(*args, **kwargs)
-        refresh_exp_value(self)
+        check_exp_value(self)

@@ -1,5 +1,6 @@
 import contextlib
 import io
+import warnings
 import json
 import tempfile
 from loguru import logger
@@ -9,6 +10,10 @@ from yolox.evaluators import COCOEvaluator as _COCOEvaluator
 
 
 class COCOEvaluator(_COCOEvaluator):
+
+    def __init__(self, *args, **kwargs):
+        warnings.warn("[Modded] COCOEvaluator")
+        super().__init__(*args, **kwargs)
 
     def evaluate_prediction(self, data_dict, statistics):
         if not is_main_process():

@@ -1,5 +1,6 @@
 import os
 import random
+import warnings
 from collections import defaultdict
 from pycocotools.coco import COCO
 from yolox.data.dataloading import get_yolox_datadir
@@ -97,8 +98,14 @@ class COCODataset(_COCODataset):
 
         self.coco = COCO(os.path.join(self.data_dir, "annotations", self.json_file))
         # >>> MOD
-        if train_subset_fract is not None:
+        if hasattr(self, "train_subset_fract") and train_subset_fract is not None:
             self.coco = coco_subsample(self.coco, train_subset_fract, train_min_cat_fract, seed)
+        warnings.warn(
+            f"[Modded] COCODataset: "
+            f"{len(self.coco.imgs)} images, "
+            f"{len(self.coco.anns)} annotations, "
+            f"{len(self.coco.cats)} categories"
+        )
         # <<< MOD
         remove_useless_info(self.coco)
         self.ids = self.coco.getImgIds()
