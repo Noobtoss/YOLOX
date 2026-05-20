@@ -18,9 +18,6 @@ def check_exp_value(exp):
         exp.cls_feat_proj_head = ClsFeatProjHeadFactory.get(**kwargs)
         warnings.warn(f"[Modded] cls_feat_proj_head: {exp.cls_feat_proj_head}")
 
-    if hasattr(exp, "epochs"):
-        exp.max_epoch = exp.epochs
-
 
 class Exp(ExpACCV2026):
     def __init__(self):
