@@ -1,6 +1,7 @@
 import os
 
 from mods import FeatLossFactory, ExpMetaFood2026
+from mods.sup_con_loss import SupervisedContrastiveLoss
 
 
 class Exp(ExpMetaFood2026):
@@ -10,7 +11,7 @@ class Exp(ExpMetaFood2026):
         self.num_classes = 37
 
         self.cls_feat = 0
-        self.cls_feat_loss = FeatLossFactory.get("sup_con_loss", temperature=0.07)
+        self.cls_feat_loss = SupervisedContrastiveLoss  # FeatLossFactory.get("sup_con_loss", temperature=0.07)
 
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
         self.exp_name = f"{self.exp_name}_baseline"
