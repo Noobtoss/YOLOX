@@ -81,7 +81,7 @@ python tools/train.py \
     --ckpt $BASE_DIR/$CKPT \
     --cache \
     --logger wandb \
-        wandb-project tmp \
+        wandb-project runs \
         wandb-entity team-noobtoss \
         wandb-name $EXP_NAME \
     output_dir $OUTPUT_DIR \
