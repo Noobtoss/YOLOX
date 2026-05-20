@@ -40,6 +40,9 @@ eval "$(conda shell.bash hook)"
 
 conda activate conda-YOLOX
 
+export PYTHONPATH="$BASE_DIR:$PYTHONPATH"
+
+# ----- WANDB -------------------------------------------------------
 export WANDB_API_KEY=95177947f5f36556806da90ea7a0bf93ed857d58
 export WANDB_DIR=/tmp/ths_wandb
 export WANDB_CACHE_DIR=/tmp/ths_wandb
