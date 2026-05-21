@@ -11,15 +11,13 @@ class UnpackReducer(reducers.BaseReducer):
         return losses[sorted_indices]
 
 
-class NormalizeFeats(nn.Module):
-    """Wraps any embedding loss and L2-normalizes embeddings before forwarding."""
-
+class NormalizeEmbeddingsWrapper(nn.Module):
     def __init__(self, loss: nn.Module):
         super().__init__()
         self.loss = loss
 
-    def forward(self, feats, *args, **kwargs):
-        return self.loss(F.normalize(feats, dim=1), *args, **kwargs)
+    def forward(self, embeddings, *args, **kwargs):
+        return self.loss(F.normalize(embeddings, dim=1), *args, **kwargs)
 
 
 class FeatLossFactory:
@@ -29,13 +27,30 @@ class FeatLossFactory:
             return None
         elif loss == "sup_con_loss":
             # https://kevinmusgrave.github.io/pytorch-metric-learning/losses/#supconloss
-            kwargs = {k: v for k, v in kwargs.items() if k in inspect.signature(losses.SupConLoss).parameters}
-            return NormalizeFeats(losses.SupConLoss(**kwargs, reducer=UnpackReducer()))
-        elif loss == "general_lifted_struct":
-            # https://kevinmusgrave.github.io/pytorch-metric-learning/losses/#generalizedliftedstructureloss
-            kwargs = {k: v for k, v in kwargs.items() if
-                      k in inspect.signature(losses.GeneralizedLiftedStructureLoss).parameters}
-            return NormalizeFeats(losses.GeneralizedLiftedStructureLoss(**kwargs, reducer=UnpackReducer()))
+            params = {
+                "temperature": 0.07,
+            }
+            params.update({k: v for k, v in kwargs.items() if k in inspect.signature(losses.SupConLoss).parameters})
+            return NormalizeEmbeddingsWrapper(losses.SupConLoss(**params, reducer=UnpackReducer()))
+
+        elif loss == "circle_loss":
+            # https://kevinmusgrave.github.io/pytorch-metric-learning/losses/#circleloss
+            params = {
+                "m": 0.25,
+                "gamma": 256,
+            }
+            params.update({k: v for k, v in kwargs.items() if k in inspect.signature(losses.CircleLoss).parameters})
+            return NormalizeEmbeddingsWrapper(losses.CircleLoss(**params, reducer=UnpackReducer()))
+
+        elif loss == "multi_sim_loss":
+            params = {
+                "alpha": 2.0,
+                "beta": 50.0,
+                "base": 0.5,
+            }
+            params.update({k: v for k, v in kwargs.items() if k in inspect.signature(losses.MultiSimilarityLoss).parameters})
+            return NormalizeEmbeddingsWrapper(losses.MultiSimilarityLoss(**params, reducer=UnpackReducer()))
+
         else:
             raise ValueError(f"Unknown feat loss type: '{loss}'")
 
@@ -130,6 +145,7 @@ class MaskFactory:
         else:
             raise ValueError(f"Unknown mask type: '{mask}'")
 
+
 class ClsFeatLoss(nn.Module):
     def __init__(self, loss: str, mask: str = None, weight: str = None, **kwargs):
         super().__init__()
@@ -154,7 +170,7 @@ class ClsFeatLoss(nn.Module):
             pred_scores = pred_scores[mask]
             target_scores = target_scores[mask]
 
-        loss_per_element = self.loss(cls_feats, target_cls)
+        loss_per_element = self.loss(cls_feats, target_cls).squeeze(-1)
 
         if self.weight is not None:
             weight = self.weight(pred_scores, target_scores)
