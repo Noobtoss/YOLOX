@@ -26,13 +26,13 @@ exp_name Images05BMVC2026_scl_8    cfg custom/exps/Images05ACCV2026.py ckpt chec
 exp_name Images05BMVC2026_scl_10   cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 10
 exp_name Images05BMVC2026_scl_12   cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 12
 exp_name Images05BMVC2026_baseline cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss circle_loss cls_feat 0
-exp_name Images05BMVC2026_cl_025   cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss circle_loss cls_feat 0.25
+exp_name Images05BMVC2026_cl_01    cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss circle_loss cls_feat 0.1
+exp_name Images05BMVC2026_cl_02    cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss circle_loss cls_feat 0.2
 exp_name Images05BMVC2026_cl_05    cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss circle_loss cls_feat 0.5
 exp_name Images05BMVC2026_cl_10    cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss circle_loss cls_feat 1.0
+exp_name Images05BMVC2026_cl_12    cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss circle_loss cls_feat 1.2
 exp_name Images05BMVC2026_cl_15    cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss circle_loss cls_feat 1.5
 exp_name Images05BMVC2026_cl_20    cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss circle_loss cls_feat 2.0
-exp_name Images05BMVC2026_cl_25    cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss circle_loss cls_feat 2.5
-exp_name Images05BMVC2026_cl_30    cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss circle_loss cls_feat 3.0
 exp_name Images05BMVC2026_baseline cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss multi_sim_loss cls_feat 0
 exp_name Images05BMVC2026_msl_1    cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss multi_sim_loss cls_feat 1
 exp_name Images05BMVC2026_msl_2    cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss multi_sim_loss cls_feat 2
