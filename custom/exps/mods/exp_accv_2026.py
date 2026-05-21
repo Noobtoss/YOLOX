@@ -3,7 +3,8 @@ import torch
 import torch.nn as nn
 
 from .exp import Exp as _Exp
-
+from .cls_feat_loss import ClsFeatLoss
+from .cls_feat_proj_heads import ClsFeatProjHeadFactory
 
 # THS, Copied from yolox.exp.yolox_base.py
 
@@ -115,10 +116,15 @@ class Exp(_Exp):
         if getattr(self, "model", None) is None:
             in_channels = [256, 512, 1024]
             backbone = YOLOPAFPN(self.depth, self.width, in_channels=in_channels, act=self.act)
+
+            kwargs = {k.removeprefix("cls_feat_"): v for k, v in vars(self).items() if k.startswith("cls_feat_")}
+            cls_feat_loss = getattr(self, "_cls_feat_loss", None) or ClsFeatLoss(**kwargs)
+            cls_feat_proj_head = getattr(self, "_cls_feat_proj_head", None) or ClsFeatProjHeadFactory.get(**kwargs)
+
             head = YOLOXHead(self.num_classes, self.width, in_channels=in_channels, act=self.act,
                              cls_feat=float(self.cls_feat) if self.cls_feat is not None else None,
-                             cls_feat_loss=self.cls_feat_loss,
-                             cls_feat_proj_head=self.cls_feat_proj_head)
+                             cls_feat_loss=cls_feat_loss,
+                             cls_feat_proj_head=cls_feat_proj_head)
             self.model = YOLOX(backbone, head)
 
         self.model.apply(init_yolo)

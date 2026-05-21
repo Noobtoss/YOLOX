@@ -5,18 +5,8 @@ from mods import ClsFeatLoss, ClsFeatProjHeadFactory, ExpACCV2026
 
 
 def check_exp_value(exp):
-    kwargs = {k.removeprefix("cls_feat_"): v for k, v in vars(exp).items() if k.startswith("cls_feat_")}
-
     if hasattr(exp, "cls_feat") and isinstance(exp.cls_feat, str):
         exp.cls_feat = float(exp.cls_feat)
-
-    if hasattr(exp, "cls_feat_loss") and isinstance(exp.cls_feat_loss, str):
-        exp.cls_feat_loss = ClsFeatLoss(**kwargs)
-        warnings.warn(f"[Modded] cls_feat_loss: {exp.cls_feat_loss}")
-
-    if hasattr(exp, "cls_feat_proj_head") and isinstance(exp.cls_feat_proj_head, str):
-        exp.cls_feat_proj_head = ClsFeatProjHeadFactory.get(**kwargs)
-        warnings.warn(f"[Modded] cls_feat_proj_head: {exp.cls_feat_proj_head}")
 
 
 class Exp(ExpACCV2026):
@@ -35,8 +25,8 @@ class Exp(ExpACCV2026):
         # self.cls_feat_proj_head = "s"
         # self.cls_feat_proj_head_lr = 0.01
         # kwargs = {k.removeprefix("cls_feat_"): v for k, v in vars(self).items() if k.startswith("cls_feat_")}
-        # self.cls_feat_loss = ClsFeatLoss(**kwargs)
-        # self.cls_feat_proj_head = ClsFeatProjHeadFactory.get(**kwargs)
+        # self._cls_feat_loss = ClsFeatLoss(**kwargs)
+        # self._cls_feat_proj_head = ClsFeatProjHeadFactory.get(**kwargs)
 
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
         self.exp_name = f"{self.exp_name}_baseline"
