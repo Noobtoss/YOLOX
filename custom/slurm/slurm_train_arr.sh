@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=YOLOX_train_arr # Kurzname des Jobs
-#SBATCH --array=9-16%             # 9-16%4  # 7 Jobs total running 4 at a time
+#SBATCH --array=9-16%              # 9-16%4  # 7 Jobs total running 4 at a time
 #SBATCH --output=logs/R-%A-%a.out
 #SBATCH --partition=p2,p3,p4,p5,p6             # p4
 #SBATCH --qos=gpuultimate
@@ -58,7 +58,7 @@ python tools/train.py \
     --ckpt $BASE_DIR/$CKPT \
     --cache \
     --logger wandb \
-        wandb-project Images05ACCV2026-YOLOX-InsanityCheck \
+        wandb-project runs \
         wandb-entity team-noobtoss \
         wandb-name $EXP_NAME \
     output_dir $OUTPUT_DIR \

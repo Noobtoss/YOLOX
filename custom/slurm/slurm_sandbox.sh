@@ -58,7 +58,7 @@ python tools/train.py \
     --ckpt $BASE_DIR/$CKPT \
     --cache \
     --logger wandb \
-        wandb-project Images05ACCV2026-YOLOX-InsanityCheck \
+        wandb-project tmp \
         wandb-entity team-noobtoss \
         wandb-name $EXP_NAME \
     output_dir $OUTPUT_DIR \

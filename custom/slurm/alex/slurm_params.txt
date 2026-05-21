@@ -7,15 +7,6 @@ exp_name Images05MetaFood2026_scl_6    cfg custom/exps/Images05MetaFood2026.py c
 exp_name Images05MetaFood2026_scl_8    cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth cls_feat 8
 exp_name Images05MetaFood2026_scl_10   cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth cls_feat 10
 exp_name Images05MetaFood2026_scl_12   cfg custom/exps/Images05MetaFood2026.py ckpt checkpoints/yolox_x.pth cls_feat 12
-# Experiments Insanity Check
-exp_name Images05MetaFood2026_baseline cfg custom/exps/Images05ACCV2026.py data_dir datasets_tar/Images05MetaFood2026.tar ckpt checkpoints/yolox_x.pth
-exp_name Images05MetaFood2026_scl_1    cfg custom/exps/Images05ACCV2026.py data_dir datasets_tar/Images05MetaFood2026.tar ckpt checkpoints/yolox_x.pth cls_feat 1
-exp_name Images05MetaFood2026_scl_2    cfg custom/exps/Images05ACCV2026.py data_dir datasets_tar/Images05MetaFood2026.tar ckpt checkpoints/yolox_x.pth cls_feat 2
-exp_name Images05MetaFood2026_scl_4    cfg custom/exps/Images05ACCV2026.py data_dir datasets_tar/Images05MetaFood2026.tar ckpt checkpoints/yolox_x.pth cls_feat 4
-exp_name Images05MetaFood2026_scl_6    cfg custom/exps/Images05ACCV2026.py data_dir datasets_tar/Images05MetaFood2026.tar ckpt checkpoints/yolox_x.pth cls_feat 6
-exp_name Images05MetaFood2026_scl_8    cfg custom/exps/Images05ACCV2026.py data_dir datasets_tar/Images05MetaFood2026.tar ckpt checkpoints/yolox_x.pth cls_feat 8
-exp_name Images05MetaFood2026_scl_10   cfg custom/exps/Images05ACCV2026.py data_dir datasets_tar/Images05MetaFood2026.tar ckpt checkpoints/yolox_x.pth cls_feat 10
-exp_name Images05MetaFood2026_scl_12   cfg custom/exps/Images05ACCV2026.py data_dir datasets_tar/Images05MetaFood2026.tar ckpt checkpoints/yolox_x.pth cls_feat 12
 # Experiments ACCV2026
 exp_name Images05ACCV2026_baseline     cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth
 exp_name Images05ACCV2026_scl_1        cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 1
@@ -25,9 +16,4 @@ exp_name Images05ACCV2026_scl_6        cfg custom/exps/Images05ACCV2026.py ckpt 
 exp_name Images05ACCV2026_scl_8        cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 8
 exp_name Images05ACCV2026_scl_10       cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 10
 exp_name Images05ACCV2026_scl_12       cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 12
-# Experiments ACCV2026 Projection Heads
-exp_name Images05ACCV2026_baseline     cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 1 cls_feat_proj_head n
-exp_name Images05ACCV2026_baseline     cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 1 cls_feat_proj_head s
-exp_name Images05ACCV2026_baseline     cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 1 cls_feat_proj_head l
-exp_name Images05ACCV2026_baseline     cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 1 cls_feat_proj_head m
 # Experiments End Current
