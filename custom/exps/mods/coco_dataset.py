@@ -12,18 +12,18 @@ from yolox.data.datasets.coco import COCODataset as _COCODataset
 # THS, Copied from yolox.data.dataset.coco
 
 
-def coco_subsample(coco: COCO, subset_fract: float, min_cat_fract: float = None, seed: int = 2024) -> COCO:
+def coco_subsample(coco: COCO, subset_pct: float, min_cls_pct: float = None, seed: int = 2024) -> COCO:
     random.seed(seed)
     all_ids = set(coco.getImgIds())
     selected = set()
-    total_budget = int(len(all_ids) * subset_fract)
-    phase_01_budget_fract = 0.1
-    phase_02_budget_fract = 0.7
+    total_budget = int(len(all_ids) * subset_pct)
+    phase_01_budget_pct = 0.1
+    phase_02_budget_pct = 0.7
 
     cat_ids = coco.getCatIds()
 
     # phase 1: equal distribution sampling
-    budget = int(phase_01_budget_fract * total_budget)
+    budget = int(phase_01_budget_pct * total_budget)
     for cat_id in cat_ids:
         per_cat_budget = max(1, int(budget / len(cat_ids)))
         cat_imgs = coco.getImgIds(catIds=[cat_id])
@@ -39,15 +39,15 @@ def coco_subsample(coco: COCO, subset_fract: float, min_cat_fract: float = None,
     total_anns = len(coco.getAnnIds())
     cat_ann_counts = {c: len(coco.getAnnIds(catIds=[c])) for c in cat_ids}
     cat_ids.sort(key=lambda c: cat_ann_counts[c])  # rarest first
-    min_cat_fract = min_cat_fract or cat_ann_counts[cat_ids[0]] / total_anns
-    min_cat_fract = min(min_cat_fract, 1.0 / len(cat_ids))
-    per_cat_ann_min = {c: max(1, int(min_cat_fract * total_anns)) for c in cat_ids}
+    min_cls_pct = min_cls_pct or cat_ann_counts[cat_ids[0]] / total_anns
+    min_cls_pct = min(min_cls_pct, 1.0 / len(cat_ids))
+    per_cat_ann_min = {c: max(1, int(min_cls_pct * total_anns)) for c in cat_ids}
 
     img_cat_ann_count = defaultdict(lambda: defaultdict(int))
     for ann in coco.loadAnns(coco.getAnnIds()):
         img_cat_ann_count[ann["image_id"]][ann["category_id"]] += 1
 
-    budget = int(phase_02_budget_fract * (total_budget - len(selected)))
+    budget = int(phase_02_budget_pct * (total_budget - len(selected)))
     for cat_id in cat_ids:
         cat_imgs = coco.getImgIds(catIds=[cat_id])
         available = list(set(cat_imgs) - selected)
@@ -87,8 +87,8 @@ class COCODataset(_COCODataset):
             preproc=None,
             cache=False,
             cache_type="ram",
-            train_subset_fract: float = None,
-            train_min_cat_fract: float = None,
+            train_subset_pct: float = None,
+            train_min_cls_pct: float = None,
             seed: int = 2024,
     ):
         if data_dir is None:
@@ -98,8 +98,8 @@ class COCODataset(_COCODataset):
 
         self.coco = COCO(os.path.join(self.data_dir, "annotations", self.json_file))
         # >>> MOD
-        if hasattr(self, "train_subset_fract") and train_subset_fract is not None:
-            self.coco = coco_subsample(self.coco, train_subset_fract, train_min_cat_fract, seed)
+        if hasattr(self, "train_subset_pct") and train_subset_pct is not None:
+            self.coco = coco_subsample(self.coco, train_subset_pct, train_min_cls_pct, seed)
         warnings.warn(
             f"[Modded] COCODataset: "
             f"{len(self.coco.imgs)} images, "

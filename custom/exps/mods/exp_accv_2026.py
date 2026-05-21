@@ -16,8 +16,8 @@ class Exp(_Exp):
         self.cls_feat_loss       = None   # SupervisedContrastiveLoss()
         self.cls_feat_proj_head  = None
         self.save_history_ckpt   = False  # True
-        self.train_subset_fract  = None
-        self.train_min_cat_fract = None
+        self.train_subset_pct    = None
+        self.train_min_cls_pct   = None
         self.seed                = 2024
 
     def get_dataset(self, cache: bool = False, cache_type: str = "ram"):
@@ -44,8 +44,8 @@ class Exp(_Exp):
             ),
             cache=cache,
             cache_type=cache_type,
-            train_subset_fract=float(self.train_subset_fract) if self.train_subset_fract is not None else None,
-            train_min_cat_fract=float(self.train_min_cat_fract) if self.train_min_cat_fract is not None else None,
+            train_subset_pct=float(self.train_subset_pct) if self.train_subset_pct is not None else None,
+            train_min_cls_pct=float(self.train_min_cls_pct) if self.train_min_cls_pct is not None else None,
             seed=int(self.seed) if self.seed is not None else None,
         )
 

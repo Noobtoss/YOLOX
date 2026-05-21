@@ -28,8 +28,9 @@ class Exp(ExpACCV2026):
         self.cls_feat = 0
         self.cls_feat_loss = "sup_con_loss"  # ClsFeatLossFactory.get("sup_con_loss", temperature=self.cls_feat_temperature)
         self.cls_feat_temperature = 0.07
-        # self.cls_feat_mask = "conf"
-        # self.cls_feat_top_rel = 0.4
+        self.cls_feat_mask = "rand"
+        # self.cls_feat_mask_pct = 0.4
+        # self.cls_feat_min_per_class = 4
         # self.cls_feat_weight = "conf"
         # self.cls_feat_proj_head = "s"
         # self.cls_feat_proj_head_lr = 0.01
@@ -43,12 +44,12 @@ class Exp(ExpACCV2026):
         # ---------------- dataloader config ---------------- #
 
         # Define yourself dataset path
-        self.data_dir = "datasets/Images05ACCV2026"
+        self.data_dir = "datasets/Images05MetaFood2026"  # DANGER, for BMVC2026 me stay on Images05MetaFood2026
         self.train_ann = "annotation_train.json"
         self.val_ann = "annotation_test.json"
 
-        self.train_subset_fract = None
-        self.train_min_cat_fract = None
+        self.train_subset_pct  = None
+        self.train_min_cls_pct = None
 
         # --------------  training config --------------------- #
 
