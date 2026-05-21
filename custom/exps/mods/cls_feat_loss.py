@@ -45,7 +45,7 @@ class FeatLossFactory:
         elif loss == "multi_sim_loss":
             params = {
                 "alpha": 2.0,
-                "beta": 50.0,
+                "beta": 20.0,
                 "base": 0.5,
             }
             params.update({k: v for k, v in kwargs.items() if k in inspect.signature(losses.MultiSimilarityLoss).parameters})
