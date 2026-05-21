@@ -60,12 +60,12 @@ class WeightFactory:
 
 
 class Masking:
-    def __init__(self, top_rel: float = 0.2, **kwargs):
+    def __init__(self, mask_pct: float = 0.2, **kwargs):
         super().__init__(**kwargs)
-        self.top_rel = top_rel
+        self.mask_pct = mask_pct
 
     def _masking(self, metric):
-        k = max(1, int(len(metric) * self.top_rel))
+        k = max(1, int(len(metric) * (1 - self.mask_pct)))
         thresh = metric.topk(k).values[-1]
         return metric >= thresh
 
@@ -76,6 +76,46 @@ class ConfMask(Masking, ConfWeight):
         return self._masking(conf)
 
 
+class RandMask:
+    def __init__(self, mask_pct: float = 0.4, **kwargs):
+        self.mask_pct = mask_pct
+
+    def __call__(self, pred_scores, target_scores):
+        k = max(1, int(len(pred_scores) * self.mask_pct))
+        mask = torch.zeros(len(pred_scores), dtype=torch.bool)
+        indices = torch.randperm(len(pred_scores))[:k]
+        mask[indices] = True
+        return ~mask
+
+
+class RandMaskBalanced:
+    def __init__(self, mask_pct: float = 0.4, min_per_class: int = 4, **kwargs):
+        self.mask_pct = mask_pct
+        self.min_per_class = min_per_class
+
+    def __call__(self, pred_scores, target_scores):
+        target_cls = target_scores.max(-1).indices
+        n = len(pred_scores)
+        k = max(1, int(n * self.mask_pct))
+        mask = torch.zeros(n, dtype=torch.bool)
+
+        # Guarantee at least min_per_class per unique class
+        for cls in target_cls.unique():
+            cls_indices = (target_cls == cls).nonzero(as_tuple=True)[0]
+            k_cls = min(self.min_per_class, len(cls_indices))
+            chosen = cls_indices[torch.randperm(len(cls_indices))[:k_cls]]
+            mask[chosen] = True
+
+        # Fill remaining budget with random unchosen indices
+        remaining = k - mask.sum().item()
+        if remaining > 0:
+            unmasked = (~mask).nonzero(as_tuple=True)[0]
+            extra = unmasked[torch.randperm(len(unmasked))[:remaining]]
+            mask[extra] = True
+
+        return ~mask
+
+
 class MaskFactory:
     @staticmethod
     def get(mask: str = None, **kwargs):
@@ -83,6 +123,10 @@ class MaskFactory:
             return None
         elif mask == "conf":
             return ConfMask(**kwargs)
+        elif mask == "rand":
+            return RandMask(**kwargs)
+        elif mask == "rand_balanced":
+            return RandMaskBalanced(**kwargs)
         else:
             raise ValueError(f"Unknown mask type: '{mask}'")
 
