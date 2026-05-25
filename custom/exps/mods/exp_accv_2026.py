@@ -45,8 +45,8 @@ class Exp(_Exp):
             ),
             cache=cache,
             cache_type=cache_type,
-            train_subset_pct=float(self.train_subset_pct) if self.train_subset_pct is not None else None,
-            train_min_cls_pct=float(self.train_min_cls_pct) if self.train_min_cls_pct is not None else None,
+            train_subset_pct=self.train_subset_pct,
+            train_min_cls_pct=self.train_min_cls_pct,
             seed=int(self.seed) if self.seed is not None else None,
         )
 

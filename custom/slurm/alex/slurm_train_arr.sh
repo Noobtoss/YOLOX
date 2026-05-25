@@ -1,13 +1,13 @@
 #!/bin/bash
 #SBATCH --job-name=YOLOX_train_arr # Kurzname des Jobs
-#SBATCH --array=17,18,19,20,22,26,27,28,30,34,35,36,38%8  # Previous runs: 17-40%8, 9-16%8
+#SBATCH --array=41,42,44,46,50,51,52,53,59,60,61,62%8  # Previous runs: 17-40%8, 9-16%8
 #SBATCH --output=logs/R-%A-%a.out
 #SBATCH --gres=gpu:a40:1     # Request 1x A40 GPUs
 #SBATCH --partition=a40      # Submit to the a40 node partition
 #SBATCH --ntasks=1           # 1 process total (not MPI)
 #SBATCH --ntasks-per-node=1  # That 1 process runs on 1 node
 #SBATCH --cpus-per-task=4    # 4 CPU cores for that process (data loading etc)
-#SBATCH --time=03:52:32      # Walltime limit: kill job after 3hr 52min 32sec
+#SBATCH --time=02:01:32      # Walltime limit: kill job after 3hr 52min 32sec
 #SBATCH --mail-type=ALL      # Email on job start, end, fail
 #SBATCH --mail-user=thomas.schmitt@th-nuernberg.de
 
@@ -81,7 +81,7 @@ python tools/train.py \
     --ckpt $BASE_DIR/$CKPT \
     --cache \
     --logger wandb \
-        wandb-project runs \
+        wandb-project runs-alex \
         wandb-entity team-noobtoss \
         wandb-name $EXP_NAME \
     output_dir $OUTPUT_DIR \

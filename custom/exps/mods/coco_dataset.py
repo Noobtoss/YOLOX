@@ -13,6 +13,7 @@ from yolox.data.datasets.coco import COCODataset as _COCODataset
 
 
 def coco_subsample(coco: COCO, subset_pct: float, min_cls_pct: float = None, seed: int = 2024) -> COCO:
+    min_cls_pct = min_cls_pct or 0.5 * subset_pct
     random.seed(seed)
     all_ids = set(coco.getImgIds())
     selected = set()
@@ -98,7 +99,7 @@ class COCODataset(_COCODataset):
 
         self.coco = COCO(os.path.join(self.data_dir, "annotations", self.json_file))
         # >>> MOD
-        if hasattr(self, "train_subset_pct") and train_subset_pct is not None:
+        if train_subset_pct is not None:
             self.coco = coco_subsample(self.coco, train_subset_pct, train_min_cls_pct, seed)
         warnings.warn(
             f"[Modded] COCODataset: "

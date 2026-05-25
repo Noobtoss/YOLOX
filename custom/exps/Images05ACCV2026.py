@@ -3,10 +3,13 @@ import warnings
 
 from mods import ClsFeatLoss, ClsFeatProjHeadFactory, ExpACCV2026
 
+EXP_FLOAT_VALUES = {"cls_feat", "train_subset_pct", "train_min_cls_pct"}
+
 
 def check_exp_value(exp):
-    if hasattr(exp, "cls_feat") and isinstance(exp.cls_feat, str):
-        exp.cls_feat = float(exp.cls_feat)
+    for value in EXP_FLOAT_VALUES:
+        if hasattr(exp, value):
+            setattr(exp, value, float(getattr(exp, value)))
 
 
 class Exp(ExpACCV2026):
