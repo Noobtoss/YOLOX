@@ -8,7 +8,7 @@ EXP_FLOAT_VALUES = {"cls_feat", "train_subset_pct", "train_min_cls_pct"}
 
 def check_exp_value(exp):
     for value in EXP_FLOAT_VALUES:
-        if hasattr(exp, value):
+        if getattr(exp, value, None) is not None:
             setattr(exp, value, float(getattr(exp, value)))
 
 
