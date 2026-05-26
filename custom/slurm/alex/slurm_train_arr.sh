@@ -40,8 +40,8 @@ DATA_DIR="${KV[data_dir]:-datasets_tar/Images05MetaFood2026.tar}"
 unset SLURM_EXPORT_ENV
 
 module purge
-module load python/3.12-conda
-module load cuda/12.6.1
+module load python/3.12-base
+module load cuda/12.8.1
 
 conda activate conda-YOLOX
 
