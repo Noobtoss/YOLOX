@@ -45,13 +45,12 @@ exp_name Images05BMVC2026_msl_16   cfg custom/exps/Images05ACCV2026.py ckpt chec
 exp_name Images05BMVC2026_msl_20   cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss multi_sim_loss cls_feat 20
 # Experiments BMVC2026 50pct
 exp_name Images05BMVC2026_50pct_baseline cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth train_subset_pct 0.5 train_min_cls_pct 0.3 cls_feat 0
+exp_name Images05BMVC2026_50pct_scl_02   cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth train_subset_pct 0.5 train_min_cls_pct 0.3 cls_feat 0.2
+exp_name Images05BMVC2026_50pct_scl_05   cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth train_subset_pct 0.5 train_min_cls_pct 0.3 cls_feat 0.5
 exp_name Images05BMVC2026_50pct_scl_1    cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth train_subset_pct 0.5 train_min_cls_pct 0.3 cls_feat 1
 exp_name Images05BMVC2026_50pct_scl_2    cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth train_subset_pct 0.5 train_min_cls_pct 0.3 cls_feat 2
 exp_name Images05BMVC2026_50pct_scl_4    cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth train_subset_pct 0.5 train_min_cls_pct 0.3 cls_feat 4
-exp_name Images05BMVC2026_50pct_scl_6    cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth train_subset_pct 0.5 train_min_cls_pct 0.3 cls_feat 6
 exp_name Images05BMVC2026_50pct_scl_8    cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth train_subset_pct 0.5 train_min_cls_pct 0.3 cls_feat 8
-exp_name Images05BMVC2026_50pct_scl_10   cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth train_subset_pct 0.5 train_min_cls_pct 0.3 cls_feat 10
-exp_name Images05BMVC2026_50pct_scl_12   cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth train_subset_pct 0.5 train_min_cls_pct 0.3 cls_feat 12
 exp_name Images05BMVC2026_50pct_baseline cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth train_subset_pct 0.5 train_min_cls_pct 0.3 cls_feat_loss circle_loss cls_feat 0
 exp_name Images05BMVC2026_50pct_cl_002   cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth train_subset_pct 0.5 train_min_cls_pct 0.3 cls_feat_loss circle_loss cls_feat 0.02
 exp_name Images05BMVC2026_50pct_cl_005   cfg custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth train_subset_pct 0.5 train_min_cls_pct 0.3 cls_feat_loss circle_loss cls_feat 0.05

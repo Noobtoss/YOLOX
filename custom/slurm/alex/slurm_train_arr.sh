@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=YOLOX_train_arr # Kurzname des Jobs
-#SBATCH --array=43,44,46,48,52,53,54,55,61,62,63,64%8  # Previous runs: 17-40%8, 9-16%8
+#SBATCH --array=44,45%8  # Previous runs: 17-40%8, 9-16%8
 #SBATCH --output=logs/R-%A-%a.out
 #SBATCH --gres=gpu:a40:1     # Request 1x A40 GPUs
 #SBATCH --partition=a40      # Submit to the a40 node partition
