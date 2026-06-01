@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=YOLOX_train_arr # Kurzname des Jobs
-#SBATCH --array=37,39%8  # Previous runs: 17-40%8, 9-16%8
+#SBATCH --array=58-81%8  # Previous runs: 17-40%8, 9-16%8
 #SBATCH --output=logs/R-%A-%a.out
 #SBATCH --partition=p2,p6             # p4
 #SBATCH --qos=gpuultimate
@@ -30,7 +30,7 @@ done
 
 OUTPUT_DIR="${BASE_DIR}/runs"
 EXP_NAME="${KV[exp_name]:-unnamed_experiment}"
-CFG="${KV[cfg]:-custom/exps/Images04.py}"
+EXP="${KV[exp]:-custom/exps/Images04.py}"
 CKPT="${KV[ckpt]:-checkpoints/yolox_x.pth}"
 
 # ----- ENVIRONMENT SETUP -------------------------------------------
@@ -42,15 +42,17 @@ conda activate conda-YOLOX
 
 export PYTHONPATH="$BASE_DIR:$PYTHONPATH"
 
+export TMPDIR=/nfs/scratch/staff/schmittth/tmp
+
 # ----- WANDB -------------------------------------------------------
 export WANDB_API_KEY=95177947f5f36556806da90ea7a0bf93ed857d58
-export WANDB_DIR=/tmp/ths_wandb
-export WANDB_CACHE_DIR=/tmp/ths_wandb
-export WANDB_CONFIG_DIR=/tmp/ths_wandb
+export WANDB_DIR=/nfs/scratch/staff/schmittth/tmp
+export WANDB_CACHE_DIR=/nfs/scratch/staff/schmittth/tmp
+export WANDB_CONFIG_DIR=/nfs/scratch/staff/schmittth/tmp
 
 # ----- TRAINING ----------------------------------------------------
 python tools/train.py \
-    --exp_file $BASE_DIR/$CFG \
+    --exp_file $BASE_DIR/$EXP \
     --devices 1 \
     --batch-size 8 \
     --fp16 \

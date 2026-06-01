@@ -13,7 +13,7 @@
 BASE_DIR=/nfs/scratch/staff/schmittth/code_nexus/YOLOX
 
 # ----- GET ARGS ----------------------------------------------------
-CFG=${1:-custom/exps/Images04.py}
+EXP=${1:-custom/exps/Images04.py}
 CKPT=${2:-checkpoints/yolox_x.pth}
 
 # ----- ENVIRONMENT SETUP -------------------------------------------
@@ -23,15 +23,17 @@ eval "$(conda shell.bash hook)"
 
 conda activate conda-YOLOX
 
+export TMPDIR=/nfs/scratch/staff/schmittth/tmp
+
 # ----- WANDB -------------------------------------------------------
 export WANDB_API_KEY=95177947f5f36556806da90ea7a0bf93ed857d58
-export WANDB_DIR=/tmp/ths_wandb
-export WANDB_CACHE_DIR=/tmp/ths_wandb
-export WANDB_CONFIG_DIR=/tmp/ths_wandb
+export WANDB_DIR=/nfs/scratch/staff/schmittth/tmp
+export WANDB_CACHE_DIR=/nfs/scratch/staff/schmittth/tmp
+export WANDB_CONFIG_DIR=/nfs/scratch/staff/schmittth/tmp
 
 # ----- TRAINING ----------------------------------------------------
 python tools/train.py \
-    --exp_file $BASE_DIR/$CFG \
+    --exp_file $BASE_DIR/$EXP \
     --devices 1 \
     --batch-size 8 \
     --fp16 \
@@ -41,4 +43,4 @@ python tools/train.py \
     --logger wandb \
         wandb-project runs \
         wandb-entity team-noobtoss \
-        wandb-name "$(basename "$CKPT" .pth)_$(basename "$CFG" .py)_$(date +"%Y-%m-%d_%H-%M")"
+        wandb-name "$(basename "$CKPT" .pth)_$(basename "$EXP" .py)_$(date +"%Y-%m-%d_%H-%M")"

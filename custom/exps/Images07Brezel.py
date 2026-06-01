@@ -8,6 +8,7 @@ class Exp(_Exp):
         super().__init__()
 
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
+        self.exp_name = f"{self.exp_name}"
 
         # ---------------- dataloader config ---------------- #
 
@@ -28,7 +29,7 @@ class Exp(_Exp):
         self.names = {
             1: "Brezel",
         }
-        self.img_size =  (1280, 1280) # (640, 640)  # (height, width)
+        self.img_size = (1280, 1280)  # (640, 640)  # (height, width)
 
         # ---------------- model config ---------------- #
 

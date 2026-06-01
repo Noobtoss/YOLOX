@@ -15,8 +15,6 @@ def check_exp_value(exp):
 class Exp(ExpACCV2026):
     def __init__(self):
         super().__init__()
-        self.num_classes = 37
-
         self.cls_feat_dim = 320  # hard encoding dangerous
         self.cls_feat = 0
         self.cls_feat_loss = "sup_con_loss"  # ClsFeatLossFactory.get("sup_con_loss", temperature=self.cls_feat_temperature)
@@ -37,11 +35,11 @@ class Exp(ExpACCV2026):
         # ---------------- dataloader config ---------------- #
 
         # Define yourself dataset path
-        self.data_dir = "datasets/Images05MetaFood2026"  # for exp BMVC2026 me stay on Images05MetaFood2026
+        self.data_dir = "datasets/Images05ACCV2026"
         self.train_ann = "annotation_train.json"
         self.val_ann = "annotation_test.json"
 
-        self.train_subset_pct  = None
+        self.train_subset_pct = None
         self.train_min_cls_pct = None
 
         # --------------  training config --------------------- #

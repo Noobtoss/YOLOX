@@ -65,7 +65,7 @@ class Exp(_Exp):
             36: "Sesamstange",
             37: "Vollgutsemmel"
         }
-        self.img_size =  (1280, 1280) # (640, 640)  # (height, width)
+        self.img_size = (1280, 1280)  # (640, 640)  # (height, width)
 
         # ---------------- model config ---------------- #
 

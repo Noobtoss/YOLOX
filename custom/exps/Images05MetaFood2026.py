@@ -8,8 +8,6 @@ class Exp(ExpMetaFood2026):
 
     def __init__(self):
         super().__init__()
-        self.num_classes = 37
-
         self.cls_feat = 0
         self.cls_feat_loss = SupervisedContrastiveLoss  # FeatLossFactory.get("sup_con_loss", temperature=0.07)
 

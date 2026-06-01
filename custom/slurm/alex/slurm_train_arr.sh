@@ -32,7 +32,7 @@ done
 
 OUTPUT_DIR="${BASE_DIR}/runs"
 EXP_NAME="${KV[exp_name]:-unnamed_experiment}"
-CFG="${KV[cfg]:-custom/exps/Images04.py}"
+EXP="${KV[exp]:-custom/exps/Images04.py}"
 CKPT="${KV[ckpt]:-checkpoints/yolox_x.pth}"
 DATA_DIR="${KV[data_dir]:-datasets_tar/Images05MetaFood2026.tar}"
 
@@ -73,7 +73,7 @@ echo $JOB_DIR
 
 # ----- TRAINING ----------------------------------------------------
 python tools/train.py \
-    --exp_file $BASE_DIR/$CFG \
+    --exp_file $BASE_DIR/$EXP \
     --devices 1 \
     --batch-size 8 \
     --fp16 \

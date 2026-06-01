@@ -48,7 +48,7 @@ class Exp(_Exp):
             20: "Kirschtasche",
             21: "Fruechteschiffchen"
         }
-        self.img_size =  (1280, 1280) # (640, 640)  # (height, width)
+        self.img_size = (1280, 1280)  # (640, 640)  # (height, width)
 
         # ---------------- model config ---------------- #
 

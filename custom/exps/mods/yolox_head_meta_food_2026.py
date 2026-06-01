@@ -31,8 +31,6 @@ class YOLOXHead(_YOLOXHead):
         self.cls_feat = cls_feat or 0
         self.cls_feat_loss = cls_feat_loss
 
-
-
     def forward(self, xin, labels=None, imgs=None):  # added class feat loss
         outputs = []
         origin_preds = []

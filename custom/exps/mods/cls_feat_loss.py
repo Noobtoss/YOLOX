@@ -49,7 +49,9 @@ class FeatLossFactory:
                 "beta": 20.0,
                 "base": 0.5,
             }
-            params.update({k: v for k, v in kwargs.items() if k in inspect.signature(losses.MultiSimilarityLoss).parameters})
+            params.update(
+                {k: v for k, v in kwargs.items() if k in inspect.signature(losses.MultiSimilarityLoss).parameters}
+            )
             return NormalizeEmbeddingsWrapper(losses.MultiSimilarityLoss(**params, reducer=UnpackReducer()))
 
         else:
