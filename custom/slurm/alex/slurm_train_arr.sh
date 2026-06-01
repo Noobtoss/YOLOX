@@ -7,7 +7,7 @@
 #SBATCH --ntasks=1           # 1 process total (not MPI)
 #SBATCH --ntasks-per-node=1  # That 1 process runs on 1 node
 #SBATCH --cpus-per-task=4    # 4 CPU cores for that process (data loading etc)
-#SBATCH --time=02:01:32      # Walltime limit: kill job after 3hr 52min 32sec
+#SBATCH --time=02:40:32      # Walltime limit: kill job after 3hr 52min 32sec
 #SBATCH --mail-type=ALL      # Email on job start, end, fail
 #SBATCH --mail-user=thomas.schmitt@th-nuernberg.de
 
@@ -53,9 +53,9 @@ export https_proxy=http://proxy:80
 
 # ----- WANDB -------------------------------------------------------
 export WANDB_API_KEY=95177947f5f36556806da90ea7a0bf93ed857d58
-export WANDB_DIR=/tmp/ths_wandb
-export WANDB_CACHE_DIR=/tmp/ths_wandb
-export WANDB_CONFIG_DIR=/tmp/ths_wandb
+export WANDB_DIR=$TMPDIR
+export WANDB_CACHE_DIR=$TMPDIR
+export WANDB_CONFIG_DIR=$TMPDIR
 
 # ----- DATA STAGING ------------------------------------------------
 tar xf $BASE_DIR/$DATA_DIR --strip-components=1 -C $JOB_DIR \
