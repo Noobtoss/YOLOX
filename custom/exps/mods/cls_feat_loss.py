@@ -98,10 +98,10 @@ class RandMask:
     def __init__(self, mask_pct: float = 0.4, **kwargs):
         self.mask_pct = mask_pct
 
-    def __call__(self, target_scores, pred_scores):
-        k = max(1, int(len(pred_scores) * self.mask_pct))
-        mask = torch.zeros(len(pred_scores), dtype=torch.bool)
-        indices = torch.randperm(len(pred_scores))[:k]
+    def __call__(self, target_scores, pred_scores=None):
+        k = max(1, int(target_scores.shape[0] * self.mask_pct))
+        mask = torch.zeros(target_scores.shape[0], dtype=torch.bool)
+        indices = torch.randperm(target_scores.shape[0])[:k]
         mask[indices] = True
         return ~mask
 
@@ -111,9 +111,9 @@ class RandMaskBalanced:
         self.mask_pct = mask_pct
         self.min_per_class = min_per_class
 
-    def __call__(self, target_scores, pred_scores):
+    def __call__(self, target_scores, pred_scores=None):
         target_cls = target_scores.max(-1).indices
-        n = len(pred_scores)
+        n = target_scores.shape[0]
         k = max(1, int(n * self.mask_pct))
         mask = torch.zeros(n, dtype=torch.bool)
 
