@@ -295,9 +295,9 @@ class YOLOXHead(_YOLOXHead):
         # >>> MOD
         loss_cls_feats = (
             self.cls_feat_loss(
-                cls_feats,
-                cls_preds.view(-1, self.num_classes)[fg_masks].detach(),
-                cls_targets,
+                cls_feats=cls_feats,
+                target_scores=cls_targets,
+                pred_scores=cls_preds.view(-1, self.num_classes)[fg_masks].detach(),
             )
         )
         loss = reg_weight * loss_iou + loss_obj + loss_cls + self.cls_feat * loss_cls_feats + loss_l1

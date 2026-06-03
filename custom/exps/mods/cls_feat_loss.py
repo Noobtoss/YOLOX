@@ -62,7 +62,7 @@ class ConfWeight:
     def __init__(self, **kwargs):
         pass
 
-    def __call__(self, pred_scores, target_scores):
+    def __call__(self, target_scores, pred_scores, *args, **kwargs):
         return pred_scores.sigmoid().max(-1).values
 
 
@@ -89,8 +89,8 @@ class Masking:
 
 
 class ConfMask(Masking, ConfWeight):
-    def __call__(self, pred_scores, target_scores):
-        conf = super().__call__(pred_scores, target_scores)
+    def __call__(self, target_scores, pred_scores, *args, **kwargs):
+        conf = super().__call__(target_scores, pred_scores, *args, **kwargs)
         return self._masking(conf)
 
 
@@ -98,7 +98,7 @@ class RandMask:
     def __init__(self, mask_pct: float = 0.4, **kwargs):
         self.mask_pct = mask_pct
 
-    def __call__(self, pred_scores, target_scores):
+    def __call__(self, target_scores, pred_scores):
         k = max(1, int(len(pred_scores) * self.mask_pct))
         mask = torch.zeros(len(pred_scores), dtype=torch.bool)
         indices = torch.randperm(len(pred_scores))[:k]
@@ -111,7 +111,7 @@ class RandMaskBalanced:
         self.mask_pct = mask_pct
         self.min_per_class = min_per_class
 
-    def __call__(self, pred_scores, target_scores):
+    def __call__(self, target_scores, pred_scores):
         target_cls = target_scores.max(-1).indices
         n = len(pred_scores)
         k = max(1, int(n * self.mask_pct))
@@ -152,6 +152,7 @@ class MaskFactory:
 class ClsFeatLoss(nn.Module):
     def __init__(self, loss: str, mask: str = None, weight: str = None, **kwargs):
         super().__init__()
+        assert mask is None or weight is None, "Only one of mask or weight can be specified, not both"
         self.loss = FeatLossFactory.get(loss, **kwargs)
         self.mask = MaskFactory.get(mask, **kwargs)
         self.weight = WeightFactory.get(weight, **kwargs)
@@ -159,24 +160,22 @@ class ClsFeatLoss(nn.Module):
     def forward(
             self,
             cls_feats: torch.Tensor,
-            pred_scores: torch.Tensor,
-            target_scores: torch.Tensor
+            target_scores: torch.Tensor,
+            *args, **kwargs
     ) -> torch.Tensor:
         loss = torch.tensor(0.0, device=cls_feats.device)
         target_cls = target_scores.max(-1).indices
         if self.mask is not None:
-            mask = self.mask(cls_feats, target_scores)
+            mask = self.mask(cls_feats, target_scores, *args, **kwargs)
             if not mask.sum():
                 return loss
             cls_feats = cls_feats[mask]
             target_cls = target_cls[mask]
-            pred_scores = pred_scores[mask]
-            target_scores = target_scores[mask]
 
         loss_per_element = self.loss(cls_feats, target_cls).squeeze(-1)
 
         if self.weight is not None:
-            weight = self.weight(pred_scores, target_scores)
+            weight = self.weight(target_scores, *args, **kwargs)
             weight = weight / weight.sum()
             loss += (loss_per_element * weight).sum()
         else:
