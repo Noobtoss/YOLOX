@@ -43,4 +43,5 @@ python tools/train.py \
     --logger wandb \
         wandb-project runs \
         wandb-entity team-noobtoss \
-        wandb-name "$(basename "$CKPT" .pth)_$(basename "$EXP" .py)_$(date +"%Y-%m-%d_%H-%M")"
+        wandb-name "$(basename "$CKPT" .pth)_$(basename "$EXP" .py)_$(date +"%Y-%m-%d_%H-%M")" \
+        wandb-log_checkpoints False
