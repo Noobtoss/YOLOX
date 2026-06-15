@@ -89,9 +89,21 @@ exp_name Images05ACCV2026_baseline exp custom/exps/Images05ACCV2026.py ckpt chec
 exp_name Images05ACCV2026_scl_4    exp custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 4
 exp_name Images05ACCV2026_scl_6    exp custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 6
 exp_name Images05ACCV2026_scl_8    exp custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 8
-# Experiments ACCV2026Mix
-exp_name Images05ACCV2026Mix_baseline exp custom/exps/Images05ACCV2026Mix.py ckpt checkpoints/yolox_x.pth cls_feat 0
-exp_name Images05ACCV2026Mix_scl_4    exp custom/exps/Images05ACCV2026Mix.py ckpt checkpoints/yolox_x.pth cls_feat 4
-exp_name Images05ACCV2026Mix_scl_6    exp custom/exps/Images05ACCV2026Mix.py ckpt checkpoints/yolox_x.pth cls_feat 6
-exp_name Images05ACCV2026Mix_scl_8    exp custom/exps/Images05ACCV2026Mix.py ckpt checkpoints/yolox_x.pth cls_feat 8
+exp_name Images05ACCV2026_cl_005   exp custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss circle_loss cls_feat 0.05
+exp_name Images05ACCV2026_cl_01    exp custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss circle_loss cls_feat 0.1
+exp_name Images05ACCV2026_cl_015   exp custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss circle_loss cls_feat 0.15
+exp_name Images05ACCV2026_msl_6    exp custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss multi_sim_loss cls_feat 6
+exp_name Images05ACCV2026_msl_8    exp custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss multi_sim_loss cls_feat 8
+exp_name Images05ACCV2026_msl_10   exp custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss multi_sim_loss cls_feat 10
+# Experiments ACCV2026Plus
+exp_name Images05ACCV2026Plus_baseline exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat 0
+exp_name Images05ACCV2026Plus_scl_4    exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat 4
+exp_name Images05ACCV2026Plus_scl_6    exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat 6
+exp_name Images05ACCV2026Plus_scl_8    exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat 8
+exp_name Images05ACCV2026Plus_cl_005   exp custom/Ïexps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat_loss circle_loss cls_feat 0.05
+exp_name Images05ACCV2026Plus_cl_01    exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat_loss circle_loss cls_feat 0.1
+exp_name Images05ACCV2026Plus_cl_015   exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat_loss circle_loss cls_feat 0.15
+exp_name Images05ACCV2026Plus_msl_6    exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat_loss multi_sim_loss cls_feat 6
+exp_name Images05ACCV2026Plus_msl_8    exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat_loss multi_sim_loss cls_feat 8
+exp_name Images05ACCV2026Plus_msl_10   exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat_loss multi_sim_loss cls_feat 10
 # Experiments End Current
