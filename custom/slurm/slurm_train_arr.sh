@@ -60,7 +60,7 @@ python tools/train.py \
     --ckpt $BASE_DIR/$CKPT \
     --cache \
     --logger wandb \
-        wandb-project runs \
+        wandb-project runs-yolox \
         wandb-entity team-noobtoss \
         wandb-name $EXP_NAME \
         wandb-log_checkpoints False \
