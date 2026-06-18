@@ -13,14 +13,21 @@ from .cls_feat_proj_heads import ClsFeatProjHeadFactory
 class Exp(_Exp):
     def __init__(self):
         super().__init__()
-        self.save_history_ckpt   = False  # True
-        self.cls_feat            = None   # 1
-        self.cls_feat_loss       = None   # SupervisedContrastiveLoss()
-        self.cls_feat_proj_head  = None
-        self.save_history_ckpt   = False  # True
-        self.train_subset_pct    = None
-        self.train_min_cls_pct   = None
-        self.seed                = 2024
+        self.save_history_ckpt      = False  # True
+        self.train_subset_pct       = None
+        self.train_min_cls_pct      = None
+        self.seed                   = 2024
+        self.cls_feat               = None   # 1
+        self.cls_feat_dim           = 320  # hard encoding dangerous
+        self.cls_feat_loss          = None   # SupervisedContrastiveLoss()
+        self.cls_feat_temperature   = 0.07
+        self.cls_feat_mask          = None
+        self.cls_feat_mask_pct      = 0.4
+        self.cls_feat_min_per_class = 4
+        self.cls_feat_weight        = None
+        self.cls_feat_proj_head     = None
+        self.cls_feat_proj_head_lr  = None
+        self.cls_feat_scheduler     = None
 
     def get_dataset(self, cache: bool = False, cache_type: str = "ram"):
         """
@@ -132,3 +139,12 @@ class Exp(_Exp):
         self.model.head.initialize_biases(1e-2)
         self.model.train()
         return self.model
+
+    def get_cls_feat_scheduler(self, cls_feat):
+        from .cls_feat_scheduler import ClsFeatScheduler
+        scheduler = ClsFeatScheduler(
+            getattr(self, "cls_feat_scheduler", None) or "constant",
+            cls_feat,
+            self.max_epoch,
+        )
+        return scheduler

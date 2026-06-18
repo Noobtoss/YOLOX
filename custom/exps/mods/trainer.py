@@ -14,7 +14,7 @@ class Trainer(_Trainer):
     def __init__(self, exp, args):
         warnings.warn("[Modded] Trainer")
         super().__init__(exp, args)
-        self.custom_scheduler = None
+        self.cls_feat_scheduler = None
 
     def before_train(self):
         super().before_train()
@@ -23,12 +23,13 @@ class Trainer(_Trainer):
             getattr(self.exp, "cls_feat_proj_head_lr", None) or self.exp.basic_lr_per_img * self.args.batch_size,
             self.max_iter
         )
-        if hasattr(self.exp, 'get_custom_scheduler'):
-            self.custom_scheduler = self.exp.get_custom_scheduler()
+        if hasattr(self.exp, 'get_cls_feat_scheduler'):
+            self.cls_feat_scheduler = self.exp.get_cls_feat_scheduler(self.exp.cls_feat)
 
     def before_epoch(self):
-        if self.custom_scheduler is not None:
-            self.custom_scheduler(self.epoch + 1)
+        # only update cls_feat_gain per epoch
+        if self.cls_feat_scheduler is not None:
+            self.model.head.cls_feat = self.cls_feat_scheduler.update_cls_feat(self.epoch+1)
         super().before_epoch()
 
     def train_one_iter(self):
@@ -66,6 +67,7 @@ class Trainer(_Trainer):
             data_time=data_end_time - iter_start_time,
             lr=lr,
             cls_feat_proj_head_lr=cls_feat_proj_head_lr,
+            cls_feat=self.model.head.cls_feat,
             **outputs,
         )
         # <<< MOD
@@ -123,9 +125,17 @@ class Trainer(_Trainer):
             if self.args.logger == "tensorboard":
                 self.tblogger.add_scalar(
                     "train/cls_feat_proj_head_lr", self.meter["cls_feat_proj_head_lr"].latest, self.progress_in_iter)
+                self.tblogger.add_scalar(
+                    "train/cls_feat", self.meter["cls_feat"].latest, self.progress_in_iter)
             if self.args.logger == "wandb":
-                metrics = {"train/cls_feat_proj_head_lr": self.meter["cls_feat_proj_head_lr"].latest}
+                metrics = {
+                    "train/cls_feat_proj_head_lr": self.meter["cls_feat_proj_head_lr"].latest,
+                    "train/cls_feat": self.meter["cls_feat"].latest,
+                }
                 self.wandb_logger.log_metrics(metrics, step=self.progress_in_iter)
             if self.args.logger == 'mlflow':
-                logs = {"train/cls_feat_proj_head_lr": self.meter["cls_feat_proj_head_lr"].latest}
+                logs = {
+                    "train/cls_feat_proj_head_lr": self.meter["cls_feat_proj_head_lr"].latest,
+                    "train/cls_feat": self.meter["cls_feat"].latest,
+                }
                 self.mlflow_logger.on_log(self.args, self.exp, self.epoch + 1, logs)
