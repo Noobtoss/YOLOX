@@ -14,7 +14,7 @@ class Trainer(_Trainer):
     def __init__(self, exp, args):
         warnings.warn("[Modded] Trainer")
         super().__init__(exp, args)
-        self.extra_scheduler = None
+        self.custom_scheduler = None
 
     def before_train(self):
         super().before_train()
@@ -23,12 +23,12 @@ class Trainer(_Trainer):
             getattr(self.exp, "cls_feat_proj_head_lr", None) or self.exp.basic_lr_per_img * self.args.batch_size,
             self.max_iter
         )
-        if hasattr(self.exp, 'get_extra_scheduler'):
-            self.extra_scheduler = self.exp.get_extra_scheduler()
+        if hasattr(self.exp, 'get_custom_scheduler'):
+            self.custom_scheduler = self.exp.get_custom_scheduler()
 
     def before_epoch(self):
-        if self.extra_scheduler is not None:
-            self.extra_scheduler(self.epoch + 1)
+        if self.custom_scheduler is not None:
+            self.custom_scheduler(self.epoch + 1)
         super().before_epoch()
 
     def train_one_iter(self):
