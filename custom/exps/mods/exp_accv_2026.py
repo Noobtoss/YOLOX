@@ -4,7 +4,7 @@ import torch.nn as nn
 
 from .exp import Exp as _Exp
 from .cls_feat_loss import ClsFeatLoss
-from .cls_feat_proj_heads import ClsFeatProjHeadFactory
+from .cls_feat_proj_head import ClsFeatProjHeadFactory
 
 
 # THS, Copied from yolox.exp.yolox_base.py
