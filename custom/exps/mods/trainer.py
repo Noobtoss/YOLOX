@@ -29,7 +29,7 @@ class Trainer(_Trainer):
     def before_epoch(self):
         # only update cls_feat_gain per epoch
         if self.cls_feat_scheduler is not None:
-            self.model.head.cls_feat = self.cls_feat_scheduler.update_cls_feat(self.epoch+1)
+            self.model.head.cls_feat = self.cls_feat_scheduler.update_cls_feat(self.epoch)
         super().before_epoch()
 
     def train_one_iter(self):
