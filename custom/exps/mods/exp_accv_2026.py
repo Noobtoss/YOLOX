@@ -142,9 +142,11 @@ class Exp(_Exp):
 
     def get_cls_feat_scheduler(self, cls_feat):
         from .cls_feat_scheduler import ClsFeatScheduler
+        kwargs = {k.removeprefix("cls_feat_"): v for k, v in vars(self).items() if k.startswith("cls_feat_")}
         scheduler = ClsFeatScheduler(
             getattr(self, "cls_feat_scheduler", None) or "constant",
             cls_feat,
             self.max_epoch,
+            **kwargs
         )
         return scheduler
