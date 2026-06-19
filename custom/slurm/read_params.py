@@ -16,6 +16,9 @@ def parse_experiments(text: str, task_ids: list[int]) -> list[str]:
     lines = [l.strip() for l in text.splitlines() if l.strip() and not l.strip().startswith('#')]
     experiments = []
     for task_id in task_ids:
+        if task_id - 1 >= len(lines):
+            experiments.append(f"Warning: task_id {task_id} exceeds number of lines ({len(lines)}), skipping.")
+            continue
         line = lines[task_id - 1]
         match = re.search(r'exp_name\s+(\S+)', line)
         if match:
@@ -23,7 +26,7 @@ def parse_experiments(text: str, task_ids: list[int]) -> list[str]:
     return experiments
 
 if __name__ == "__main__":
-    array_str = "86,87,88,93,94,95%3  # Previous runs: 17-40%8, 9-16%8"
+    array_str = "86,87,88,89,90,91,96,97,98,99,100,101%3  # Previous runs: 17-40%8, 9-16%8"
     task_ids  = parse_array_ids(array_str)
 
     with open("slurm_params.txt", "r") as f:

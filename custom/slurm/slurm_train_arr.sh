@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=YOLOX_train_arr # Kurzname des Jobs
-#SBATCH --array=86,87,88,93,94,95%3  # Previous runs: 17-40%8, 9-16%8
+#SBATCH --array=86,87,88,89,90,91,96,97,98,99,100,101%3  # Previous runs: 17-40%8, 9-16%8
 #SBATCH --output=logs/R-%A-%a.out
 #SBATCH --partition=p2,p6             # p4
 #SBATCH --qos=gpuultimate
