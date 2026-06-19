@@ -1,8 +1,16 @@
 import os
+from pathlib import Path
 from yolox.exp import Exp as _Exp
 
 
 # THS, Copied from yolox.exp.yolox_base.py
+
+
+def tag_exp(exp, cfg_list):
+    exp.dataset_name = Path(getattr(exp, "data_dir")).stem
+    for k, v in zip(cfg_list[0::2], cfg_list[1::2]):
+        if k == "ckpt":
+            exp.model_name = Path(v).stem
 
 
 class Exp(_Exp):
@@ -181,3 +189,7 @@ class Exp(_Exp):
         )
         read_useful_info(coco_dataset.coco)
         return coco_dataset
+
+    def merge(self, cfg_list):
+        super().merge(cfg_list)
+        tag_exp(self, cfg_list)
