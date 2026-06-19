@@ -89,15 +89,21 @@ exp_name Images05ACCV2026_baseline  exp custom/exps/Images05ACCV2026.py ckpt che
 exp_name Images05ACCV2026_scl4      exp custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 4
 exp_name Images05ACCV2026_scl6      exp custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 6
 exp_name Images05ACCV2026_scl8      exp custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 8
-exp_name Images05ACCV2026_scl6_acd  exp custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 6  cls_feat_scheduler anti_cos_decay
-exp_name Images05ACCV2026_scl8_acd  exp custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 8  cls_feat_scheduler anti_cos_decay
-exp_name Images05ACCV2026_scl10_acd exp custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 10 cls_feat_scheduler anti_cos_decay
+exp_name Images05ACCV2026_scl6_acd  exp custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 6  cls_feat_scheduler inverse_cos_decay
+exp_name Images05ACCV2026_scl8_acd  exp custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 8  cls_feat_scheduler inverse_cos_decay
+exp_name Images05ACCV2026_scl10_acd exp custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 10 cls_feat_scheduler inverse_cos_decay
+exp_name Images05ACCV2026_scl6_wsd  exp custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 6  cls_feat_scheduler inverse_cos_wsd
+exp_name Images05ACCV2026_scl8_wsd  exp custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 8  cls_feat_scheduler inverse_cos_wsd
+exp_name Images05ACCV2026_scl10_wsd exp custom/exps/Images05ACCV2026.py ckpt checkpoints/yolox_x.pth cls_feat 10 cls_feat_scheduler inverse_cos_wsd
 # Experiments ACCV2026Plus
 exp_name Images05ACCV2026Plus_baseline  exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat 0
 exp_name Images05ACCV2026Plus_scl4      exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat 4
 exp_name Images05ACCV2026Plus_scl6      exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat 6
 exp_name Images05ACCV2026Plus_scl8      exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat 8
-exp_name Images05ACCV2026Plus_scl6_acd  exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat 6 cls_feat_scheduler anti_cos_decay
-exp_name Images05ACCV2026Plus_scl8_acd  exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat 8 cls_feat_scheduler anti_cos_decay
-exp_name Images05ACCV2026Plus_scl10_acd exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat 10 cls_feat_scheduler anti_cos_decay
+exp_name Images05ACCV2026Plus_scl6_acd  exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat 6  cls_feat_scheduler inverse_cos_decay
+exp_name Images05ACCV2026Plus_scl8_acd  exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat 8  cls_feat_scheduler inverse_cos_decay
+exp_name Images05ACCV2026Plus_scl10_acd exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat 10 cls_feat_scheduler inverse_cos_decay
+exp_name Images05ACCV2026Plus_scl6_wsd  exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat 6  cls_feat_scheduler inverse_cos_wsd
+exp_name Images05ACCV2026Plus_scl8_wsd  exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat 8  cls_feat_scheduler inverse_cos_wsd
+exp_name Images05ACCV2026Plus_scl10_wsd exp custom/exps/Images05ACCV2026Plus.py ckpt checkpoints/yolox_x.pth cls_feat 10 cls_feat_scheduler inverse_cos_wsd
 # Experiments End Current
