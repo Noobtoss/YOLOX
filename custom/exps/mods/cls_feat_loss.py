@@ -58,7 +58,7 @@ class FeatLossFactory:
             raise ValueError(f"Unknown feat loss type: '{loss}'")
 
 
-class ConfWeight:
+class ClassConfWeight:
     def __init__(self, **kwargs):
         pass
 
@@ -71,14 +71,14 @@ class WeightFactory:
     def get(weight: str = None, **kwargs):
         if weight is None or weight == "None":
             return None
-        elif weight == "conf":
-            return ConfWeight()
+        elif weight == "class_conf":
+            return ClassConfWeight()
         else:
             raise ValueError(f"Unknown weight type: '{weight}'")
 
 
 class Masking:
-    def __init__(self, mask_pct: float = 0.2, **kwargs):
+    def __init__(self, mask_pct: float = 0.4, **kwargs):
         super().__init__(**kwargs)
         self.mask_pct = mask_pct
 
@@ -88,10 +88,10 @@ class Masking:
         return metric >= thresh
 
 
-class ConfMask(Masking, ConfWeight):
+class ClassConfMask(Masking, ClassConfWeight):
     def __call__(self, target_scores, pred_scores, *args, **kwargs):
-        conf = super().__call__(target_scores, pred_scores, *args, **kwargs)
-        return self._masking(conf)
+        class_conf = super().__call__(target_scores, pred_scores, *args, **kwargs)
+        return self._masking(class_conf)
 
 
 class RandMask:
@@ -139,8 +139,8 @@ class MaskFactory:
     def get(mask: str = None, **kwargs):
         if mask is None or mask == "None":
             return None
-        elif mask == "conf":
-            return ConfMask(**kwargs)
+        elif mask == "class_conf":
+            return ClassConfMask(**kwargs)
         elif mask == "rand":
             return RandMask(**kwargs)
         elif mask == "rand_balanced":
