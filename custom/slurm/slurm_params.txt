@@ -34,7 +34,7 @@ exp_name Images05BMVC2026_msl10    exp custom/exps/Images05BMVC2026.py ckpt chec
 exp_name Images05BMVC2026_msl12    exp custom/exps/Images05BMVC2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss multi_sim_loss cls_feat 12
 exp_name Images05BMVC2026_msl16    exp custom/exps/Images05BMVC2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss multi_sim_loss cls_feat 16
 exp_name Images05BMVC2026_msl20    exp custom/exps/Images05BMVC2026.py ckpt checkpoints/yolox_x.pth cls_feat_loss multi_sim_loss cls_feat 20
-# Experiments BMVC2026 _50pct
+# Experiments BMVC2026 50pct
 exp_name Images05BMVC2026_50pct_baseline exp custom/exps/Images05BMVC2026.py ckpt checkpoints/yolox_x.pth train_subset_pct 0.5 train_min_cls_pct 0.3 cls_feat 0
 exp_name Images05BMVC2026_50pct_scl02    exp custom/exps/Images05BMVC2026.py ckpt checkpoints/yolox_x.pth train_subset_pct 0.5 train_min_cls_pct 0.3 cls_feat 0.2
 exp_name Images05BMVC2026_50pct_scl05    exp custom/exps/Images05BMVC2026.py ckpt checkpoints/yolox_x.pth train_subset_pct 0.5 train_min_cls_pct 0.3 cls_feat 0.5
