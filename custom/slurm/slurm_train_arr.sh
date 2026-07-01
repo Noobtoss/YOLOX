@@ -63,7 +63,7 @@ python tools/train.py \
         wandb-project runs-yolox \
         wandb-entity team-noobtoss \
         wandb-name $EXP_NAME \
-        wandb-log_checkpoints False \
+        wandb-log_checkpoints False
     output_dir $OUTPUT_DIR \
     $PARAMS
 
