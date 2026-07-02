@@ -32,7 +32,7 @@ def make_parser():
     return parser
 
 
-class YOLOXDetectModel(nn.Module):
+class YoloxDetectModel(nn.Module):
     """Wrap an Ultralytics YOLO model for Apple iOS CoreML export."""
 
     def __init__(self, model, im, num_of_class, device='cuda'):
@@ -80,7 +80,7 @@ def main():
     nc = len(names.keys())  # number of classes
 
     im = torch.zeros(args.batch_size, 3, exp.test_size[0], exp.test_size[1]).to(DEVICE)
-    model = YOLOXDetectModel(model, im, nc, DEVICE)
+    model = YoloxDetectModel(model, im, nc, DEVICE)
     model.eval().to(DEVICE)
 
     y = model(im)
@@ -175,7 +175,7 @@ def main():
     ct_model.output_description["coordinates"] = "Boxes × [x, y, width, height] (relative to image size)"
 
     metadata = {
-        "description": "YOLOX",
+        "description": "yolox",
         "author": "Noobtoss"
     }
     ct_model.short_description = metadata.pop("description")

@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=YOLOX_train_arr # Kurzname des Jobs
+#SBATCH --job-name=yolox_train_arr # Kurzname des Jobs
 #SBATCH --array=44,45%8  # Previous runs: 17-40%8, 9-16%8
 #SBATCH --output=logs/R-%A-%a.out
 #SBATCH --gres=gpu:a40:1     # Request 1x A40 GPUs
@@ -12,7 +12,7 @@
 #SBATCH --mail-user=thomas.schmitt@th-nuernberg.de
 
 # ----- BASE_DIR ----------------------------------------------------
-BASE_DIR="$WORK/code_nexus/YOLOX"
+BASE_DIR="$WORK/code_nexus/yolox"
 JOB_DIR=$TMPDIR
 
 # ----- GET ARGS ----------------------------------------------------
@@ -43,7 +43,7 @@ module purge
 module load python/3.12-base
 module load cuda/12.8.1
 
-conda activate conda-YOLOX
+conda activate conda-yolox
 
 export PYTHONPATH="$BASE_DIR:$PYTHONPATH"
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=YOLOX_train        # Kurzname des Jobs
+#SBATCH --job-name=yolox_train        # Kurzname des Jobs
 #SBATCH --output=logs/R-%j.out
 #SBATCH --partition=p2
 #SBATCH --qos=gpuultimate
@@ -10,7 +10,7 @@
 #SBATCH --mem-per-cpu=64G        # RAM pro CPU Kern #20G #32G #64G
 
 # ----- BASE_DIR ----------------------------------------------------
-BASE_DIR=/nfs/scratch/staff/schmittth/code_nexus/YOLOX
+BASE_DIR=/nfs/scratch/staff/schmittth/code_nexus/yolox
 
 # ----- GET ARGS ----------------------------------------------------
 EXP=${1:-custom/exps/Images04.py}
@@ -21,7 +21,7 @@ module purge
 module load python/anaconda3
 eval "$(conda shell.bash hook)"
 
-conda activate conda-YOLOX
+conda activate conda-yolox
 
 export TMPDIR=/nfs/scratch/staff/schmittth/tmp
 

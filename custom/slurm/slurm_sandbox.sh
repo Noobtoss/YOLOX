@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=YOLOX_train_arr # Kurzname des Jobs
+#SBATCH --job-name=yolox_train_arr # Kurzname des Jobs
 #SBATCH --array=1
 #SBATCH --output=logs/R-%A-%a.out
 #SBATCH --partition=p2,p3,p4,p5,p6 # p4
@@ -11,7 +11,7 @@
 #SBATCH --mem-per-cpu=64G          # RAM pro CPU Kern #20G #32G #64G
 
 # ----- BASE_DIR ----------------------------------------------------
-BASE_DIR=/nfs/scratch/staff/schmittth/code_nexus/YOLOX
+BASE_DIR=/nfs/scratch/staff/schmittth/code_nexus/yolox
 
 # ----- GET ARGS ----------------------------------------------------
 PARAMS_FILE="$BASE_DIR/custom/slurm/slurm_params.txt"
@@ -38,7 +38,7 @@ module purge
 module load python/anaconda3
 eval "$(conda shell.bash hook)"
 
-conda activate conda-YOLOX
+conda activate conda-yolox
 
 export PYTHONPATH="$BASE_DIR:$PYTHONPATH"
 
